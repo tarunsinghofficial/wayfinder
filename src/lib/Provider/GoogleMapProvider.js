@@ -3,13 +3,17 @@ import StopMarker from '$components/map/StopMarker.svelte';
 import { faBus } from '@fortawesome/free-solid-svg-icons';
 import { COLORS } from '$lib/colors';
 import PopupContent from '$components/map/PopupContent.svelte';
+import VehiclePopupContent from '$components/map/VehiclePopupContent.svelte';
+import { createVehicleIconSvg } from '$lib/MapHelpers/generateVehicleIcon';
 export default class GoogleMapProvider {
 	constructor(apiKey) {
 		this.apiKey = apiKey;
 		this.map = null;
-		this.stopMarkers = [];
 		this.globalInfoWindow = null;
 		this.popupContentComponent = null;
+		this.stopsMap = new Map();
+		this.stopMarkers = [];
+		this.vehicleMarkers = [];
 	}
 
 	async initMap(element, options) {
@@ -110,6 +114,8 @@ export default class GoogleMapProvider {
 			}
 		});
 
+		this.stopsMap.set(stop.id, stop);
+
 		marker.addListener('click', () => {
 			if (this.globalInfoWindow) {
 				this.globalInfoWindow.close();
@@ -144,6 +150,98 @@ export default class GoogleMapProvider {
 			marker.setMap(null);
 		});
 		this.stopMarkers = [];
+	}
+
+	addVehicleMarker(vehicle, activeTrip) {
+		if (!this.map) return null;
+
+		let color;
+		if (!vehicle.predicted) {
+			color = COLORS.VEHICLE_REAL_TIME_OFF;
+		}
+
+		const busIcon = createVehicleIconSvg(vehicle?.orientation, color);
+		const icon = {
+			url: `data:image/svg+xml;charset=UTF-8,${encodeURIComponent(busIcon)}`,
+			scaledSize: new google.maps.Size(40, 40),
+			anchor: new google.maps.Point(20, 20)
+		};
+
+		const marker = new google.maps.Marker({
+			position: { lat: vehicle.position.lat, lng: vehicle.position.lon },
+			map: this.map,
+			icon: icon,
+			zIndex: 1000
+		});
+
+		this.vehicleMarkers.push(marker);
+
+		const vehicleData = {
+			nextDestination: activeTrip.tripHeadsign,
+			vehicleId: vehicle.vehicleId,
+			lastUpdateTime: vehicle.lastUpdateTime,
+			nextStopName: this.stopsMap.get(vehicle.nextStop)?.name,
+			predicted: vehicle.predicted
+		};
+
+		const popupContainer = document.createElement('div');
+		marker.popupComponent = new VehiclePopupContent({
+			target: popupContainer,
+			props: vehicleData
+		});
+
+		marker.infoWindow = new google.maps.InfoWindow({
+			content: popupContainer
+		});
+
+		marker.addListener('click', () => {
+			marker.infoWindow.open(this.map, marker);
+		});
+
+		return marker;
+	}
+
+	updateVehicleMarker(marker, vehicleStatus, activeTrip) {
+		if (!this.map || !marker) return;
+
+		marker.setPosition({ lat: vehicleStatus.position.lat, lng: vehicleStatus.position.lon });
+
+		let color;
+		if (!vehicleStatus.predicted) {
+			color = COLORS.VEHICLE_REAL_TIME_OFF;
+		}
+
+		const updatedIcon = createVehicleIconSvg(vehicleStatus.orientation, color);
+		marker.setIcon({
+			url: `data:image/svg+xml;charset=UTF-8,${encodeURIComponent(updatedIcon)}`,
+			scaledSize: new google.maps.Size(40, 40),
+			anchor: new google.maps.Point(20, 20)
+		});
+
+		const updatedData = {
+			nextDestination: activeTrip.tripHeadsign,
+			vehicleId: vehicleStatus.vehicleId,
+			lastUpdateTime: vehicleStatus.lastUpdateTime,
+			nextStopName: this.stopsMap.get(vehicleStatus.nextStop)?.name,
+			predicted: vehicleStatus.predicted
+		};
+
+		if (marker.popupComponent) {
+			marker.popupComponent.$set(updatedData);
+		}
+	}
+
+	removeVehicleMarker(marker) {
+		marker.setMap(null);
+	}
+
+	clearVehicleMarkers() {
+		if (!this.map) return;
+
+		for (const marker of this.vehicleMarkers) {
+			marker.setMap(null);
+		}
+		this.vehicleMarkers = [];
 	}
 
 	cleanupInfoWindow() {
@@ -201,7 +299,7 @@ export default class GoogleMapProvider {
 			geodesic: true,
 			strokeColor: COLORS.POLYLINE,
 			strokeOpacity: 1.0,
-			strokeWeight: 4
+			strokeWeight: 5
 		};
 
 		if (addArrow) {

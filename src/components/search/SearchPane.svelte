@@ -6,6 +6,8 @@
 	import { prioritizedRouteTypeForDisplay } from '$config/routeConfig';
 	import { faMapPin, faSignsPost } from '@fortawesome/free-solid-svg-icons';
 	import { t } from 'svelte-i18n';
+	import { clearVehicleMarkersMap, fetchAndUpdateVehicles } from '$lib/vehicleUtils';
+	import { calculateMidpoint } from '$lib/mathUtils';
 
 	const dispatch = createEventDispatcher();
 
@@ -14,14 +16,11 @@
 	let location = null;
 	let query = null;
 	let polylines = [];
+	let currentIntervalId = null;
 
 	export let mapProvider = null;
 
 	function handleLocationClick(location) {
-		if (polylines) {
-			dispatch('clearResults', polylines);
-		}
-
 		clearResults();
 
 		const lat = location.geometry.location.lat;
@@ -34,10 +33,6 @@
 	}
 
 	function handleStopClick(stop) {
-		if (polylines) {
-			dispatch('clearResults', polylines);
-		}
-
 		clearResults();
 
 		mapProvider.panTo(stop.lat, stop.lon);
@@ -47,11 +42,8 @@
 	}
 
 	async function handleRouteClick(route) {
-		if (polylines) {
-			dispatch('clearResults', polylines);
-		}
-
 		clearResults();
+
 		const response = await fetch(`/api/oba/stops-for-route/${route.id}`);
 
 		const stopsForRoute = await response.json();
@@ -69,16 +61,16 @@
 			polylines.push(polyline);
 		}
 
-		let routeLat = stopsForRoute.data.references.stops[0].lat;
-		let routeLon = stopsForRoute.data.references.stops[0].lon;
+		await showStopsOnRoute(stops);
 
-		showStopsOnRoute(stops);
+		currentIntervalId = await fetchAndUpdateVehicles(route.id, mapProvider);
 
-		mapProvider.setZoom(11);
+		const midpoint = calculateMidpoint(stopsForRoute.data.references.stops);
 
-		mapProvider.panTo(routeLat, routeLon);
+		mapProvider.panTo(midpoint.lat, midpoint.lng);
+		mapProvider.setZoom(13);
 
-		dispatch('routeSelected', { route, stopsForRoute, stops, polylines });
+		dispatch('routeSelected', { route, stopsForRoute, stops, polylines, currentIntervalId });
 	}
 
 	async function showStopsOnRoute(stops) {
@@ -95,10 +87,17 @@
 	}
 
 	function clearResults() {
+		if (polylines) {
+			dispatch('clearResults', polylines);
+		}
 		routes = null;
 		stops = null;
 		location = null;
 		query = null;
+
+		clearVehicleMarkersMap();
+		mapProvider.clearVehicleMarkers();
+		clearInterval(currentIntervalId);
 	}
 </script>
 
