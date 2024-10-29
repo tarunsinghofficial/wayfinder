@@ -17,15 +17,15 @@ export default class OpenStreetMapProvider {
 		this.stopsMap = new Map();
 		this.stopMarkers = [];
 		this.vehicleMarkers = [];
+		this.maplibreLayer = 'positron';
 	}
 
 	async initMap(element, options) {
-		if (!browser) {
-			return;
-		}
+		if (!browser) return;
 
 		const leaflet = await import('leaflet');
-		import('leaflet-polylinedecorator');
+		await import('@maplibre/maplibre-gl-leaflet');
+		await import('leaflet-polylinedecorator');
 
 		this.L = leaflet.default;
 
@@ -37,13 +37,17 @@ export default class OpenStreetMapProvider {
 
 		this.map = this.L.map(element, { zoomControl: false }).setView([options.lat, options.lng], 14);
 
-		this.L.control
-			.zoom({
-				position: 'bottomright'
-			})
-			.addTo(this.map);
+		this.L.control.zoom({ position: 'bottomright' }).addTo(this.map);
 
-		this.L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {}).addTo(this.map);
+		// TODO: Make this configurable through env file
+
+		/*
+		 * for more styles https://github.com/teamapps-org/maplibre-gl-styles
+		 */
+		this.maplibreLayer = this.L.maplibreGL({
+			style: `https://tiles.openfreemap.org/styles/${this.maplibreLayer}`,
+			interactive: true
+		}).addTo(this.map);
 	}
 
 	eventListeners(mapInstance, debouncedLoadMarkers) {
@@ -271,7 +275,23 @@ export default class OpenStreetMapProvider {
 	}
 
 	setTheme(theme) {
-		console.log('TODO: implement setTheme for OpenStreetMapProvider', theme);
+		if (!browser || !this.map) return;
+
+		let styleUrl;
+		if (theme === 'dark') {
+			styleUrl = 'https://tiles.openfreemap.org/styles/dark';
+		} else {
+			styleUrl = 'https://tiles.openfreemap.org/styles/positron';
+		}
+
+		if (this.maplibreLayer) {
+			this.map.removeLayer(this.maplibreLayer);
+		}
+
+		this.maplibreLayer = this.L.maplibreGL({
+			style: styleUrl,
+			interactive: true
+		}).addTo(this.map);
 	}
 
 	createPolyline(points) {
