@@ -7,6 +7,7 @@
 	import MapContainer from '$components/MapContainer.svelte';
 	import RouteModal from '$components/navigation/RouteModal.svelte';
 	import ViewAllRoutesModal from '$components/navigation/ViewAllRoutesModal.svelte';
+	import { isLoading } from 'svelte-i18n';
 
 	let stop;
 	let selectedTrip = null;
@@ -109,49 +110,53 @@
 	}
 </script>
 
-<div class="absolute left-0 right-0 top-0 z-40">
-	<Header />
+{#if $isLoading}
+	<p>Loading...</p>
+{:else}
+	<div class="absolute left-0 right-0 top-0 z-40">
+		<Header />
 
-	<div class="ml-4 mt-4 md:w-64">
-		<SearchPane
-			{mapProvider}
-			on:routeSelected={handleRouteSelected}
-			on:clearResults={clearPolylines}
-			on:viewAllRoutes={handleShowAllRoutes}
-		/>
+		<div class="ml-4 mt-4 md:w-64">
+			<SearchPane
+				{mapProvider}
+				on:routeSelected={handleRouteSelected}
+				on:clearResults={clearPolylines}
+				on:viewAllRoutes={handleShowAllRoutes}
+			/>
+		</div>
 	</div>
-</div>
 
-{#if stop}
-	<ModalPane on:close={closePane} {stop}>
-		<StopPane
-			{showAllStops}
-			{stop}
-			on:tripSelected={tripSelected}
-			on:updateRouteMap={handleUpdateRouteMap}
-			on:showAllStops={handleShowAllStops}
-		/>
-	</ModalPane>
+	{#if stop}
+		<ModalPane on:close={closePane} {stop}>
+			<StopPane
+				{showAllStops}
+				{stop}
+				on:tripSelected={tripSelected}
+				on:updateRouteMap={handleUpdateRouteMap}
+				on:showAllStops={handleShowAllStops}
+			/>
+		</ModalPane>
+	{/if}
+
+	{#if showRouteModal}
+		<ModalPane on:close={closePane}>
+			<RouteModal {mapProvider} {stops} {selectedRoute} />
+		</ModalPane>
+	{/if}
+
+	{#if showAllRoutesModal}
+		<ModalPane on:close={closePane}>
+			<ViewAllRoutesModal on:routeSelected={handleRouteSelectedFromModal} />
+		</ModalPane>
+	{/if}
+
+	<MapContainer
+		{selectedTrip}
+		{selectedRoute}
+		on:stopSelected={stopSelected}
+		{showRoute}
+		{showRouteMap}
+		{stop}
+		bind:mapProvider
+	/>
 {/if}
-
-{#if showRouteModal}
-	<ModalPane on:close={closePane}>
-		<RouteModal {mapProvider} {stops} {selectedRoute} />
-	</ModalPane>
-{/if}
-
-{#if showAllRoutesModal}
-	<ModalPane on:close={closePane}>
-		<ViewAllRoutesModal on:routeSelected={handleRouteSelectedFromModal} />
-	</ModalPane>
-{/if}
-
-<MapContainer
-	{selectedTrip}
-	{selectedRoute}
-	on:stopSelected={stopSelected}
-	{showRoute}
-	{showRouteMap}
-	{stop}
-	bind:mapProvider
-/>

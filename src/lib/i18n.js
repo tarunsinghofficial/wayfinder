@@ -8,11 +8,7 @@ register('tl', () => import('./../locales/tl.json')); // Tagalog
 register('so', () => import('./../locales/so.json')); // Somali
 register('am', () => import('./../locales/am.json')); // Amharic
 
-const locale = getLocaleFromNavigator();
-
-const lang = locale ? locale.split('-')[0] : 'en';
-
 init({
 	fallbackLocale: 'en',
-	initialLocale: lang
+	initialLocale: getLocaleFromNavigator()
 });
