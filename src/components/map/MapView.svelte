@@ -10,7 +10,6 @@
 	import LocationButton from '$lib/LocationButton/LocationButton.svelte';
 	import RouteMap from './RouteMap.svelte';
 
-	import MapTypeButton from '$lib/MapTypeButton/MapTypeButton.svelte';
 	import { faBus } from '@fortawesome/free-solid-svg-icons';
 	import { RouteType, routePriorities, prioritizedRouteTypeForDisplay } from '$config/routeConfig';
 
@@ -26,7 +25,6 @@
 	const dispatch = createEventDispatcher();
 
 	let mapInstance = null;
-	let mapTypeId = 'roadmap';
 	let mapElement;
 
 	let markers = [];
@@ -212,11 +210,6 @@
 		mapInstance.addUserLocationMarker({ lat: latitude, lng: longitude });
 	}
 
-	function handleMapTypeChange(event) {
-		mapTypeId = event.detail;
-		mapInstance.setMapType(mapTypeId);
-	}
-
 	onMount(async () => {
 		await initMap();
 		if (browser) {
@@ -249,8 +242,6 @@
 
 <div class="controls">
 	<LocationButton on:locationObtained={handleLocationObtained} />
-	<!-- TODO: MAKE THE MAP TYPE WORK IN OSM MAP-->
-	<MapTypeButton {mapTypeId} on:mapTypeChanged={handleMapTypeChange} />
 </div>
 
 <style>
