@@ -17,7 +17,8 @@
 	function formatTime(seconds) {
 		if (!seconds) return '';
 		const date = new Date(seconds * 1000);
-		return date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+		const utcDate = new Date(date.toUTCString().slice(0, -4));
+		return utcDate.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
 	}
 
 	function calculateBusPosition() {
