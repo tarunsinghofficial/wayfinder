@@ -7,6 +7,8 @@
 	import RouteModal from '$components/navigation/RouteModal.svelte';
 	import ViewAllRoutesModal from '$components/navigation/ViewAllRoutesModal.svelte';
 	import { isLoading } from 'svelte-i18n';
+	import AlertsModal from '$components/navigation/AlertsModal.svelte';
+	import { onMount } from 'svelte';
 
 	let stop;
 	let selectedTrip = null;
@@ -18,6 +20,8 @@
 	let showRouteModal;
 	let mapProvider = null;
 	let currentIntervalId = null;
+	let alert = null;
+	let showAlertModal = false;
 	let polylines = [];
 	let stops = [];
 
@@ -107,7 +111,33 @@
 		mapProvider.removeStopMarkers();
 		selectedRoute = null;
 	}
+
+	async function loadAlerts() {
+		try {
+			const response = await fetch('/api/oba/alerts');
+
+			if (!response.ok) {
+				showAlertModal = false;
+				return;
+			}
+
+			const data = await response.json();
+
+			alert = data;
+			showAlertModal = true;
+		} catch (error) {
+			console.error('Error loading alerts:', error);
+		}
+	}
+
+	onMount(() => {
+		loadAlerts();
+	});
 </script>
+
+{#if showAlertModal}
+	<AlertsModal {alert} />
+{/if}
 
 {#if $isLoading}
 	<p>Loading...</p>
