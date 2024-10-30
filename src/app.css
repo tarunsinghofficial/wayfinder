@@ -3,14 +3,6 @@
 @tailwind utilities;
 
 @layer components {
-	.scroll-hidden {
-		-ms-overflow-style: none; /* Internet Explorer 10+ */
-		scrollbar-width: none; /* Firefox */
-	}
-	.scroll-hidden::-webkit-scrollbar {
-		display: none; /* Safari and Chrome */
-	}
-
 	.h1 {
 		@apply mb-4 text-2xl font-semibold text-gray-900 dark:text-gray-300;
 	}
@@ -21,5 +13,9 @@
 
 	.h3 {
 		@apply mb-2 text-lg font-semibold dark:text-white;
+	}
+
+	.modal-pane {
+		@apply rounded-lg border-gray-500 bg-white/90 px-4 shadow-lg dark:bg-black dark:text-white dark:shadow-lg dark:shadow-gray-200/10;
 	}
 }

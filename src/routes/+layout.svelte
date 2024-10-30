@@ -7,11 +7,9 @@
 	config.autoAddCss = false; // Tell Font Awesome to skip adding the CSS automatically since it's being imported above
 </script>
 
-<div class="relative h-dvh w-full">
-	<div class="fixed w-full">
-		<Header />
-	</div>
-	<div class="h-[100vh] overflow-hidden">
+<div class="flex h-dvh w-full flex-col">
+	<Header />
+	<div class="relative flex-1 overflow-hidden">
 		<slot></slot>
 	</div>
 </div>
