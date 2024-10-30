@@ -11,6 +11,8 @@
 
 	const dispatch = createEventDispatcher();
 
+	export let cssClasses = '';
+
 	let routes = null;
 	let stops = null;
 	let location = null;
@@ -105,9 +107,7 @@
 	});
 </script>
 
-<div
-	class="bg-blur-sm flex w-96 justify-between rounded-lg border-gray-500 bg-white/90 px-4 shadow-lg dark:bg-black dark:text-white dark:shadow-lg dark:shadow-gray-200/10"
->
+<div class={`modal-pane flex w-96 justify-between ${cssClasses}`}>
 	<div class="flex w-full flex-col gap-y-2 py-4">
 		<SearchField value={query} on:searchResults={handleSearchResults} />
 

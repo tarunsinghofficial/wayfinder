@@ -75,7 +75,7 @@
 			<h1 class="mb-6 text-center text-2xl font-bold text-white">{$t('search.all_routes')}</h1>
 		</div>
 
-		<div class="p-4">
+		<div class="mt-4">
 			<div class="relative mb-4">
 				<input
 					type="text"

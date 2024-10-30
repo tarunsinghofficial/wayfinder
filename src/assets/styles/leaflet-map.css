@@ -1,9 +1,9 @@
 .leaflet-touch {
 	.leaflet-bar {
 		position: absolute;
-		bottom: 6px;
+		bottom: 64px;
 		padding: 0px;
-		right: 0px;
+		right: -1px;
 
 		.leaflet-control-zoom-in,
 		.leaflet-control-zoom-out {
