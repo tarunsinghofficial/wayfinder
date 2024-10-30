@@ -27,10 +27,13 @@ export async function GET() {
 			});
 		}
 	} catch (error) {
-		return new Response(JSON.stringify({ error: 'Failed to fetch or parse alerts' }), {
-			headers: { 'Content-Type': 'application/json' },
-			status: 500
-		});
+		return new Response(
+			JSON.stringify({ error: 'Failed to fetch or parse alerts', message: error }),
+			{
+				headers: { 'Content-Type': 'application/json' },
+				status: 500
+			}
+		);
 	}
 }
 
