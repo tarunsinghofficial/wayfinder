@@ -19,7 +19,7 @@ See `.env.example` for an example of the required keys and values.
 
 - `PUBLIC_OBA_REGION_NAME` - string: displayed in the header.
 - `PUBLIC_OBA_LOGO_URL` - string: The URL of your transit agency's logo.
-- `PUBLIC_NAV_BAR_LINKS` - JSON string: A dictionary of the links displayed across the navigation bar.****
+- `PUBLIC_NAV_BAR_LINKS` - JSON string: A dictionary of the links displayed across the navigation bar.
 
 ### OBA Server
 
