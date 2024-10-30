@@ -25,6 +25,10 @@
 		"arrives_on_time": "dumarating ng oras",
 		"scheduled_not_real_time": "Naka-iskedyul/hindi real-time"
 	},
+	"alert": {
+		"more_info": "Karagdagang impormasyon",
+		"close": "Isara"
+	},
 	"arrivals_and_departures": "Mga pagdating at pag-alis",
 	"stop": "Hintuan",
 	"routes": "Mga ruta",

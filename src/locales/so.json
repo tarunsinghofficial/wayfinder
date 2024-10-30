@@ -25,6 +25,10 @@
 		"arrives_on_time": "wakhtiga ku yimid",
 		"scheduled_not_real_time": "Jadwaleysan/maaha waqtiga dhabta ah"
 	},
+	"alert": {
+		"more_info": "Macluumaad dheeraad ah",
+		"close": "Xidh"
+	},
 	"arrivals_and_departures": "Imaatinka iyo baxsashada",
 	"stop": "Joogsi",
 	"routes": "Wadooyin",

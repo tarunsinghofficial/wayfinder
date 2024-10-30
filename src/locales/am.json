@@ -25,6 +25,10 @@
 		"arrives_on_time": "በጊዜው ይደርሳል",
 		"scheduled_not_real_time": "ታቅዷል/እንደሚሆነ ሁኔታ"
 	},
+	"alert": {
+		"more_info": "ተጨማሪ መረጃ",
+		"close": "ዝጋ"
+	},
 	"arrivals_and_departures": "መግቢያዎችና መውጫዎች",
 	"stop": "ቆሻሻ",
 	"routes": "መንገዶች",

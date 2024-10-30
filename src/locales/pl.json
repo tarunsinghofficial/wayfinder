@@ -25,6 +25,10 @@
 		"arrives_on_time": "przyjeżdża na czas",
 		"scheduled_not_real_time": "Zaplanowane/nie w czasie rzeczywistym"
 	},
+	"alert": {
+		"more_info": "Więcej informacji",
+		"close": "Zamknij"
+	},
 	"arrivals_and_departures": "Przyjazdy i odjazdy",
 	"stop": "Przystanek",
 	"routes": "Trasy",
