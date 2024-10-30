@@ -1,12 +1,11 @@
-<script lang="ts">
+<script>
 	import { Modal, Button } from 'flowbite-svelte';
 	import { getLocaleFromNavigator } from 'svelte-i18n';
-	import GtfsRealtimeBindings from 'gtfs-realtime-bindings';
 	import { t } from 'svelte-i18n';
 
 	let showModal = true;
 
-	export let alert: GtfsRealtimeBindings.transit_realtime.IAlert;
+	export let alert;
 
 	const currentLanguage = String(getLocaleFromNavigator()).split('-')[0];
 
