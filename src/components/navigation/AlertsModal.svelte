@@ -2,6 +2,7 @@
 	import { Modal, Button } from 'flowbite-svelte';
 	import { getLocaleFromNavigator } from 'svelte-i18n';
 	import GtfsRealtimeBindings from 'gtfs-realtime-bindings';
+	import { t } from 'svelte-i18n';
 
 	let showModal = true;
 
@@ -39,13 +40,13 @@
 				class="bg-gray-300 text-black hover:bg-gray-400 dark:bg-gray-700 dark:text-white dark:hover:bg-gray-600"
 				on:click={() => (showModal = false)}
 			>
-				Close
+				{$t('alert.close')}
 			</Button>
 			<Button
 				class="bg-green-600 text-white hover:bg-green-700 dark:bg-green-500 dark:hover:bg-green-600"
 				on:click={() => window.open(getUrlTranslation(), '_blank')}
 			>
-				Learn More
+				{$t('alert.more_info')}
 			</Button>
 		</div>
 	</svelte:fragment>
