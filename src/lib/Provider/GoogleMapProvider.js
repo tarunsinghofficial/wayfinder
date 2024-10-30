@@ -268,10 +268,6 @@ export default class GoogleMapProvider {
 		this.map.setOptions({ styles });
 	}
 
-	setMapType(type) {
-		this.map.setMapTypeId(type);
-	}
-
 	addUserLocationMarker(latLng) {
 		new google.maps.Marker({
 			map: this.map,
