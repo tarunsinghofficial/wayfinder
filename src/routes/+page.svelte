@@ -116,7 +116,7 @@
 		try {
 			const response = await fetch('/api/oba/alerts');
 
-			if (!response.ok) {
+			if (!response.ok || response.status === 204) {
 				showAlertModal = false;
 				return;
 			}
