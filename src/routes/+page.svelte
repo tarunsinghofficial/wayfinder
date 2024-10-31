@@ -34,6 +34,7 @@
 	function stopSelected(event) {
 		stop = event.detail.stop;
 		pushState(`/stops/${stop.id}`);
+		showAllRoutesModal = false;
 	}
 
 	function handleShowAllRoutes() {
