@@ -16,13 +16,14 @@ export async function GET() {
 				break;
 			}
 		}
+
 		if (validAlert) {
 			return new Response(JSON.stringify(validAlert), {
 				headers: { 'Content-Type': 'application/json' }
 			});
 		} else {
-			return new Response(JSON.stringify({ message: 'No high severity alerts available' }), {
-				status: 400,
+			return new Response(null, {
+				status: 204,
 				headers: { 'Content-Type': 'application/json' }
 			});
 		}
@@ -42,6 +43,10 @@ function isValidAlert(alert) {
 }
 
 function isHighSeverity(alert) {
+	if (!alert) {
+		return false;
+	}
+
 	const isHighSeverity =
 		(alert &&
 			getSeverityLevel(alert) ===
