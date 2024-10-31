@@ -1,9 +1,15 @@
 import GtfsRealtimeBindings from 'gtfs-realtime-bindings';
-import { PRIVATE_OBACO_API_BASE_URL } from '$env/static/private';
+import { PRIVATE_OBACO_API_BASE_URL, PRIVATE_OBACO_SHOW_TEST_ALERTS } from '$env/static/private';
+import { buildURL } from '$lib/urls.js';
 
 export async function GET() {
 	try {
-		const response = await fetch(`${PRIVATE_OBACO_API_BASE_URL}/alerts.pb`);
+		const alertsURL = buildURL(
+			PRIVATE_OBACO_API_BASE_URL,
+			'alerts.pb',
+			PRIVATE_OBACO_SHOW_TEST_ALERTS && PRIVATE_OBACO_SHOW_TEST_ALERTS == 'true' ? { test: 1 } : {}
+		);
+		const response = await fetch(alertsURL);
 
 		const buffer = await response.arrayBuffer();
 
