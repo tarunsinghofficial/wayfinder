@@ -25,6 +25,10 @@
 		"arrives_on_time": "đến đúng giờ",
 		"scheduled_not_real_time": "Lên lịch/không thời gian thực"
 	},
+	"alert": {
+		"more_info": "Thêm thông tin",
+		"close": "Đóng"
+	},
 	"arrivals_and_departures": "Đến và đi",
 	"stop": "Trạm dừng",
 	"routes": "Tuyến đường",

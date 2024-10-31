@@ -27,6 +27,8 @@ See `.env.example` for an example of the required keys and values.
 - `PUBLIC_OBA_REGION_CENTER_LAT` - float: The region's center latitude.
 - `PUBLIC_OBA_REGION_CENTER_LNG` - float: The region's center longitude.
 - `PRIVATE_OBA_API_KEY` - string: Your OneBusAway REST API server key.
+- `PRIVATE_OBACO_API_BASE_URL` - string: (optional) Your OneBusAway.co server base URL, including the path prefix `/api/v1/regions/<YOUR REGION ID>`.
+- `PRIVATE_OBACO_SHOW_TEST_ALERTS` - boolean: (optional) Show test alerts on the website. Don't set this value in production.
 
 ### Maps
 

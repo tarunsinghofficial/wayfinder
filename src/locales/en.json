@@ -25,6 +25,10 @@
 		"arrives_on_time": "arrives on time",
 		"scheduled_not_real_time": "Scheduled/not real-time"
 	},
+	"alert": {
+		"more_info": "More info",
+		"close": "Close"
+	},
 	"arrivals_and_departures": "Arrivals and departures",
 	"stop": "Stop",
 	"routes": "Routes",
