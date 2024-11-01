@@ -30,6 +30,7 @@
 		"close": "Đóng"
 	},
 	"arrivals_and_departures": "Đến và đi",
+	"no_arrivals_or_departures_in_next_30_minutes": "Không có chuyến đến hoặc đi trong 30 phút tới",
 	"stop": "Trạm dừng",
 	"routes": "Tuyến đường",
 	"route": "tuyến đường",

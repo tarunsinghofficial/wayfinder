@@ -30,6 +30,7 @@
 		"close": "Cerrar"
 	},
 	"arrivals_and_departures": "Llegadas y salidas",
+	"no_arrivals_or_departures_in_next_30_minutes": "No hay llegadas ni salidas en los próximos 30 minutos",
 	"stop": "Parada",
 	"routes": "Rutas",
 	"route": "Ruta",

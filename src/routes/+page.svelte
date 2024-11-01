@@ -152,7 +152,7 @@
 				on:clearResults={clearPolylines}
 				on:viewAllRoutes={handleShowAllRoutes}
 			/>
-			<div class="mt-2">
+			<div class="mt-4 flex-1">
 				{#if stop}
 					<ModalPane on:close={closePane}>
 						<StopPane
