@@ -1,12 +1,17 @@
 <script>
 	import { faCaretUp } from '@fortawesome/free-solid-svg-icons';
 	import { FontAwesomeIcon } from '@fortawesome/svelte-fontawesome';
+
 	export let stop;
 	export let onClick;
 	export let icon;
+	export let isHighlighted = false;
 </script>
 
-<button class="custom-marker dark:border-[#5a2c2c]" on:click={onClick}>
+<button
+	class="custom-marker dark:border-[#5a2c2c] {isHighlighted ? 'highlight' : ''}"
+	on:click={onClick}
+>
 	<span class="bus-icon dark:text-white">
 		<FontAwesomeIcon {icon} class=" text-black" />
 		{#if stop.direction}
@@ -26,6 +31,10 @@
 		justify-content: center;
 		align-items: center;
 		position: relative;
+	}
+
+	.highlight {
+		@apply scale-125 border-green-600 drop-shadow-md;
 	}
 
 	.custom-marker:hover {
