@@ -1,12 +1,17 @@
 <script>
 	import { faCaretUp } from '@fortawesome/free-solid-svg-icons';
 	import { FontAwesomeIcon } from '@fortawesome/svelte-fontawesome';
+
 	export let stop;
 	export let onClick;
 	export let icon;
+	export let isHighlighted = false;
 </script>
 
-<button class="custom-marker dark:border-[#5a2c2c]" on:click={onClick}>
+<button
+	class="custom-marker dark:border-[#5a2c2c] {isHighlighted ? 'highlight' : ''}"
+	on:click={onClick}
+>
 	<span class="bus-icon dark:text-white">
 		<FontAwesomeIcon {icon} class=" text-black" />
 		{#if stop.direction}
@@ -28,6 +33,10 @@
 		position: relative;
 	}
 
+	.highlight {
+		@apply scale-125 border-green-600 drop-shadow-md;
+	}
+
 	.custom-marker:hover {
 		cursor: pointer;
 	}
@@ -44,42 +53,42 @@
 	}
 
 	.direction-arrow.n {
-		top: -18px;
-		left: 12px;
+		top: -20px;
+		left: 8px;
 		transform: rotate(0deg);
 	}
 	.direction-arrow.ne {
-		top: -15px;
+		top: -18px;
 		right: -10px;
 		transform: rotate(45deg);
 	}
 	.direction-arrow.e {
 		right: -13px;
-		top: 5px;
+		top: 0px;
 		transform: rotate(90deg);
 	}
 	.direction-arrow.se {
-		bottom: -15px;
+		bottom: -17px;
 		right: -10px;
 		transform: rotate(135deg);
 	}
 	.direction-arrow.s {
-		bottom: -18px;
-		left: 12px;
+		bottom: -20px;
+		left: 8px;
 		transform: rotate(180deg);
 	}
 	.direction-arrow.sw {
-		bottom: -15px;
+		bottom: -18px;
 		left: -10px;
 		transform: rotate(225deg);
 	}
 	.direction-arrow.w {
 		left: -13px;
-		top: 5px;
+		top: 0px;
 		transform: rotate(270deg);
 	}
 	.direction-arrow.nw {
-		top: -15px;
+		top: -17px;
 		left: -10px;
 		transform: rotate(315deg);
 	}
