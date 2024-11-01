@@ -3,11 +3,11 @@
 </script>
 
 <div
-	class="absolute inset-0 z-10 flex items-center justify-center md:rounded-lg bg-neutral-800 bg-opacity-80"
+	class="flex items-center justify-center bg-neutral-800 bg-gradient-to-br from-zinc-300 dark:from-zinc-500 to-zinc-700 h-full"
 >
-	<div class="flex items-center text-white">
+	<div class="flex items-center text-white font-semibold">
 		<svg
-			class="-ml-1 mr-3 h-5 w-5 animate-spin text-white"
+			class="-ml-1 mr-3 h-5 w-5 animate-spin "
 			xmlns="http://www.w3.org/2000/svg"
 			fill="none"
 			viewBox="0 0 24 24"
