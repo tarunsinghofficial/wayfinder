@@ -101,7 +101,7 @@
 				</svg>
 			</div>
 
-			<div class="scrollbar-hidden fixed-height relative mt-4 max-h-96 overflow-y-auto">
+			<div class="scrollbar-hidden fixed-height relative mt-4 max-h-96 overflow-y-auto rounded-lg">
 				{#if filteredRoutes.length > 0}
 					{#each filteredRoutes as route}
 						<RouteItem {route} on:routeClick={handleRouteClick} />
