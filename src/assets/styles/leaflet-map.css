@@ -1,10 +1,5 @@
 .leaflet-touch {
 	.leaflet-bar {
-		position: absolute;
-		bottom: 64px;
-		padding: 0px;
-		right: -1px;
-
 		.leaflet-control-zoom-in,
 		.leaflet-control-zoom-out {
 			width: 2.2rem;
@@ -26,6 +21,7 @@
 		display: none;
 	}
 }
+
 .leaflet-control {
 	background-color: #fff;
 }

@@ -252,7 +252,7 @@
 		z-index: 1;
 	}
 	#map {
-		height: 100vh;
+		height: 100%;
 		width: 100%;
 	}
 </style>
