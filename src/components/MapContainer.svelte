@@ -3,6 +3,7 @@
 	import MapView from './map/MapView.svelte';
 	import GoogleMapProvider from '$lib/Provider/GoogleMapProvider';
 	import OpenStreetMapProvider from '$lib/Provider/OpenStreetMapProvider';
+	import FullPageLoadingSpinner from '$components/FullPageLoadingSpinner.svelte';
 	import {
 		PUBLIC_OBA_MAP_PROVIDER,
 		PUBLIC_OBA_GOOGLE_MAPS_API_KEY as apiKey
@@ -44,5 +45,5 @@
 		on:mapProvider={forward}
 	/>
 {:else}
-	<p>Loading map...</p>
+	<FullPageLoadingSpinner />
 {/if}

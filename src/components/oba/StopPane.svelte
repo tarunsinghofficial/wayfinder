@@ -110,25 +110,28 @@
 					{/if}
 				</div>
 			</div>
-			<div>
-				<h2 class="h2 ml-4 mt-4">{$t('arrivals_and_departures')}</h2>
-			</div>
-			<div class="scrollbar-hidden h-96 space-y-2 overflow-y-scroll rounded-lg">
-				<div>
-					{#each arrivalsAndDepartures.arrivalsAndDepartures as arrival}
-						<ArrivalDeparture
-							routeShortName={arrival.routeShortName}
-							tripHeadsign={arrival.tripHeadsign}
-							scheduledArrivalTime={arrival.scheduledArrivalTime}
-							predictedArrivalTime={arrival.predictedArrivalTime}
-							tripId={arrival.tripId}
-							vehicleId={arrival.vehicleId}
-							serviceDate={arrival.serviceDate}
-							on:showTripDetails={handleShowTripDetails}
-						/>
-					{/each}
+			{#if arrivalsAndDepartures.arrivalsAndDepartures.length === 0}
+				<div class="flex h-96 items-center justify-center">
+					<p>{$t('no_arrivals_or_departures_in_next_30_minutes')}</p>
 				</div>
-			</div>
+			{:else}
+				<div class="scrollbar-hidden h-96 space-y-2 overflow-y-scroll rounded-lg">
+					<div>
+						{#each arrivalsAndDepartures.arrivalsAndDepartures as arrival}
+							<ArrivalDeparture
+								routeShortName={arrival.routeShortName}
+								tripHeadsign={arrival.tripHeadsign}
+								scheduledArrivalTime={arrival.scheduledArrivalTime}
+								predictedArrivalTime={arrival.predictedArrivalTime}
+								tripId={arrival.tripId}
+								vehicleId={arrival.vehicleId}
+								serviceDate={arrival.serviceDate}
+								on:showTripDetails={handleShowTripDetails}
+							/>
+						{/each}
+					</div>
+				</div>
+			{/if}
 		</div>
 	{/if}
 

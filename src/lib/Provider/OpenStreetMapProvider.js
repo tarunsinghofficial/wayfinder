@@ -32,7 +32,7 @@ export default class OpenStreetMapProvider {
 		// Leaflet CSS
 		const link = document.createElement('link');
 		link.rel = 'stylesheet';
-		link.href = 'https://unpkg.com/leaflet@1.7.1/dist/leaflet.css';
+		link.href = 'https://unpkg.com/leaflet@1.9.4/dist/leaflet.css';
 		document.head.appendChild(link);
 
 		this.map = this.L.map(element, { zoomControl: false }).setView([options.lat, options.lng], 14);

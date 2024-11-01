@@ -144,7 +144,7 @@
 	<p>Loading...</p>
 {:else}
 	<div class="pointer-events-none absolute bottom-0 left-0 right-0 top-0 z-40">
-		<div class="ml-4 mt-4 flex h-full w-full flex-col md:w-96">
+		<div class="mx-4 mt-4 flex h-full flex-col md:w-96">
 			<SearchPane
 				{mapProvider}
 				cssClasses="pointer-events-auto"
@@ -152,7 +152,7 @@
 				on:clearResults={clearPolylines}
 				on:viewAllRoutes={handleShowAllRoutes}
 			/>
-			<div class="mt-2">
+			<div class="mt-4 flex-1">
 				{#if stop}
 					<ModalPane on:close={closePane}>
 						<StopPane
