@@ -2,7 +2,7 @@
 	import ArrivalDeparture from '../ArrivalDeparture.svelte';
 	import TripDetailsModal from '../navigation/TripDetailsModal.svelte';
 	import LoadingSpinner from '$components/LoadingSpinner.svelte';
-	import { onMount } from 'svelte';
+	import { onDestroy } from 'svelte';
 	import { createEventDispatcher } from 'svelte';
 
 	import '$lib/i18n.js';
@@ -18,13 +18,12 @@
 
 	let showTripDetails = false;
 	let selectedTripDetails = null;
-	let interval;
+	let interval = null;
 
 	const dispatch = createEventDispatcher();
 
 	async function loadData(stopID) {
 		loading = true;
-
 		const response = await fetch(`/api/oba/arrivals-and-departures-for-stop/${stopID}`);
 
 		if (response.ok) {
@@ -33,8 +32,17 @@
 		} else {
 			error = 'Unable to fetch arrival/departure data';
 		}
-
 		loading = false;
+	}
+
+	function resetDataFetchInterval(stopID) {
+		if (interval) clearInterval(interval);
+
+		loadData(stopID);
+
+		interval = setInterval(() => {
+			loadData(stopID);
+		}, 30000);
 	}
 
 	$: if (showAllStops) {
@@ -42,27 +50,17 @@
 		selectedTripDetails = null;
 	}
 
-	$: (async (s, arrDep) => {
-		// if the arrivalsAndDeparturesResponse is passed in, use that
-		// instead of loading fresh data.
-		if (arrDep) {
-			arrivalsAndDepartures = arrDep.data.entry;
-		} else {
-			await loadData(s.id);
-		}
-	})(stop, arrivalsAndDeparturesResponse);
+	$: if (stop?.id) {
+		resetDataFetchInterval(stop.id);
+	}
 
-	onMount(() => {
-		interval = setInterval(() => {
-			loadData(stop.id);
-		}, 30000);
-
-		return () => clearInterval(interval);
+	onDestroy(() => {
+		if (interval) clearInterval(interval);
 	});
 
 	let _routeShortNames = null;
 	function routeShortNames() {
-		if (!_routeShortNames) {
+		if (!_routeShortNames && arrivalsAndDeparturesResponse?.data?.references?.routes) {
 			_routeShortNames = arrivalsAndDeparturesResponse.data.references.routes
 				.filter((r) => stop.routeIds.includes(r.id))
 				.map((r) => r.nullSafeShortName)
@@ -70,6 +68,7 @@
 		}
 		return _routeShortNames;
 	}
+
 	function handleShowTripDetails(event) {
 		selectedTripDetails = {
 			...event.detail,
