@@ -111,7 +111,7 @@
 				</div>
 			</div>
 			{#if arrivalsAndDepartures.arrivalsAndDepartures.length === 0}
-				<div class="flex items-center justify-center h-96">
+				<div class="flex h-96 items-center justify-center">
 					<p>{$t('no_arrivals_or_departures_in_next_30_minutes')}</p>
 				</div>
 			{:else}
