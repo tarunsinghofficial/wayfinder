@@ -107,7 +107,7 @@
 	});
 </script>
 
-<div class={`modal-pane flex w-96 justify-between ${cssClasses}`}>
+<div class={`modal-pane flex md:w-96 justify-between ${cssClasses}`}>
 	<div class="flex w-full flex-col gap-y-2 py-4">
 		<SearchField value={query} on:searchResults={handleSearchResults} />
 
