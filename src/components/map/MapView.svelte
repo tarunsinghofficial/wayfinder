@@ -119,8 +119,6 @@
 
 		allStops = [...new Map([...allStops, ...newStops].map((stop) => [stop.id, stop])).values()];
 
-		clearAllMarkers();
-
 		if (selectedRoute && !showRoute) {
 			allStops = [];
 		} else if (showRoute && selectedRoute) {
@@ -148,14 +146,12 @@
 	$: if (stop && mapInstance) {
 		// TODO: make sure that these markers are deduped. i.e. we shouldn't
 		// show the same stop twice on the map
-		if (stop.id != selectedStopID) {
+		if (stop.id !== selectedStopID) {
 			addMarker(stop);
-			mapInstance.setCenter({ lat: stop.lat, lng: stop.lon });
 		}
 	}
 
 	$: if (showAllStops) {
-		clearAllMarkers();
 		allStops.forEach((s) => addMarker(s));
 	}
 
@@ -164,13 +160,20 @@
 		const stopsToShow = allStops.filter((s) => s.routeIds.includes(selectedRoute.id));
 		stopsToShow.forEach((s) => addMarker(s));
 	} else if (!showRoute || !selectedRoute) {
-		clearAllMarkers();
 		allStops.forEach((s) => addMarker(s));
 	}
 
 	function addMarker(s, routeReference) {
 		if (!mapInstance) {
 			console.error('Map not initialized yet');
+			return;
+		}
+
+		// check if the marker already exists
+		const existingMarker = markers.find((marker) => marker.stop.id === s.id);
+
+		// if it does, don't add it again
+		if (existingMarker) {
 			return;
 		}
 
@@ -196,6 +199,7 @@
 			}
 		});
 
+		markerObj.stop = s;
 		markers.push(markerObj);
 	}
 
