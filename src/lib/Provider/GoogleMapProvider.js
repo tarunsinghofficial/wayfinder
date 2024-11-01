@@ -14,6 +14,7 @@ export default class GoogleMapProvider {
 		this.stopsMap = new Map();
 		this.stopMarkers = [];
 		this.vehicleMarkers = [];
+		this.markersMap = new Map();
 	}
 
 	async initMap(element, options) {
@@ -51,7 +52,7 @@ export default class GoogleMapProvider {
 			const container = document.createElement('div');
 			document.body.appendChild(container);
 
-			new StopMarker({
+			const marker = new StopMarker({
 				target: container,
 				props: {
 					stop: options.stop,
@@ -61,6 +62,8 @@ export default class GoogleMapProvider {
 					}
 				}
 			});
+
+			this.markersMap.set(options.stop.id, marker);
 
 			const overlay = new google.maps.OverlayView();
 			overlay.onAdd = function () {
@@ -78,7 +81,6 @@ export default class GoogleMapProvider {
 				container.parentNode.removeChild(container);
 			};
 			overlay.setMap(this.map);
-
 			return { overlay, element: container };
 		} catch (error) {
 			console.error('Error adding marker:', error);
@@ -143,6 +145,17 @@ export default class GoogleMapProvider {
 		});
 
 		this.stopMarkers.push(marker);
+	}
+
+	highlightMarker(stopId) {
+		console.log(stopId);
+		const marker = this.markersMap.get(stopId);
+		marker.$set({ isHighlighted: true });
+	}
+
+	unHighlightMarker(stopId) {
+		const marker = this.markersMap.get(stopId);
+		marker.$set({ isHighlighted: false });
 	}
 
 	removeStopMarkers() {
