@@ -115,9 +115,6 @@
 					<p>{$t('no_arrivals_or_departures_in_next_30_minutes')}</p>
 				</div>
 			{:else}
-				<div>
-					<h2 class="h2 ml-4 mt-4">{$t('arrivals_and_departures')}</h2>
-				</div>
 				<div class="scrollbar-hidden h-96 space-y-2 overflow-y-scroll rounded-lg">
 					<div>
 						{#each arrivalsAndDepartures.arrivalsAndDepartures as arrival}
