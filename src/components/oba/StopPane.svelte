@@ -100,7 +100,7 @@
 	{/if}
 
 	{#if arrivalsAndDepartures}
-		<div>
+		<div class="space-y-4">
 			<div>
 				<div class="flex flex-col gap-y-1 rounded-lg bg-[#1C1C1E] bg-opacity-80 p-4">
 					<h1 class="h1 mb-0 text-white">{stop.name}</h1>
