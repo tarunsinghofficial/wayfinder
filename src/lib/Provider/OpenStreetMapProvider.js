@@ -18,6 +18,7 @@ export default class OpenStreetMapProvider {
 		this.stopMarkers = [];
 		this.vehicleMarkers = [];
 		this.maplibreLayer = 'positron';
+		this.markersMap = new Map();
 	}
 
 	async initMap(element, options) {
@@ -61,7 +62,7 @@ export default class OpenStreetMapProvider {
 
 		const container = document.createElement('div');
 
-		new StopMarker({
+		const stopMarkerComponent = new StopMarker({
 			target: container,
 			props: {
 				stop: options.stop,
@@ -79,7 +80,24 @@ export default class OpenStreetMapProvider {
 		const marker = this.L.marker([options.position.lat, options.position.lng], {
 			icon: customIcon
 		}).addTo(this.map);
+
+		marker.stopMarkerComponent = stopMarkerComponent;
+
+		this.markersMap.set(options.stop.id, marker);
+
 		return marker;
+	}
+
+	highlightMarker(stopId) {
+		const marker = this.markersMap.get(stopId);
+		if (!marker) return;
+		marker.stopMarkerComponent.$set({ isHighlighted: true });
+	}
+
+	unHighlightMarker(stopId) {
+		const marker = this.markersMap.get(stopId);
+		if (!marker) return;
+		marker.stopMarkerComponent.$set({ isHighlighted: false });
 	}
 
 	addStopMarker(stop, stopTime = null) {
