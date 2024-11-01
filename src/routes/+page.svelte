@@ -35,10 +35,16 @@
 		}
 	}
 
+	let currentHighlightedStopId = null;
 	function stopSelected(event) {
 		stop = event.detail.stop;
 		pushState(`/stops/${stop.id}`);
 		showAllRoutesModal = false;
+		if (currentHighlightedStopId !== null) {
+			mapProvider.unHighlightMarker(currentHighlightedStopId);
+		}
+		mapProvider.highlightMarker(stop.id);
+		currentHighlightedStopId = stop.id;
 	}
 
 	function handleShowAllRoutes() {
@@ -69,6 +75,8 @@
 		showRoute = false;
 		showRouteModal = false;
 		showAllRoutesModal = false;
+		mapProvider.unHighlightMarker(currentHighlightedStopId);
+		currentHighlightedStopId = null;
 	}
 
 	function tripSelected(event) {
