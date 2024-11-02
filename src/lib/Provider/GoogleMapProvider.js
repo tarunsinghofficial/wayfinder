@@ -148,7 +148,6 @@ export default class GoogleMapProvider {
 	}
 
 	highlightMarker(stopId) {
-		console.log(stopId);
 		const marker = this.markersMap.get(stopId);
 		marker.$set({ isHighlighted: true });
 	}
