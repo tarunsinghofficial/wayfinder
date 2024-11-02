@@ -21,7 +21,6 @@
 	let showTripDetails = false;
 	let selectedTripDetails = null;
 	let interval = null;
-	let firstApiCall = true;
 	let initialDataLoaded = false;
 
 	const dispatch = createEventDispatcher();
