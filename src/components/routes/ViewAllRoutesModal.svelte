@@ -1,4 +1,5 @@
 <script>
+	import ModalPane from '$components/navigation/ModalPane.svelte';
 	import LoadingSpinner from '$components/LoadingSpinner.svelte';
 	import RouteItem from '$components/RouteItem.svelte';
 	import { onMount } from 'svelte';
@@ -65,7 +66,7 @@
 	}
 </script>
 
-<div>
+<ModalPane on:close>
 	{#if loading}
 		<LoadingSpinner />
 	{/if}
@@ -114,7 +115,7 @@
 			</div>
 		</div>
 	{/if}
-</div>
+</ModalPane>
 
 <style>
 	.scrollbar-hidden {

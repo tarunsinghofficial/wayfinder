@@ -1,10 +1,9 @@
 <script>
 	import { pushState } from '$app/navigation';
 	import SearchPane from '$components/search/SearchPane.svelte';
-	import ModalPane from '$components/navigation/ModalPane.svelte';
 	import MapContainer from '$components/MapContainer.svelte';
 	import RouteModal from '$components/routes/RouteModal.svelte';
-	import ViewAllRoutesModal from '$components/navigation/ViewAllRoutesModal.svelte';
+	import ViewAllRoutesModal from '$components/routes/ViewAllRoutesModal.svelte';
 	import { isLoading } from 'svelte-i18n';
 	import AlertsModal from '$components/navigation/AlertsModal.svelte';
 	import { onMount } from 'svelte';
@@ -160,6 +159,7 @@
 				on:clearResults={clearPolylines}
 				on:viewAllRoutes={handleShowAllRoutes}
 			/>
+
 			<div class="mt-4 flex-1">
 				{#if stop}
 					<StopModal
@@ -177,9 +177,10 @@
 				{/if}
 
 				{#if showAllRoutesModal}
-					<ModalPane on:close={closePane}>
-						<ViewAllRoutesModal on:routeSelected={handleRouteSelectedFromModal} />
-					</ModalPane>
+					<ViewAllRoutesModal
+						on:close={closePane}
+						on:routeSelected={handleRouteSelectedFromModal}
+					/>
 				{/if}
 			</div>
 		</div>
