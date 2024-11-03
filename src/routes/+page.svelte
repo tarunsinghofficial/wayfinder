@@ -3,7 +3,7 @@
 	import SearchPane from '$components/search/SearchPane.svelte';
 	import ModalPane from '$components/navigation/ModalPane.svelte';
 	import MapContainer from '$components/MapContainer.svelte';
-	import RouteModal from '$components/navigation/RouteModal.svelte';
+	import RouteModal from '$components/routes/RouteModal.svelte';
 	import ViewAllRoutesModal from '$components/navigation/ViewAllRoutesModal.svelte';
 	import { isLoading } from 'svelte-i18n';
 	import AlertsModal from '$components/navigation/AlertsModal.svelte';
@@ -173,9 +173,7 @@
 				{/if}
 
 				{#if showRouteModal}
-					<ModalPane on:close={closePane}>
-						<RouteModal {mapProvider} {stops} {selectedRoute} />
-					</ModalPane>
+					<RouteModal on:close={closePane} {mapProvider} {stops} {selectedRoute} />
 				{/if}
 
 				{#if showAllRoutesModal}
