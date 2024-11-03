@@ -47,7 +47,8 @@ export default class OpenStreetMapProvider {
 		 */
 		this.maplibreLayer = this.L.maplibreGL({
 			style: `https://tiles.openfreemap.org/styles/${this.maplibreLayer}`,
-			interactive: true
+			interactive: true,
+			dragRotate: false
 		}).addTo(this.map);
 	}
 
@@ -307,8 +308,7 @@ export default class OpenStreetMapProvider {
 		}
 
 		this.maplibreLayer = this.L.maplibreGL({
-			style: styleUrl,
-			interactive: true
+			style: styleUrl
 		}).addTo(this.map);
 	}
 
