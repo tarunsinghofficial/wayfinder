@@ -1,4 +1,5 @@
 <script>
+	import ModalPane from '$components/navigation/ModalPane.svelte';
 	import LoadingSpinner from '$components/LoadingSpinner.svelte';
 	import RouteItem from '$components/RouteItem.svelte';
 	import { onMount } from 'svelte';
@@ -65,18 +66,14 @@
 	}
 </script>
 
-<div>
+<ModalPane on:close title={$t('search.all_routes')}>
 	{#if loading}
 		<LoadingSpinner />
 	{/if}
 
 	{#if routes.length > 0}
-		<div class="h-25 rounded-lg bg-[#1C1C1E] bg-opacity-80 p-4">
-			<h1 class="mb-6 text-center text-2xl font-bold text-white">{$t('search.all_routes')}</h1>
-		</div>
-
-		<div class="mt-4">
-			<div class="relative mb-4">
+		<div>
+			<div class="sticky top-0">
 				<input
 					type="text"
 					placeholder={$t('search.search_for_routes')}
@@ -101,7 +98,7 @@
 				</svg>
 			</div>
 
-			<div class="scrollbar-hidden fixed-height relative mt-4 max-h-96 overflow-y-auto rounded-lg">
+			<div>
 				{#if filteredRoutes.length > 0}
 					{#each filteredRoutes as route}
 						<RouteItem {route} on:routeClick={handleRouteClick} />
@@ -114,17 +111,4 @@
 			</div>
 		</div>
 	{/if}
-</div>
-
-<style>
-	.scrollbar-hidden {
-		scrollbar-width: none;
-		-ms-overflow-style: none;
-	}
-	.scrollbar-hidden::-webkit-scrollbar {
-		display: none;
-	}
-	.fixed-height {
-		height: 500px;
-	}
-</style>
+</ModalPane>

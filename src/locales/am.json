@@ -34,6 +34,7 @@
 	"stop": "ቆሻሻ",
 	"routes": "መንገዶች",
 	"route": "መንገድ",
+	"route_modal_title": "መስመር {name}",
 	"loading": "በመጫን ላይ",
 	"arrives": "ይደርሳል",
 	"NA": "አቅርኛ",

@@ -34,6 +34,7 @@
 	"stop": "Stop",
 	"routes": "Routes",
 	"route": "route",
+	"route_modal_title": "Route {name}",
 	"loading": "Loading",
 	"arrives": "arrives",
 	"NA": "N/A",
