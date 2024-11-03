@@ -35,7 +35,7 @@
 				</div>
 			</div>
 
-			<div class="h-96 space-y-2 overflow-y-scroll rounded-lg">
+			<div class="space-y-2 overflow-y-scroll rounded-lg">
 				<div>
 					{#each stops as stop}
 						<StopItem {stop} on:stopClick={handleStopItemClick} />

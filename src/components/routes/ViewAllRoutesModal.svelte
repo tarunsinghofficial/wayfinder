@@ -73,7 +73,7 @@
 
 	{#if routes.length > 0}
 		<div>
-			<div class="relative">
+			<div class="sticky top-0">
 				<input
 					type="text"
 					placeholder={$t('search.search_for_routes')}
@@ -98,7 +98,7 @@
 				</svg>
 			</div>
 
-			<div class="fixed-height relative mt-4 max-h-96 overflow-y-auto rounded-lg">
+			<div>
 				{#if filteredRoutes.length > 0}
 					{#each filteredRoutes as route}
 						<RouteItem {route} on:routeClick={handleRouteClick} />
@@ -112,9 +112,3 @@
 		</div>
 	{/if}
 </ModalPane>
-
-<style>
-	.fixed-height {
-		height: 500px;
-	}
-</style>

@@ -21,23 +21,27 @@
 	in:fly={{ y: 200, duration: 500 }}
 	out:fly={{ y: 200, duration: 500 }}
 >
-	<div class="flex py-1">
-		<div class="text-normal flex-1 self-center font-semibold">{title}</div>
-		<div>
-			<button
-				type="button"
-				on:click={closePane}
-				use:keybinding={{ code: 'Escape' }}
-				class="close-button"
-			>
-				<FontAwesomeIcon icon={faX} class="font-black text-black dark:text-white" />
-				<span class="sr-only">Close</span>
-			</button>
+	<div class="flex h-full flex-col">
+		<div class="flex py-1">
+			<div class="text-normal flex-1 self-center font-semibold">{title}</div>
+			<div>
+				<button
+					type="button"
+					on:click={closePane}
+					use:keybinding={{ code: 'Escape' }}
+					class="close-button"
+				>
+					<FontAwesomeIcon icon={faX} class="font-black text-black dark:text-white" />
+					<span class="sr-only">Close</span>
+				</button>
+			</div>
 		</div>
-	</div>
 
-	<div class="modal-content">
-		<slot></slot>
+		<div class="relative flex-1">
+			<div class="absolute inset-0 overflow-y-auto">
+				<slot></slot>
+			</div>
+		</div>
 	</div>
 </div>
 
