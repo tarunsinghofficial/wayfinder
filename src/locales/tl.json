@@ -34,6 +34,7 @@
 	"stop": "Hintuan",
 	"routes": "Mga ruta",
 	"route": "ruta",
+	"route_modal_title": "Ruta {name}",
 	"loading": "Naglo-load",
 	"arrives": "dumarating",
 	"NA": "W/A",

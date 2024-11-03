@@ -1,6 +1,7 @@
 <script>
 	import StopItem from '$components/StopItem.svelte';
 	import ModalPane from '$components/navigation/ModalPane.svelte';
+	import { t } from 'svelte-i18n';
 
 	export let selectedRoute;
 	export let stops;
@@ -12,9 +13,17 @@
 		mapProvider.panTo(stop.lat, stop.lon);
 		mapProvider.setZoom(20);
 	}
+
+	function title() {
+		if (!selectedRoute) {
+			return '';
+		}
+
+		return $t('route_modal_title', { values: { name: selectedRoute.shortName } });
+	}
 </script>
 
-<ModalPane on:close>
+<ModalPane on:close title={title()}>
 	{#if stops && selectedRoute}
 		<div class="space-y-4">
 			<div>

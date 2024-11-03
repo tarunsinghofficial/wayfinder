@@ -19,6 +19,6 @@
 	export let stop;
 </script>
 
-<ModalPane on:close>
+<ModalPane on:close title={stop.name}>
 	<StopPane on:tripSelected on:updateRouteMap on:showAllStops {showAllStops} {stop} />
 </ModalPane>

@@ -66,18 +66,14 @@
 	}
 </script>
 
-<ModalPane on:close>
+<ModalPane on:close title={$t('search.all_routes')}>
 	{#if loading}
 		<LoadingSpinner />
 	{/if}
 
 	{#if routes.length > 0}
-		<div class="h-25 rounded-lg bg-[#1C1C1E] bg-opacity-80 p-4">
-			<h1 class="mb-6 text-center text-2xl font-bold text-white">{$t('search.all_routes')}</h1>
-		</div>
-
-		<div class="mt-4">
-			<div class="relative mb-4">
+		<div>
+			<div class="relative">
 				<input
 					type="text"
 					placeholder={$t('search.search_for_routes')}

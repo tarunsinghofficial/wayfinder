@@ -34,6 +34,7 @@
 	"stop": "Przystanek",
 	"routes": "Trasy",
 	"route": "trasa",
+	"route_modal_title": "Trasa {name}",
 	"loading": "Ładowanie",
 	"arrives": "przyjeżdża",
 	"NA": "N/D",

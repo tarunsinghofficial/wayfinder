@@ -34,6 +34,7 @@
 	"stop": "Trạm dừng",
 	"routes": "Tuyến đường",
 	"route": "tuyến đường",
+	"route_modal_title": "Tuyến đường {name}",
 	"loading": "Đang tải",
 	"arrives": "đến",
 	"NA": "KAD",
