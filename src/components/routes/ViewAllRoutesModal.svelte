@@ -102,7 +102,7 @@
 				</svg>
 			</div>
 
-			<div class="scrollbar-hidden fixed-height relative mt-4 max-h-96 overflow-y-auto rounded-lg">
+			<div class="fixed-height relative mt-4 max-h-96 overflow-y-auto rounded-lg">
 				{#if filteredRoutes.length > 0}
 					{#each filteredRoutes as route}
 						<RouteItem {route} on:routeClick={handleRouteClick} />
@@ -118,13 +118,6 @@
 </ModalPane>
 
 <style>
-	.scrollbar-hidden {
-		scrollbar-width: none;
-		-ms-overflow-style: none;
-	}
-	.scrollbar-hidden::-webkit-scrollbar {
-		display: none;
-	}
 	.fixed-height {
 		height: 500px;
 	}
