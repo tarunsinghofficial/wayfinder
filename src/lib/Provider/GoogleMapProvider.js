@@ -56,7 +56,7 @@ export default class GoogleMapProvider {
 				target: container,
 				props: {
 					stop: options.stop,
-					icon: faBus,
+					icon: options.icon || faBus,
 					onClick: () => {
 						options.onClick && options.onClick();
 					}
