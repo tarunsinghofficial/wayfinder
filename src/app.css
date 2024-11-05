@@ -23,7 +23,7 @@
 		direction: rtl;
 	}
 
-	   .rtl .rotate-rtl {
-        transform: rotate(180deg);
-    }
+	.rtl .rotate-rtl {
+		transform: rotate(180deg);
+	}
 }
