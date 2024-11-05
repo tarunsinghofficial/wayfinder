@@ -4,7 +4,19 @@
 	import { config } from '@fortawesome/fontawesome-svg-core';
 	import '@fortawesome/fontawesome-svg-core/styles.css';
 	import '$lib/i18n';
+	import { locale } from 'svelte-i18n';
+	import { onMount } from 'svelte';
 	config.autoAddCss = false; // Tell Font Awesome to skip adding the CSS automatically since it's being imported above
+
+	onMount(() => {
+		locale.subscribe((lang) => {
+			if (lang === 'ar') {
+				document.documentElement.classList.add('rtl');
+			} else {
+				document.documentElement.classList.remove('rtl');
+			}
+		});
+	});
 </script>
 
 <div class="flex h-dvh w-full flex-col">
