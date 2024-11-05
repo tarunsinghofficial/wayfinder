@@ -7,6 +7,7 @@ register('vi', () => import('./../locales/vi.json')); // Vietnamese
 register('tl', () => import('./../locales/tl.json')); // Tagalog
 register('so', () => import('./../locales/so.json')); // Somali
 register('am', () => import('./../locales/am.json')); // Amharic
+register('ar', () => import('./../locales/ar.json')); // Arabic
 
 init({
 	fallbackLocale: 'en',
