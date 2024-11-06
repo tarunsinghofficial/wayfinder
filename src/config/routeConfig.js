@@ -3,7 +3,7 @@ import {
 	faFerry,
 	faTrainSubway,
 	faTrain,
-	faCableCar,
+	faCableCar
 } from '@fortawesome/free-solid-svg-icons';
 
 const RouteType = {
@@ -35,7 +35,7 @@ const prioritizedRouteTypeForDisplay = (routeType) => {
 		case RouteType.FERRY:
 			return faFerry;
 		case RouteType.LIGHT_RAIL:
-			return  faTrainSubway
+			return faTrainSubway;
 		case RouteType.SUBWAY:
 			return faTrainSubway;
 		case RouteType.CABLE_CAR:
