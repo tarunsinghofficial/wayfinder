@@ -187,9 +187,10 @@
 
 		if (s.routes && s.routes.length > 0) {
 			const routeTypes = new Set(s.routes.map((r) => r.type));
-			const prioritizedType =
-				routePriorities.find((type) => routeTypes.has(type)) || RouteType.UNKNOWN;
-
+			let prioritizedType = routePriorities.find((type) => routeTypes.has(type));
+			if (prioritizedType === undefined) {
+				prioritizedType = RouteType.UNKNOWN;
+			}
 			icon = prioritizedRouteTypeForDisplay(prioritizedType);
 		}
 
