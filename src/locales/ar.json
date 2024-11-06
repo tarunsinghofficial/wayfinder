@@ -1,0 +1,53 @@
+{
+	"search": {
+		"placeholder": "ابحث عن المحطات، المسارات، والأماكن",
+		"results_for": "نتائج البحث عن",
+		"clear_results": "مسح النتائج",
+		"search": "بحث",
+		"click_here": "اضغط هنا",
+		"for_a_list_of_available_routes": "لقائمة المسارات المتاحة",
+		"search_for_routes": "ابحث عن المسارات...",
+		"no_routes_found": "لم يتم العثور على مسارات",
+		"all_routes": "جميع المسارات"
+	},
+	"header": {
+		"home": "الرئيسية",
+		"about": "معلومات عنا",
+		"contact": "تواصل معنا",
+		"fares_and_tolls": "الأجرة والرسوم"
+	},
+	"status": {
+		"scheduled": "مجدول",
+		"early": "مبكر",
+		"late": "متأخر",
+		"on_time": "في الوقت المحدد",
+		"min": "دقيقة",
+		"arrives_on_time": "يصل في الوقت المحدد",
+		"scheduled_not_real_time": "مجدول/ليس في الوقت الحقيقي"
+	},
+	"alert": {
+		"more_info": "مزيد من المعلومات",
+		"close": "إغلاق"
+	},
+	"arrivals_and_departures": "الوصول والمغادرة",
+	"no_arrivals_or_departures_in_next_30_minutes": "لا يوجد وصول أو مغادرة خلال الثلاثين دقيقة القادمة",
+	"stop": "المحطة",
+	"routes": "المسارات",
+	"route": "المسار",
+	"loading": "جاري التحميل",
+	"arrives": "يصل",
+	"NA": "غير متاح",
+	"time": {
+		"ago": "منذ",
+		"sec": "ثانية",
+		"secs": "ثواني",
+		"min": "دقيقة",
+		"mins": "دقائق"
+	},
+	"vehicle": {
+		"number": "رقم المركبة",
+		"data_updated": "تم تحديث البيانات",
+		"no_real_time_data": "لا توجد بيانات في الوقت الحقيقي لهذه المركبة الآن.",
+		"next_stop": "المحطة التالية:"
+	}
+}
