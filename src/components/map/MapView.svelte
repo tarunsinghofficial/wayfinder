@@ -17,20 +17,17 @@
 	export let selectedRoute = null;
 	export let showRoute = false;
 	export let showRouteMap = false;
-	export let showAllStops = true;
 	export let stop = null;
 	export let mapProvider = null;
+
 	let selectedStopID = null;
-
-	const dispatch = createEventDispatcher();
-
 	let mapInstance = null;
 	let mapElement;
-
 	let markers = [];
 	let allStops = [];
-	let routeReference = [];
 	let stopsCache = new Map();
+
+	const dispatch = createEventDispatcher();
 
 	function cacheKey(zoomLevel, boundingBox) {
 		const decimalPlaces = 2; // 2 decimal places equals between 0.5 and 1.1 km depending on where you are in the world.
@@ -99,6 +96,10 @@
 				const center = mapInstance.getCenter();
 				const zoomLevel = mapInstance.map.getZoom();
 
+				// Prevent fetching stops when a route is selected, we only fetch stops when we are see other stops
+				if (selectedRoute || showRoute) {
+					return;
+				}
 				await loadStopsAndAddMarkers(center.lat, center.lng, false, zoomLevel);
 			}, 300);
 
@@ -115,19 +116,24 @@
 	async function loadStopsAndAddMarkers(lat, lng, firstCall = false, zoomLevel = 15) {
 		const stopsData = await loadStopsForLocation(lat, lng, zoomLevel, firstCall);
 		const newStops = stopsData.data.list;
-		routeReference = stopsData.data.references.routes || [];
+		const routeReference = stopsData.data.references.routes || [];
+
+		const routeLookup = new Map(routeReference.map((route) => [route.id, route]));
+
+		// merge the stops routeIds with the route data
+		newStops.forEach((stop) => {
+			stop.routes = stop.routeIds.map((routeId) => routeLookup.get(routeId)).filter(Boolean);
+		});
 
 		allStops = [...new Map([...allStops, ...newStops].map((stop) => [stop.id, stop])).values()];
 
 		if (selectedRoute && !showRoute) {
 			allStops = [];
 		} else if (showRoute && selectedRoute) {
-			if (showRoute && selectedRoute) {
-				const stopsToShow = allStops.filter((s) => s.routeIds.includes(selectedRoute.id));
-				stopsToShow.forEach((s) => addMarker(s, routeReference));
-			} else {
-				newStops.forEach((s) => addMarker(s, routeReference));
-			}
+			const stopsToShow = allStops.filter((s) => s.routeIds.includes(selectedRoute.id));
+			stopsToShow.forEach((s) => addMarker(s));
+		} else {
+			newStops.forEach((s) => addMarker(s));
 		}
 	}
 
@@ -151,25 +157,25 @@
 		}
 	}
 
-	$: if (showAllStops) {
-		allStops.forEach((s) => addMarker(s));
-	}
-
 	$: if (selectedRoute && showRoute) {
 		clearAllMarkers();
 		const stopsToShow = allStops.filter((s) => s.routeIds.includes(selectedRoute.id));
 		stopsToShow.forEach((s) => addMarker(s));
-	} else if (!showRoute || !selectedRoute) {
+	}
+
+	// If no route is selected and not showing a route, add all markers
+	// This ensures markers are re-added after a route is deselected
+	$: if (!selectedRoute && !showRoute) {
 		allStops.forEach((s) => addMarker(s));
 	}
 
-	function addMarker(s, routeReference) {
+	function addMarker(s) {
 		if (!mapInstance) {
 			console.error('Map not initialized yet');
 			return;
 		}
 
-		// check if the marker already exists
+		// // check if the marker already exists
 		const existingMarker = markers.find((marker) => marker.stop.id === s.id);
 
 		// if it does, don't add it again
@@ -179,13 +185,12 @@
 
 		let icon = faBus;
 
-		if (routeReference && routeReference.length > 0) {
-			const availableRoutes = s.routeIds
-				.map((id) => routeReference.find((r) => r.id === id))
-				.filter(Boolean);
-			const routeTypes = new Set(availableRoutes.map((r) => r.type));
-			const prioritizedType =
-				routePriorities.find((type) => routeTypes.has(type)) || RouteType.UNKNOWN;
+		if (s.routes && s.routes.length > 0) {
+			const routeTypes = new Set(s.routes.map((r) => r.type));
+			let prioritizedType = routePriorities.find((type) => routeTypes.has(type));
+			if (prioritizedType === undefined) {
+				prioritizedType = RouteType.UNKNOWN;
+			}
 			icon = prioritizedRouteTypeForDisplay(prioritizedType);
 		}
 

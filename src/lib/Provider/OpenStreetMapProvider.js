@@ -67,7 +67,7 @@ export default class OpenStreetMapProvider {
 			target: container,
 			props: {
 				stop: options.stop,
-				icon: faBus,
+				icon: options.icon || faBus,
 				onClick: options.onClick || (() => {})
 			}
 		});

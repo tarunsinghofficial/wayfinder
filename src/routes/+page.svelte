@@ -14,7 +14,6 @@
 	let showRoute = false;
 	let selectedRoute = null;
 	let showRouteMap = false;
-	let showAllStops = false;
 	let showAllRoutesModal = false;
 	let showRouteModal;
 	let mapProvider = null;
@@ -95,12 +94,6 @@
 
 	function handleUpdateRouteMap(event) {
 		showRouteMap = event.detail.show;
-		showAllStops = !event.detail.show;
-	}
-
-	function handleShowAllStops() {
-		showAllStops = true;
-		showRouteMap = false;
 	}
 
 	function handleRouteSelected(event) {
@@ -166,9 +159,7 @@
 						on:close={closePane}
 						on:tripSelected={tripSelected}
 						on:updateRouteMap={handleUpdateRouteMap}
-						on:showAllStops={handleShowAllStops}
 						{stop}
-						{showAllStops}
 					/>
 				{/if}
 

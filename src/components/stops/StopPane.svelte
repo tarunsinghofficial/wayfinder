@@ -12,7 +12,6 @@
 
 	export let stop;
 	export let arrivalsAndDeparturesResponse = null;
-	export let showAllStops = true;
 
 	let arrivalsAndDepartures;
 	let loading = false;
@@ -48,10 +47,6 @@
 		}, 30000);
 	}
 
-	$: if (showAllStops) {
-		showTripDetails = false;
-		selectedTripDetails = null;
-	}
 	$: if (stop?.id && initialDataLoaded) {
 		clearInterval(interval);
 		resetDataFetchInterval(stop.id);
@@ -93,7 +88,6 @@
 		showTripDetails = false;
 		dispatch('tripSelected', null);
 		dispatch('updateRouteMap', { show: false });
-		dispatch('showAllStops');
 	}
 </script>
 

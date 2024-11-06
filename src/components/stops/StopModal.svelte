@@ -15,10 +15,9 @@
 	import ModalPane from '$components/navigation/ModalPane.svelte';
 	import StopPane from '$components/stops/StopPane.svelte';
 
-	export let showAllStops;
 	export let stop;
 </script>
 
 <ModalPane on:close title={stop.name}>
-	<StopPane on:tripSelected on:updateRouteMap on:showAllStops {showAllStops} {stop} />
+	<StopPane on:tripSelected on:updateRouteMap {stop} />
 </ModalPane>
