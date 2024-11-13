@@ -16,7 +16,7 @@
 		<FontAwesomeIcon {icon} class=" text-black" />
 		{#if stop.direction}
 			<span class="direction-arrow {stop.direction.toLowerCase()} dark:text-white">
-				<FontAwesomeIcon icon={faCaretUp} />
+				<FontAwesomeIcon icon={faCaretUp} class="dark:text-white" />
 			</span>
 		{/if}
 	</span>
@@ -26,7 +26,7 @@
 	.custom-marker {
 		@apply h-8 w-8 rounded-md;
 		@apply bg-white/80 dark:bg-neutral-200;
-		@apply border border-2 border-gray-400;
+		@apply border-2 border-gray-400;
 		display: flex;
 		justify-content: center;
 		align-items: center;
