@@ -12,6 +12,7 @@
 
 	import { faBus } from '@fortawesome/free-solid-svg-icons';
 	import { RouteType, routePriorities, prioritizedRouteTypeForDisplay } from '$config/routeConfig';
+	import { isMapLoaded } from '$src/stores/mapStore';
 
 	export let selectedTrip = null;
 	export let selectedRoute = null;
@@ -19,6 +20,8 @@
 	export let showRouteMap = false;
 	export let stop = null;
 	export let mapProvider = null;
+
+	let isTripPlanMoodActive = false;
 
 	let selectedStopID = null;
 	let mapInstance = null;
@@ -169,6 +172,17 @@
 		allStops.forEach((s) => addMarker(s));
 	}
 
+	// TODO: prevent fetch stops-for-location if the trip planner mode is on - we should do this after merge.
+	$: {
+		if (isTripPlanMoodActive) {
+			clearAllMarkers();
+		} else {
+			if (!selectedRoute || !showRoute) {
+				allStops.forEach((s) => addMarker(s));
+			}
+		}
+	}
+
 	function addMarker(s) {
 		if (!mapInstance) {
 			console.error('Map not initialized yet');
@@ -221,8 +235,15 @@
 
 	onMount(async () => {
 		await initMap();
+		isMapLoaded.set(true);
 		if (browser) {
 			const darkMode = document.documentElement.classList.contains('dark');
+			window.addEventListener('planTripTabClicked', () => {
+				isTripPlanMoodActive = true;
+			});
+			window.addEventListener('tabSwitched', () => {
+				isTripPlanMoodActive = false;
+			});
 			const event = new CustomEvent('themeChange', { detail: { darkMode } });
 			window.dispatchEvent(event);
 		}
