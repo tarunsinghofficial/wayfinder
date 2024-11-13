@@ -18,7 +18,6 @@ export async function GET() {
 
 		let validAlert = null;
 		for (const entity of feed.entity) {
-
 			// If we're in test mode, show the alert to test the UI
 			if (PRIVATE_OBACO_SHOW_TEST_ALERTS) {
 				validAlert = entity.alert;
