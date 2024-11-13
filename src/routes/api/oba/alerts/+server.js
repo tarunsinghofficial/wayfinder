@@ -9,6 +9,7 @@ export async function GET() {
 			'alerts.pb',
 			PRIVATE_OBACO_SHOW_TEST_ALERTS && PRIVATE_OBACO_SHOW_TEST_ALERTS == 'true' ? { test: 1 } : {}
 		);
+
 		const response = await fetch(alertsURL);
 
 		const buffer = await response.arrayBuffer();
@@ -17,6 +18,12 @@ export async function GET() {
 
 		let validAlert = null;
 		for (const entity of feed.entity) {
+
+			// If we're in test mode, show the alert to test the UI
+			if (PRIVATE_OBACO_SHOW_TEST_ALERTS) {
+				validAlert = entity.alert;
+				break;
+			}
 			if (entity.alert && isValidAlert(entity.alert)) {
 				validAlert = entity.alert;
 				break;
