@@ -226,7 +226,6 @@
 		on:stopSelected={stopSelected}
 		{showRoute}
 		{showRouteMap}
-		{stop}
 		bind:mapProvider
 	/>
 {/if}
