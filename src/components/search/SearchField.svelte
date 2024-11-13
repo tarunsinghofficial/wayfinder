@@ -17,6 +17,9 @@
 	}
 
 	const onHandleSearch = (event) => {
+		if (!value) {
+			return;
+		}
 		if (event.key === 'Enter' || typeof event.key === 'undefined') {
 			handleSearch();
 		}
@@ -57,7 +60,8 @@
 		<button
 			type="button"
 			on:click={onHandleSearch}
-			class="rotate-rtl relative -ml-px inline-flex items-center gap-x-1.5 rounded-r-md px-3 py-2 text-sm font-semibold text-gray-900 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 dark:text-gray-300 dark:hover:text-gray-900"
+			disabled={!value}
+			class="rotate-rtl relative -ml-px inline-flex items-center gap-x-1.5 rounded-r-md px-3 py-2 text-sm font-semibold text-gray-900 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 disabled:cursor-not-allowed dark:text-gray-300 dark:hover:text-gray-900"
 		>
 			<svg
 				xmlns="http://www.w3.org/2000/svg"
