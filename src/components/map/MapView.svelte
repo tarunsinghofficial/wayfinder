@@ -188,7 +188,6 @@
 			icon: icon,
 			stop: s,
 			onClick: () => {
-				selectedStopID = s.id;
 				dispatch('stopSelected', { stop: s });
 			}
 		});
