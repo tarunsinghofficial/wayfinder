@@ -18,10 +18,9 @@
 	export let selectedRoute = null;
 	export let showRoute = false;
 	export let showRouteMap = false;
-	export let stop = null;
 	export let mapProvider = null;
 
-	let isTripPlanMoodActive = false;
+	let isTripPlanModeActive = false;
 
 	let selectedStopID = null;
 	let mapInstance = null;
@@ -99,8 +98,8 @@
 				const center = mapInstance.getCenter();
 				const zoomLevel = mapInstance.map.getZoom();
 
-				// Prevent fetching stops when a route is selected, we only fetch stops when we are see other stops
-				if (selectedRoute || showRoute) {
+				// Prevent fetching stops in the background when a route is selected or trip plan mode is active, we only fetch stops when we are see other stops
+				if (selectedRoute || showRoute || isTripPlanModeActive) {
 					return;
 				}
 				await loadStopsAndAddMarkers(center.lat, center.lng, false, zoomLevel);
@@ -129,15 +128,6 @@
 		});
 
 		allStops = [...new Map([...allStops, ...newStops].map((stop) => [stop.id, stop])).values()];
-
-		if (selectedRoute && !showRoute) {
-			allStops = [];
-		} else if (showRoute && selectedRoute) {
-			const stopsToShow = allStops.filter((s) => s.routeIds.includes(selectedRoute.id));
-			stopsToShow.forEach((s) => addMarker(s));
-		} else {
-			newStops.forEach((s) => addMarker(s));
-		}
 	}
 
 	function clearAllMarkers() {
@@ -147,40 +137,26 @@
 		markers = [];
 	}
 
-	$: if (selectedRoute && !showRoute) {
-		clearAllMarkers();
-		allStops = [];
-	}
-
-	$: if (stop && mapInstance) {
-		// TODO: make sure that these markers are deduped. i.e. we shouldn't
-		// show the same stop twice on the map
-		if (stop.id !== selectedStopID) {
-			addMarker(stop);
+	function updateMarkers() {
+		if (showRoute) {
+			const stopsToShow = allStops.filter((s) => s.routeIds.includes(selectedRoute.id));
+			stopsToShow.forEach((s) => addMarker(s));
+		} else if (!selectedRoute && !isTripPlanModeActive) {
+			allStops.forEach((s) => addMarker(s));
 		}
 	}
 
-	$: if (selectedRoute && showRoute) {
-		clearAllMarkers();
-		const stopsToShow = allStops.filter((s) => s.routeIds.includes(selectedRoute.id));
-		stopsToShow.forEach((s) => addMarker(s));
-	}
-
-	// If no route is selected and not showing a route, add all markers
-	// This ensures markers are re-added after a route is deselected
-	$: if (!selectedRoute && !showRoute) {
-		allStops.forEach((s) => addMarker(s));
-	}
-
-	// TODO: prevent fetch stops-for-location if the trip planner mode is on - we should do this after merge.
 	$: {
-		if (isTripPlanMoodActive) {
+		if (selectedRoute) {
 			clearAllMarkers();
-		} else {
-			if (!selectedRoute || !showRoute) {
-				allStops.forEach((s) => addMarker(s));
-			}
+			updateMarkers();
+		} else if (!isTripPlanModeActive) {
+			allStops.forEach((s) => addMarker(s));
 		}
+	}
+
+	$: if (isTripPlanModeActive) {
+		clearAllMarkers();
 	}
 
 	function addMarker(s) {
@@ -239,10 +215,10 @@
 		if (browser) {
 			const darkMode = document.documentElement.classList.contains('dark');
 			window.addEventListener('planTripTabClicked', () => {
-				isTripPlanMoodActive = true;
+				isTripPlanModeActive = true;
 			});
 			window.addEventListener('tabSwitched', () => {
-				isTripPlanMoodActive = false;
+				isTripPlanModeActive = false;
 			});
 			const event = new CustomEvent('themeChange', { detail: { darkMode } });
 			window.dispatchEvent(event);
