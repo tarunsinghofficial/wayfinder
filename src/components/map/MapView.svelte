@@ -183,7 +183,7 @@
 		}
 	}
 
-	function addMarker(s, routeReference) {
+	function addMarker(s) {
 		if (!mapInstance) {
 			console.error('Map not initialized yet');
 			return;
