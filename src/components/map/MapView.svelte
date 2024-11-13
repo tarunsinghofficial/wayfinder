@@ -19,6 +19,10 @@
 	export let showRouteMap = false;
 	export let stop = null;
 	export let mapProvider = null;
+<<<<<<< HEAD
+=======
+	let isTripPlanMoodActive = false;
+>>>>>>> b21eed0 (feat: implement trip planner mood toggle in MapView component)
 
 	let selectedStopID = null;
 	let mapInstance = null;
@@ -169,7 +173,18 @@
 		allStops.forEach((s) => addMarker(s));
 	}
 
-	function addMarker(s) {
+	// TODO: prevent fetch stops-for-location if the trip planner mood is on - we should do this after merge.
+	$: {
+		if (isTripPlanMoodActive) {
+			clearAllMarkers();
+		} else {
+			if (!selectedRoute || !showRoute) {
+				allStops.forEach((s) => addMarker(s));
+			}
+		}
+	}
+
+	function addMarker(s, routeReference) {
 		if (!mapInstance) {
 			console.error('Map not initialized yet');
 			return;
@@ -223,6 +238,12 @@
 		await initMap();
 		if (browser) {
 			const darkMode = document.documentElement.classList.contains('dark');
+			window.addEventListener('planTripTabClicked', () => {
+				isTripPlanMoodActive = true;
+			});
+			window.addEventListener('tabSwitched', () => {
+				isTripPlanMoodActive = false;
+			});
 			const event = new CustomEvent('themeChange', { detail: { darkMode } });
 			window.dispatchEvent(event);
 		}
