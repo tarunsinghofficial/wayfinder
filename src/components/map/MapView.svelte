@@ -20,10 +20,8 @@
 	export let showRouteMap = false;
 	export let stop = null;
 	export let mapProvider = null;
-<<<<<<< HEAD
-=======
+
 	let isTripPlanMoodActive = false;
->>>>>>> b21eed0 (feat: implement trip planner mood toggle in MapView component)
 
 	let selectedStopID = null;
 	let mapInstance = null;
