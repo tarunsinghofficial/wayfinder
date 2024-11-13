@@ -22,7 +22,6 @@
 
 	let isTripPlanModeActive = false;
 
-	let selectedStopID = null;
 	let mapInstance = null;
 	let mapElement;
 	let markers = [];
