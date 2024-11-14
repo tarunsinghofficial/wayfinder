@@ -17,6 +17,7 @@
 	let fromMarker;
 	let toMarker;
 	let loading = false;
+	let lockSelectLocation = false;
 
 	const dispatch = createEventDispatcher();
 
@@ -74,18 +75,25 @@
 	}
 
 	async function selectLocation(suggestion, isFrom) {
-		if (isFrom) {
+		if (lockSelectLocation) return;
+		lockSelectLocation = true;
+		try {
 			const response = await geocodeLocation(suggestion.text);
-			selectedFrom = response.location.geometry.location;
-			fromMarker = mapProvider.addPinMarker(selectedFrom, 'From');
-			fromPlace = suggestion.text;
-			fromResults = [];
-		} else {
-			const response = await geocodeLocation(suggestion.text);
-			selectedTo = response.location.geometry.location;
-			toMarker = mapProvider.addPinMarker(selectedTo, 'To');
-			toPlace = suggestion.text;
-			toResults = [];
+			if (isFrom) {
+				selectedFrom = response.location.geometry.location;
+				fromMarker = mapProvider.addPinMarker(selectedFrom, 'From');
+				fromPlace = suggestion.text;
+				fromResults = [];
+			} else {
+				selectedTo = response.location.geometry.location;
+				toMarker = mapProvider.addPinMarker(selectedTo, 'To');
+				toPlace = suggestion.text;
+				toResults = [];
+			}
+		} catch (error) {
+			console.error('Error selecting location:', error);
+		} finally {
+			lockSelectLocation = false;
 		}
 	}
 
@@ -147,7 +155,6 @@
 		}
 	}
 
-	// clear input fields when the tab is switched
 	onMount(() => {
 		if (browser) {
 			window.addEventListener('tabSwitched', () => {
