@@ -4,6 +4,7 @@
 	import TripPlanSearchField from './TripPlanSearchField.svelte';
 	import { error } from '@sveltejs/kit';
 	import { browser } from '$app/environment';
+	import { t } from 'svelte-i18n';
 	export let mapProvider;
 
 	let fromPlace = '';
@@ -212,7 +213,7 @@
 			</svg>
 			Planning...
 		{:else}
-			Plan Your Trip
+			{$t('trip-planner.plan_your_trip')}
 		{/if}
 	</button>
 </div>
