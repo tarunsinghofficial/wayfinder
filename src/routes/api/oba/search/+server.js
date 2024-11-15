@@ -10,9 +10,12 @@ import {
 
 import {
 	PRIVATE_OBA_API_KEY as apiKey,
-	PRIVATE_OBA_GEOCODER_API_KEY as geocoderApiKey,
 	PRIVATE_OBA_GEOCODER_PROVIDER as geocoderProvider
 } from '$env/static/private';
+
+import { env } from '$env/dynamic/private';
+
+let geocoderApiKey = env.PRIVATE_OBA_GEOCODER_API_KEY;
 
 const oba = new OnebusawaySDK({
 	apiKey: apiKey,
