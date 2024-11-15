@@ -1,4 +1,17 @@
 {
+	"trip-planner": {
+		"plan_your_trip": "ጉዞዎን ያቅዱ",
+		"itinerary": "ጉዞ አይነት",
+		"duration": "ቆይታ ጊዜ",
+		"start_time": "መነሻ ጊዜ",
+		"end_time": "መጨረሻ ጊዜ",
+		"minutes": "ደቂቃዎች",
+		"distance": "ርቀት",
+		"end": "መጨረሻ",
+		"meters": "ሜትሮች",
+		"no_itineraries_found": "ምንም ጉዞ አይነት አልተገኘም",
+		"loading": "በመጫን ላይ..."
+	},
 	"search": {
 		"placeholder": "ቆሻሻዎችን፣ መንገዶችን እና ቦታዎችን ይፈልጉ",
 		"results_for": "የፍለጋ ውጤቶች ለ",
@@ -45,7 +58,6 @@
 		"min": "ደቂቃ",
 		"mins": "ደቂቃዎች"
 	},
-
 	"vehicle": {
 		"number": "ተሽከርካሪ #",
 		"data_updated": "የተሻሻለ ውሂብ",

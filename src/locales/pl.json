@@ -1,4 +1,17 @@
 {
+	"trip-planner": {
+		"plan_your_trip": "Zaplanuj swoją podróż",
+		"itinerary": "Plan podróży",
+		"duration": "Czas trwania",
+		"start_time": "Czas rozpoczęcia",
+		"end_time": "Czas zakończenia",
+		"minutes": "minuty",
+		"distance": "Odległość",
+		"end": "Koniec",
+		"meters": "metry",
+		"no_itineraries_found": "Nie znaleziono planów podróży",
+		"loading": "Ładowanie..."
+	},
 	"search": {
 		"placeholder": "Szukaj przystanków, tras i miejsc",
 		"results_for": "Wyniki wyszukiwania dla",
@@ -34,7 +47,6 @@
 	"stop": "Przystanek",
 	"routes": "Trasy",
 	"route": "trasa",
-	"route_modal_title": "Trasa {name}",
 	"loading": "Ładowanie",
 	"arrives": "przyjeżdża",
 	"NA": "N/D",

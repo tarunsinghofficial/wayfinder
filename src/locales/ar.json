@@ -1,4 +1,17 @@
 {
+	"trip-planner": {
+		"plan_your_trip": "خطط رحلتك",
+		"itinerary": "مسار الرحلة",
+		"duration": "المدة",
+		"start_time": "وقت البدء",
+		"end_time": "وقت الانتهاء",
+		"minutes": "دقيقة",
+		"distance": "المسافة",
+		"end": "النهاية",
+		"meters": "الأمتار",
+		"no_itineraries_found": "لم يتم العثور على مسارات",
+		"loading": "جاري التحميل..."
+	},
 	"search": {
 		"placeholder": "ابحث عن المحطات، المسارات، والأماكن",
 		"results_for": "نتائج البحث عن",

@@ -1,4 +1,17 @@
 {
+	"trip-planner": {
+		"plan_your_trip": "Qorshee safarkaaga",
+		"itinerary": "Jadwalka safarka",
+		"duration": "Mudada",
+		"start_time": "Waqtiga bilowga",
+		"end_time": "Waqtiga dhamaadka",
+		"minutes": "daqiiqado",
+		"distance": "Masaafada",
+		"end": "Dhamaadka",
+		"meters": "mitir",
+		"no_itineraries_found": "Jadwal safar lama helin",
+		"loading": "Shaqeynaya..."
+	},
 	"search": {
 		"placeholder": "Raadi joogsiyo, wadooyin iyo meelo",
 		"results_for": "Natiijooyinka raadinta ee",
@@ -34,7 +47,6 @@
 	"stop": "Joogsi",
 	"routes": "Jidadka",
 	"route": "Jidka",
-	"route_modal_title": "Jidka {name}",
 	"loading": "Shaqeynaya",
 	"arrives": "imaataa",
 	"NA": "M/Q",

@@ -1,4 +1,17 @@
 {
+	"trip-planner": {
+		"plan_your_trip": "Lập kế hoạch hành trình",
+		"itinerary": "Lịch trình",
+		"duration": "Thời gian",
+		"start_time": "Thời gian bắt đầu",
+		"end_time": "Thời gian kết thúc",
+		"minutes": "phút",
+		"distance": "Khoảng cách",
+		"end": "Kết thúc",
+		"meters": "mét",
+		"no_itineraries_found": "Không tìm thấy lịch trình",
+		"loading": "Đang tải..."
+	},
 	"search": {
 		"placeholder": "Tìm kiếm trạm dừng, tuyến đường và địa điểm",
 		"results_for": "Kết quả tìm kiếm cho",

@@ -1,4 +1,17 @@
 {
+	"trip-planner": {
+		"plan_your_trip": "Plan Your Trip",
+		"itinerary": "Itinerary",
+		"duration": "Duration",
+		"start_time": "Start Time",
+		"end_time": "End Time",
+		"minutes": "min",
+		"distance": "Distance",
+		"end": "End",
+		"meters": "meters",
+		"no_itineraries_found": "No itineraries found",
+		"loading": "Loading..."
+	},
 	"search": {
 		"placeholder": "Search for stops, routes, and places",
 		"results_for": "Search results for",
