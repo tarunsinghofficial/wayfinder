@@ -8,7 +8,7 @@ This is the next-generation OneBusAway web application, built on top of [SvelteK
 npm install
 cp .env.example .env
 # edit .env with your editor of choice
-npm run devPUBLIC_NAV_BAR_LINKS
+npm run dev
 ```
 
 ## `.env` File Keys
