@@ -1,9 +1,10 @@
 import { googlePlacesAutocomplete } from '$lib/geocoder';
 
-import {
-	PRIVATE_OBA_GEOCODER_API_KEY as geocoderApiKey,
-	PRIVATE_OBA_GEOCODER_PROVIDER as geocoderProvider
-} from '$env/static/private';
+import { PRIVATE_OBA_GEOCODER_PROVIDER as geocoderProvider } from '$env/static/private';
+
+import { env } from '$env/dynamic/private';
+
+let geocoderApiKey = env.PRIVATE_OBA_GEOCODER_API_KEY;
 
 async function autoCompletePlacesSearch(input) {
 	if (geocoderProvider === 'google') {
