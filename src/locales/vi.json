@@ -8,9 +8,19 @@
 		"minutes": "phút",
 		"distance": "Khoảng cách",
 		"end": "Kết thúc",
+		"start": "Bắt đầu",
 		"meters": "mét",
 		"no_itineraries_found": "Không tìm thấy lịch trình",
-		"loading": "Đang tải..."
+		"loading": "Đang tải...",
+		"planning": "Đang lập kế hoạch",
+		"from": "Từ",
+		"to": "Đến",
+		"search_for_a_place": "Tìm kiếm địa điểm",
+		"trip_itineraries": "Lịch trình chuyến đi"
+	},
+	"tabs": {
+		"stops-and-stations": "Trạm dừng và nhà ga",
+		"plan_trip": "Lập kế hoạch chuyến đi"
 	},
 	"search": {
 		"placeholder": "Tìm kiếm trạm dừng, tuyến đường và địa điểm",
@@ -46,10 +56,10 @@
 	"no_arrivals_or_departures_in_next_30_minutes": "Không có chuyến đến hoặc đi trong 30 phút tới",
 	"stop": "Trạm dừng",
 	"routes": "Tuyến đường",
-	"route": "tuyến đường",
+	"route": "Tuyến đường",
 	"route_modal_title": "Tuyến đường {name}",
 	"loading": "Đang tải",
-	"arrives": "đến",
+	"arrives": "Đến",
 	"NA": "KAD",
 	"time": {
 		"ago": "trước",

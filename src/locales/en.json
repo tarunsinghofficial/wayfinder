@@ -6,11 +6,21 @@
 		"start_time": "Start Time",
 		"end_time": "End Time",
 		"minutes": "min",
-		"distance": "Distance",
+		"distance": "Distance:",
 		"end": "End",
+		"start": "Start",
 		"meters": "meters",
 		"no_itineraries_found": "No itineraries found",
-		"loading": "Loading..."
+		"loading": "Loading",
+		"planning": "Planning",
+		"from": "From",
+		"to": "To",
+		"search_for_a_place": "Search for a place",
+		"trip_itineraries": "Trip Itineraries"
+	},
+	"tabs": {
+		"stops-and-stations": "Stops and Stations",
+		"plan_trip": "Plan a Trip"
 	},
 	"search": {
 		"placeholder": "Search for stops, routes, and places",
@@ -56,7 +66,8 @@
 		"sec": "sec",
 		"secs": "secs",
 		"min": "min",
-		"mins": "mins"
+		"mins": "mins",
+		"minutes": "minutes"
 	},
 	"vehicle": {
 		"number": "Vehicle #",

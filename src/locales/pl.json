@@ -6,11 +6,21 @@
 		"start_time": "Czas rozpoczęcia",
 		"end_time": "Czas zakończenia",
 		"minutes": "minuty",
-		"distance": "Odległość",
+		"distance": "Odległość:",
 		"end": "Koniec",
+		"start": "Początek",
 		"meters": "metry",
 		"no_itineraries_found": "Nie znaleziono planów podróży",
-		"loading": "Ładowanie..."
+		"loading": "Ładowanie",
+		"planning": "Planowanie",
+		"from": "Od",
+		"to": "Do",
+		"search_for_a_place": "Szukaj miejsca",
+		"trip_itineraries": "Plany podróży"
+	},
+	"tabs": {
+		"stops-and-stations": "Przystanki i stacje",
+		"plan_trip": "Zaplanuj podróż"
 	},
 	"search": {
 		"placeholder": "Szukaj przystanków, tras i miejsc",
@@ -47,6 +57,7 @@
 	"stop": "Przystanek",
 	"routes": "Trasy",
 	"route": "trasa",
+	"route_modal_title": "Trasa {name}",
 	"loading": "Ładowanie",
 	"arrives": "przyjeżdża",
 	"NA": "N/D",
@@ -55,7 +66,8 @@
 		"sec": "sek",
 		"secs": "sekundy",
 		"min": "min",
-		"mins": "minuty"
+		"mins": "minuty",
+		"minutes": "minuty"
 	},
 	"vehicle": {
 		"number": "Pojazd #",

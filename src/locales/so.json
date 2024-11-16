@@ -8,9 +8,19 @@
 		"minutes": "daqiiqado",
 		"distance": "Masaafada",
 		"end": "Dhamaadka",
+		"start": "Bilowga",
 		"meters": "mitir",
 		"no_itineraries_found": "Jadwal safar lama helin",
-		"loading": "Shaqeynaya..."
+		"loading": "Shaqeynaya...",
+		"planning": "Qorshaynta",
+		"from": "Laga soo bilaabo",
+		"to": "Ku socda",
+		"search_for_a_place": "Raadi meel",
+		"trip_itineraries": "Jadwalka safarada"
+	},
+	"tabs": {
+		"stops-and-stations": "Joogsiyada iyo saldhigyada",
+		"plan_trip": "Qorshee safarka"
 	},
 	"search": {
 		"placeholder": "Raadi joogsiyo, wadooyin iyo meelo",
@@ -47,6 +57,7 @@
 	"stop": "Joogsi",
 	"routes": "Jidadka",
 	"route": "Jidka",
+	"route_modal_title": "Jidka {name}",
 	"loading": "Shaqeynaya",
 	"arrives": "imaataa",
 	"NA": "M/Q",
@@ -55,7 +66,8 @@
 		"sec": "ilbiriqsi",
 		"secs": "ilbiriqsiyaal",
 		"min": "daqiiqo",
-		"mins": "daqiiqado"
+		"mins": "daqiiqado",
+		"minutes": "daqiiqado"
 	},
 	"vehicle": {
 		"number": "Gaari #",

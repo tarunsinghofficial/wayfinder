@@ -8,9 +8,19 @@
 		"minutes": "ደቂቃዎች",
 		"distance": "ርቀት",
 		"end": "መጨረሻ",
+		"start": "መነሻ",
 		"meters": "ሜትሮች",
 		"no_itineraries_found": "ምንም ጉዞ አይነት አልተገኘም",
-		"loading": "በመጫን ላይ..."
+		"loading": "በመጫን ላይ...",
+		"planning": "በማቅዳት ላይ",
+		"from": "ከ",
+		"to": "ወደ",
+		"search_for_a_place": "ቦታ ይፈልጉ",
+		"trip_itineraries": "የጉዞ አይነቶች"
+	},
+	"tabs": {
+		"stops-and-stations": "ማቆሚያዎችና ጣቢያዎች",
+		"plan_trip": "ጉዞን አቅድ"
 	},
 	"search": {
 		"placeholder": "ቆሻሻዎችን፣ መንገዶችን እና ቦታዎችን ይፈልጉ",
@@ -56,7 +66,8 @@
 		"sec": "ሰከንድ",
 		"secs": "ሰከንዶች",
 		"min": "ደቂቃ",
-		"mins": "ደቂቃዎች"
+		"mins": "ደቂቃዎች",
+		"minutes": "ደቂቃዎች"
 	},
 	"vehicle": {
 		"number": "ተሽከርካሪ #",
