@@ -1,4 +1,27 @@
 {
+	"trip-planner": {
+		"plan_your_trip": "خطط رحلتك",
+		"itinerary": "مسار الرحلة",
+		"duration": "المدة",
+		"start_time": "وقت البدء",
+		"end_time": "وقت الانتهاء",
+		"minutes": "دقيقة",
+		"distance": "المسافة",
+		"end": "النهاية",
+		"start": "البداية",
+		"meters": "الأمتار",
+		"no_itineraries_found": "لم يتم العثور على مسارات",
+		"loading": "جاري التحميل...",
+		"planning": "جاري التخطيط",
+		"from": "من",
+		"to": "إلى",
+		"search_for_a_place": "ابحث عن المكان",
+		"trip_itineraries": "مسارات الرحلة"
+	},
+	"tabs": {
+		"stops-and-stations": "المحطات والمواقف",
+		"plan_trip": "خطط لرحلة"
+	},
 	"search": {
 		"placeholder": "ابحث عن المحطات، المسارات، والأماكن",
 		"results_for": "نتائج البحث عن",
@@ -34,6 +57,7 @@
 	"stop": "المحطة",
 	"routes": "المسارات",
 	"route": "المسار",
+	"route_modal_title": "مسار {name}",
 	"loading": "جاري التحميل",
 	"arrives": "يصل",
 	"NA": "غير متاح",
@@ -42,7 +66,8 @@
 		"sec": "ثانية",
 		"secs": "ثواني",
 		"min": "دقيقة",
-		"mins": "دقائق"
+		"mins": "دقائق",
+		"minutes": "دقائق"
 	},
 	"vehicle": {
 		"number": "رقم المركبة",

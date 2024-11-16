@@ -1,4 +1,27 @@
 {
+	"trip-planner": {
+		"plan_your_trip": "Planuhin ang iyong biyahe",
+		"itinerary": "Itineraryo",
+		"duration": "Tagal",
+		"start_time": "Oras ng pagsisimula",
+		"end_time": "Oras ng pagtatapos",
+		"minutes": "minuto",
+		"distance": "Distansya",
+		"end": "Wakas",
+		"start": "Simula",
+		"meters": "metro",
+		"no_itineraries_found": "Walang nahanap na itineraryo",
+		"loading": "Naglo-load...",
+		"planning": "Pinaplano",
+		"from": "Mula sa",
+		"to": "Patungo sa",
+		"search_for_a_place": "Maghanap ng lugar",
+		"trip_itineraries": "Mga itineraryo ng biyahe"
+	},
+	"tabs": {
+		"stops-and-stations": "Mga hintuan at estasyon",
+		"plan_trip": "Planuhin ang biyahe"
+	},
 	"search": {
 		"placeholder": "Maghanap ng mga hintuan, ruta, at lugar",
 		"results_for": "Mga resulta ng paghahanap para sa",
@@ -33,10 +56,10 @@
 	"no_arrivals_or_departures_in_next_30_minutes": "Walang mga pagdating o pag-alis sa susunod na 30 minuto",
 	"stop": "Hintuan",
 	"routes": "Mga ruta",
-	"route": "ruta",
+	"route": "Ruta",
 	"route_modal_title": "Ruta {name}",
 	"loading": "Naglo-load",
-	"arrives": "dumarating",
+	"arrives": "Dumarating",
 	"NA": "W/A",
 	"time": {
 		"ago": "nakaraan",

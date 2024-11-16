@@ -1,7 +1,7 @@
 <script>
 	import { faMapMarkerAlt } from '@fortawesome/free-solid-svg-icons';
 	import { FontAwesomeIcon } from '@fortawesome/svelte-fontawesome';
-
+	import { t } from 'svelte-i18n';
 	export let label = '';
 	export let place = '';
 	export let results = [];
@@ -33,7 +33,7 @@
 			type="text"
 			bind:value={place}
 			on:input={handleInput}
-			placeholder="Enter location"
+			placeholder="{$t('trip-planner.search_for_a_place')}..."
 			class="dark: mt-1 block w-full rounded-md border-gray-300 pr-10 text-black shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
 		/>
 		{#if place}
@@ -61,7 +61,7 @@
 		<p
 			class="absolute z-10 mt-1 w-full rounded-md border border-gray-300 bg-white px-4 py-2 text-gray-500 shadow-lg"
 		>
-			Loading...
+			{$t('trip-planner.loading')}...
 		</p>
 	{:else if results.length > 0}
 		<ul

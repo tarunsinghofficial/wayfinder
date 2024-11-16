@@ -1,4 +1,27 @@
 {
+	"trip-planner": {
+		"plan_your_trip": "Planifica tu viaje",
+		"itinerary": "Itinerario",
+		"duration": "Duración",
+		"start_time": "Hora de inicio",
+		"end_time": "Hora de finalización",
+		"minutes": "minutos",
+		"distance": "Distancia:",
+		"end": "Final",
+		"start": "Inicio",
+		"meters": "metros",
+		"no_itineraries_found": "No se encontraron itinerarios",
+		"loading": "Cargando",
+		"planning": "Planificando",
+		"from": "Desde",
+		"to": "Hasta",
+		"search_for_a_place": "Buscar un lugar",
+		"trip_itineraries": "Itinerarios de viaje"
+	},
+	"tabs": {
+		"stops-and-stations": "Paradas y estaciones",
+		"plan_trip": "Planificar un viaje"
+	},
 	"search": {
 		"placeholder": "Buscar paradas, rutas y lugares",
 		"results_for": "Resultados de búsqueda para",
@@ -43,7 +66,8 @@
 		"sec": "seg",
 		"secs": "segs",
 		"min": "min",
-		"mins": "mins"
+		"mins": "mins",
+		"minutes": "minutos"
 	},
 	"vehicle": {
 		"number": "Vehículo #",

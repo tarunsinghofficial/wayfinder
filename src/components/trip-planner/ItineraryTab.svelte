@@ -1,4 +1,5 @@
 <script>
+	import { t } from 'svelte-i18n';
 	export let index;
 	export let activeTab;
 	export let setActiveTab;
@@ -10,5 +11,6 @@
 	}`}
 	on:click={() => setActiveTab(index)}
 >
-	Itinerary {index + 1}
+	{$t('trip-planner.itinerary')}
+	{index + 1}
 </button>

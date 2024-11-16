@@ -18,12 +18,39 @@
 	.modal-pane {
 		@apply rounded-lg border-gray-500 bg-white/90 px-4 shadow-lg dark:bg-black dark:text-white dark:shadow-lg dark:shadow-gray-200/10;
 	}
+
 	.rtl {
-		@apply flex-row-reverse text-left;
+		@apply flex-row-reverse text-right;
 		direction: rtl;
 	}
 
 	.rtl .rotate-rtl {
 		transform: rotate(180deg);
+	}
+
+	.rtl .ml-3 {
+		margin-right: 0.75rem;
+	}
+
+	.rtl .mr-3 {
+		margin-left: 0.75rem;
+	}
+
+	.rtl .space-x-4 {
+		margin-left: 1rem;
+	}
+
+	.rtl .space-x-reverse {
+		margin-right: 1rem;
+	}
+
+	.rtl .border-l-4 {
+		border-left-width: 0;
+		border-right-width: 4px;
+	}
+
+	.rtl .left-5 {
+		left: auto;
+		right: 1.25rem;
 	}
 }

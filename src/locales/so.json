@@ -1,4 +1,27 @@
 {
+	"trip-planner": {
+		"plan_your_trip": "Qorshee safarkaaga",
+		"itinerary": "Jadwalka safarka",
+		"duration": "Mudada",
+		"start_time": "Waqtiga bilowga",
+		"end_time": "Waqtiga dhamaadka",
+		"minutes": "daqiiqado",
+		"distance": "Masaafada",
+		"end": "Dhamaadka",
+		"start": "Bilowga",
+		"meters": "mitir",
+		"no_itineraries_found": "Jadwal safar lama helin",
+		"loading": "Shaqeynaya...",
+		"planning": "Qorshaynta",
+		"from": "Laga soo bilaabo",
+		"to": "Ku socda",
+		"search_for_a_place": "Raadi meel",
+		"trip_itineraries": "Jadwalka safarada"
+	},
+	"tabs": {
+		"stops-and-stations": "Joogsiyada iyo saldhigyada",
+		"plan_trip": "Qorshee safarka"
+	},
 	"search": {
 		"placeholder": "Raadi joogsiyo, wadooyin iyo meelo",
 		"results_for": "Natiijooyinka raadinta ee",
@@ -43,7 +66,8 @@
 		"sec": "ilbiriqsi",
 		"secs": "ilbiriqsiyaal",
 		"min": "daqiiqo",
-		"mins": "daqiiqado"
+		"mins": "daqiiqado",
+		"minutes": "daqiiqado"
 	},
 	"vehicle": {
 		"number": "Gaari #",
