@@ -11,6 +11,6 @@
 	}`}
 	on:click={() => setActiveTab(index)}
 >
-	{$t('trip.itinerary')}
+	{$t('trip-planner.itinerary')}
 	{index + 1}
 </button>

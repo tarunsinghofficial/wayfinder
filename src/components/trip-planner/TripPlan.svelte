@@ -82,12 +82,12 @@
 			const response = await geocodeLocation(suggestion.text);
 			if (isFrom) {
 				selectedFrom = response.location.geometry.location;
-				fromMarker = mapProvider.addPinMarker(selectedFrom, 'From');
+				fromMarker = mapProvider.addPinMarker(selectedFrom, $t('trip-planner.from'));
 				fromPlace = suggestion.text;
 				fromResults = [];
 			} else {
 				selectedTo = response.location.geometry.location;
-				toMarker = mapProvider.addPinMarker(selectedTo, 'To');
+				toMarker = mapProvider.addPinMarker(selectedTo, $t('trip-planner.to'));
 				toPlace = suggestion.text;
 				toResults = [];
 			}
@@ -143,8 +143,8 @@
 				mapProvider.removePinMarker(toMarker);
 			}
 
-			fromMarker = mapProvider.addPinMarker(selectedFrom, 'From');
-			toMarker = mapProvider.addPinMarker(selectedTo, 'To');
+			fromMarker = mapProvider.addPinMarker(selectedFrom, $t('trip-planner.from'));
+			toMarker = mapProvider.addPinMarker(selectedTo, $t('trip-planner.to'));
 
 			const data = await fetchTripPlan(selectedFrom, selectedTo);
 
@@ -168,7 +168,7 @@
 
 <div class="space-y-4">
 	<TripPlanSearchField
-		label="From:"
+		label="{$t('trip-planner.from')}:"
 		place={fromPlace}
 		results={fromResults}
 		isLoading={isLoadingFrom}
@@ -178,7 +178,7 @@
 	/>
 
 	<TripPlanSearchField
-		label="To:"
+		label="{$t('trip-planner.to')}:"
 		place={toPlace}
 		results={toResults}
 		isLoading={isLoadingTo}
@@ -211,7 +211,7 @@
 				></circle>
 				<path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z"></path>
 			</svg>
-			Planning...
+			{$t('trip-planner.planning')}...
 		{:else}
 			{$t('trip-planner.plan_your_trip')}
 		{/if}

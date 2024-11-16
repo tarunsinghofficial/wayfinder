@@ -14,7 +14,7 @@
 		faArrowAltCircleRight
 	} from '@fortawesome/free-solid-svg-icons';
 	import { FontAwesomeIcon } from '@fortawesome/svelte-fontawesome';
-
+	import { t } from 'svelte-i18n';
 	export let leg;
 	export let index;
 	export let expandedSteps;
@@ -75,7 +75,7 @@
 		<div class="mt-3 flex space-x-4 text-sm text-gray-600 dark:text-gray-100">
 			<div class="flex items-center">
 				<FontAwesomeIcon icon={faClock} class="mr-1 text-blue-500" />
-				<span class="text-md">Start:</span>
+				<span class="text-md">{$t('trip-planner.start')}:</span>
 				<div class="ml-1 flex items-baseline">
 					<span class="text-md font-semibold">{formatTime(leg.startTime).slice(0, -3)}</span>
 					<span class="ml-1 text-xs">{formatTime(leg.startTime).slice(-2)}</span>
@@ -83,7 +83,7 @@
 			</div>
 			<div class="flex items-center">
 				<FontAwesomeIcon icon={faClock} class="mr-1 text-red-500" />
-				<span class="text-md">End:</span>
+				<span class="text-md">{$t('trip-planner.end')}:</span>
 				<div class="ml-1 flex items-baseline">
 					<span class="text-md font-semibold">{formatTime(leg.endTime).slice(0, -3)}</span>
 					<span class="ml-1 text-xs">{formatTime(leg.endTime).slice(-2)}</span>
@@ -98,11 +98,13 @@
 			</div>
 			<div class="mb-2 flex items-center">
 				<FontAwesomeIcon icon={faRulerCombined} class="mr-2 text-gray-400" />
-				<span>Distance: {Math.round(leg.distance)} meters</span>
+				<span>Distance: {Math.round(leg.distance)} {$t('trip-planner.meters')}</span>
 			</div>
 			<div class="mb-4 flex items-center">
 				<FontAwesomeIcon icon={faClock} class="mr-2 text-gray-400" />
-				<span>Duration: {Math.round(leg.duration / 60)} minutes</span>
+				<span
+					>{$t('trip-planner.duration')}: {Math.round(leg.duration / 60)} {$t('time.minutes')}</span
+				>
 			</div>
 		</div>
 
@@ -119,7 +121,11 @@
 							<div class="font-semibold">{step.relativeDirection} on {step.streetName}</div>
 							<div class="mb-2 flex items-center">
 								<FontAwesomeIcon icon={faRulerCombined} class="mr-2 text-gray-400" />
-								<span>Distance: {Math.round(step.distance)} meters</span>
+								<span
+									>{$t('trip-planner.distance')}
+									{Math.round(step.distance)}
+									{$t('trip-planner.meters')}</span
+								>
 							</div>
 							<div class="flex items-center">
 								<FontAwesomeIcon icon={faArrowAltCircleRight} class="mr-2 text-gray-400" />

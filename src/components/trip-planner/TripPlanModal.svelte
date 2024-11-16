@@ -4,6 +4,7 @@
 	import ItineraryDetails from './ItineraryDetails.svelte';
 	import ItineraryTab from './ItineraryTab.svelte';
 	import { onDestroy, onMount } from 'svelte';
+	import { t } from 'svelte-i18n';
 
 	export let mapProvider;
 	export let itineraries = [];
@@ -62,7 +63,7 @@
 	});
 </script>
 
-<ModalPane on:close title="Trip Itineraries">
+<ModalPane on:close title={$t('trip-planner.trip_itineraries')}>
 	{#if loading}
 		<LoadingSpinner />
 	{/if}
@@ -82,7 +83,7 @@
 		</div>
 	{:else}
 		<div class="flex h-full items-center justify-center text-gray-400 dark:text-gray-500">
-			No itineraries found
+			{$t('trip-planner.no_itineraries_found')}
 		</div>
 	{/if}
 </ModalPane>
