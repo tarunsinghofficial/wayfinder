@@ -9,7 +9,7 @@
 	import { clearVehicleMarkersMap, fetchAndUpdateVehicles } from '$lib/vehicleUtils';
 	import { calculateMidpoint } from '$lib/mathUtils';
 	import { Tabs, TabItem } from 'flowbite-svelte';
-	import { PUBLIC_OTP_SERVER_URL } from '$env/static/public';
+	import { env } from '$env/dynamic/public';
 	import TripPlan from '$components/trip-planner/TripPlan.svelte';
 	import { isMapLoaded } from '$src/stores/mapStore';
 
@@ -181,7 +181,7 @@
 			</div>
 		</TabItem>
 
-		{#if PUBLIC_OTP_SERVER_URL}
+		{#if env.PUBLIC_OTP_SERVER_URL}
 			<TabItem title={$t('tabs.plan_trip')} on:click={handlePlanTripTabClick} disabled={!mapLoaded}>
 				<TripPlan {mapProvider} on:tripPlanned={handleTripPlan} />
 			</TabItem>

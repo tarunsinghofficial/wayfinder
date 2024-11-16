@@ -1,13 +1,13 @@
 import GtfsRealtimeBindings from 'gtfs-realtime-bindings';
-import { PRIVATE_OBACO_API_BASE_URL, PRIVATE_OBACO_SHOW_TEST_ALERTS } from '$env/static/private';
+import { env } from '$env/dynamic/private';
 import { buildURL } from '$lib/urls.js';
 
 export async function GET() {
 	try {
 		const alertsURL = buildURL(
-			PRIVATE_OBACO_API_BASE_URL,
+			env.PRIVATE_OBACO_API_BASE_URL,
 			'alerts.pb',
-			PRIVATE_OBACO_SHOW_TEST_ALERTS && PRIVATE_OBACO_SHOW_TEST_ALERTS == 'true' ? { test: 1 } : {}
+			env.PRIVATE_OBACO_SHOW_TEST_ALERTS == 'true' ? { test: 1 } : {}
 		);
 
 		const response = await fetch(alertsURL);
@@ -19,7 +19,7 @@ export async function GET() {
 		let validAlert = null;
 		for (const entity of feed.entity) {
 			// If we're in test mode, show the alert to test the UI
-			if (PRIVATE_OBACO_SHOW_TEST_ALERTS) {
+			if (env.PRIVATE_OBACO_SHOW_TEST_ALERTS === 'true') {
 				validAlert = entity.alert;
 				break;
 			}

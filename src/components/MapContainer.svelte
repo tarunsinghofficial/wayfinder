@@ -4,15 +4,16 @@
 	import GoogleMapProvider from '$lib/Provider/GoogleMapProvider';
 	import OpenStreetMapProvider from '$lib/Provider/OpenStreetMapProvider';
 	import FullPageLoadingSpinner from '$components/FullPageLoadingSpinner.svelte';
-	import {
-		PUBLIC_OBA_MAP_PROVIDER,
-		PUBLIC_OBA_GOOGLE_MAPS_API_KEY as apiKey
-	} from '$env/static/public';
+	import { env } from '$env/dynamic/public';
+	import { PUBLIC_OBA_MAP_PROVIDER } from '$env/static/public';
 	import { createEventDispatcher, onMount } from 'svelte';
 	import { MapSource } from './../config/mapSource.js';
 
 	export let mapProvider = null;
 	export let mapSource = null;
+
+	let apiKey = env.GOOGLE_MAPS_API_KEY;
+
 	const dispatch = createEventDispatcher();
 
 	onMount(() => {
