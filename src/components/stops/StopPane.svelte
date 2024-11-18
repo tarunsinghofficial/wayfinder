@@ -104,6 +104,13 @@
 		{/if}
 
 		{#if arrivalsAndDepartures}
+			<a
+				href={`/stops/${stop.id}/schedule`}
+				class="mb-4 inline-block text-green-500 hover:underline"
+				target="_blank"
+			>
+				View Schedule
+			</a>
 			<div class="space-y-4">
 				<div>
 					<div class="flex flex-col gap-y-1 rounded-lg bg-[#1C1C1E] bg-opacity-80 p-4">
