@@ -1,6 +1,6 @@
 <script>
 	import { page } from '$app/stores';
-	import { convertUnixToTime } from '$lib/formatters.js';
+	import { convertUnixToTime, formatTime } from '$lib/formatters.js';
 	import { Accordion, AccordionItem } from 'flowbite-svelte';
 	import { Datepicker } from 'flowbite-svelte';
 	import { onMount } from 'svelte';
@@ -43,14 +43,17 @@
 		expandedItems = schedules.map((_, index) => false);
 	}
 
+
+	// TODO: ADD AM AND PM LOGIC
 	function groupStopTimesByHour(stopTimes) {
 		const grouped = {};
 		for (let stopTime of stopTimes) {
-			const date = new Date(stopTime.arrivalTime * 1000);
-			const hour = date.getUTCHours();
+			console.log(stopTime);
+			const date = new Date(stopTime.arrivalTime);
+			const hour = date.getHours();
 			if (!grouped[hour]) grouped[hour] = [];
 			grouped[hour].push({
-				arrivalTime: convertUnixToTime(stopTime.arrivalTime)
+				arrivalTime: formatTime(stopTime.arrivalTime)
 			});
 		}
 		return grouped;
@@ -91,13 +94,13 @@
 
 			<div class="mb-4 flex gap-4">
 				<button
-					class="rounded-lg bg-green-500 px-6 py-2 font-medium text-white shadow hover:bg-green-600 active:bg-green-700"
+					class="text-md rounded-lg bg-green-500 px-6 py-2 text-white shadow hover:bg-green-600 active:bg-green-700"
 					on:click={() => toggleAll(true)}
 				>
 					Show All Routes
 				</button>
 				<button
-					class="rounded-lg bg-gray-500 px-6 py-2 font-medium text-white shadow hover:bg-gray-600 active:bg-gray-700"
+					class="text-md rounded-lg bg-gray-500 px-6 py-2 text-white shadow hover:bg-gray-600 active:bg-gray-700"
 					on:click={() => toggleAll(false)}
 				>
 					Collapse All Routes
@@ -111,16 +114,15 @@
 				<Accordion>
 					{#each schedules as schedule, index (schedule.tripHeadsign)}
 						<AccordionItem open={expandedItems[index]}>
-							<span slot="header" class="text-lg font-semibold text-gray-800">
+							<span slot="header" class="-semibold text-lg text-gray-800">
 								{schedule.tripHeadsign}
 							</span>
 							{#each Object.entries(schedule.stopTimes) as [hour, times]}
-								<h3 class="mt-4 text-lg font-medium text-green-700">{hour}:00</h3>
+								<h3 class="mt-4 text-lg text-green-700">{hour}:00</h3>
 								<table class="mt-2 w-full table-auto border border-gray-200">
 									<thead class="bg-gray-100">
 										<tr>
 											<th class="border px-4 py-2 text-left">Arrival Time</th>
-											<th class="border px-4 py-2 text-left">Departure Time</th>
 										</tr>
 									</thead>
 									<tbody>
