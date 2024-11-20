@@ -1,11 +1,11 @@
 <script>
 	import { page } from '$app/stores';
 	import LoadingSpinner from '$components/LoadingSpinner.svelte';
-	import ScheduleAccordionItem from '$components/schedules-for-stop/scheduleAccordionItem.svelte';
+	import ScheduleAccordionItem from '$components/schedule-for-stop/scheduleAccordionItem.svelte';
+	import StopDetailsHeader from '$components/schedule-for-stop/StopDetailsHeader.svelte';
 	import { formatTime } from '$lib/formatters.js';
 	import { Accordion } from 'flowbite-svelte';
 	import { Datepicker } from 'flowbite-svelte';
-	import { onMount } from 'svelte';
 	import { isLoading } from 'svelte-i18n';
 
 	let selectedDate = new Date();
@@ -122,24 +122,7 @@
 	<LoadingSpinner />
 {:else}
 	<div class="mx-auto max-w-7xl overflow-y-auto p-5" style="max-height: calc(100vh - 100px);">
-		<div class="mb-6 rounded-lg bg-gray-100 p-6 text-center shadow-lg">
-			<h1 class="text-3xl font-bold text-green-700">Stop Details</h1>
-			<p class="mt-2 text-lg text-gray-700">
-				<strong>Stop Name:</strong>
-				{stopName} | <strong>Stop ID:</strong>
-				{stopId}
-			</p>
-			<p class="mt-2 text-lg text-gray-700">
-				<strong>Direction:</strong>
-				{stopDirection}
-			</p>
-			<a
-				href={`/stops/${stopId}`}
-				class="mt-4 inline-block rounded-lg bg-green-500 px-4 py-2 text-white shadow hover:bg-green-600"
-			>
-				Click here for real-time information
-			</a>
-		</div>
+		<StopDetailsHeader {stopName} {stopId} {stopDirection} />
 
 		<div class="flex flex-col gap-6 md:flex-row">
 			<div class="md:w-1/3">
