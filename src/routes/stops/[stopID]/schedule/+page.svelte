@@ -43,12 +43,10 @@
 		expandedItems = schedules.map((_, index) => false);
 	}
 
-
 	// TODO: ADD AM AND PM LOGIC
 	function groupStopTimesByHour(stopTimes) {
 		const grouped = {};
 		for (let stopTime of stopTimes) {
-			console.log(stopTime);
 			const date = new Date(stopTime.arrivalTime);
 			const hour = date.getHours();
 			if (!grouped[hour]) grouped[hour] = [];
