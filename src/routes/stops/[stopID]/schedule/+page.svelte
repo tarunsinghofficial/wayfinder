@@ -6,21 +6,28 @@
 	import { formatTime } from '$lib/formatters.js';
 	import { Accordion } from 'flowbite-svelte';
 	import { Datepicker } from 'flowbite-svelte';
+	import { onMount } from 'svelte';
 	import { isLoading } from 'svelte-i18n';
 
-	let selectedDate = new Date();
+	let selectedDate = '';
 	let prevSelectedDate = null;
 	let schedulesMap = new Map();
 	let routeReference = new Map();
 	let schedules = [];
-	let stopName = null;
-	let stopId = null;
-	let stopDirection = null;
+	let stopName = '';
+	let stopId = '';
+	let stopDirection = '';
 	let expandedItems = [];
 	let loading = true;
 	let emptySchedules = false;
 
 	$: stopId = $page.params.stopID;
+
+	$: if (selectedDate && selectedDate !== prevSelectedDate) {
+		const formattedDate = selectedDate.toISOString().split('T')[0];
+		prevSelectedDate = selectedDate;
+		fetchScheduleForStop(stopId, formattedDate);
+	}
 
 	async function fetchScheduleForStop(stopId, date) {
 		try {
@@ -111,11 +118,11 @@
 		expandedItems = expandedItems.map((item, i) => (i === index ? !item : item));
 	}
 
-	$: if (selectedDate && selectedDate !== prevSelectedDate) {
-		const formattedDate = selectedDate.toISOString().split('T')[0];
-		prevSelectedDate = selectedDate;
+	onMount(() => {
+		const currentDate = new Date();
+		const formattedDate = currentDate.toISOString().split('T')[0];
 		fetchScheduleForStop(stopId, formattedDate);
-	}
+	});
 </script>
 
 {#if loading || $isLoading}
