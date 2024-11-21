@@ -20,6 +20,7 @@
 	let expandedItems = [];
 	let loading = true;
 	let emptySchedules = false;
+	let currentDate = new Date();
 
 	$: stopId = $page.params.stopID;
 
@@ -119,7 +120,6 @@
 	}
 
 	onMount(() => {
-		const currentDate = new Date();
 		const formattedDate = currentDate.toISOString().split('T')[0];
 		fetchScheduleForStop(stopId, formattedDate);
 	});
@@ -137,7 +137,9 @@
 				<div class="rounded-lg border border-gray-300 bg-white p-4 shadow">
 					<Datepicker inline bind:value={selectedDate} />
 					<p class="mt-4 text-sm text-gray-600">
-						Selected date: {selectedDate ? selectedDate.toLocaleDateString() : 'None'}
+						Selected date: {selectedDate
+							? selectedDate.toLocaleDateString()
+							: currentDate.toLocaleDateString()}
 					</p>
 				</div>
 			</div>
