@@ -50,36 +50,52 @@
 			<tr class="bg-gray-200">
 				<td colspan="2" class="px-4 py-2 font-bold">AM</td>
 			</tr>
-			{#each renderScheduleTable(schedule).amTimes as [hour, times]}
+			{#if renderScheduleTable(schedule).amTimes.length === 0}
 				<tr>
-					<td class="border px-4 py-2 text-center">{formatHour(hour)}:00</td>
-					<td class="border px-4 py-2">
-						{#each times as stopTime, index (index)}
-							<span>
-								{extractMinutes(stopTime.arrivalTime)}
-								{index < times.length - 1 ? ', ' : ''}
-							</span>
-						{/each}
-					</td>
+					<td colspan="2" class="border px-4 py-2 text-center text-gray-500"
+						>No AM schedules available</td
+					>
 				</tr>
-			{/each}
+			{:else}
+				{#each renderScheduleTable(schedule).amTimes as [hour, times]}
+					<tr>
+						<td class="border px-4 py-2 text-center">{formatHour(hour)}:00</td>
+						<td class="border px-4 py-2">
+							{#each times as stopTime, index (index)}
+								<span>
+									{extractMinutes(stopTime.arrivalTime)}
+									{index < times.length - 1 ? ', ' : ''}
+								</span>
+							{/each}
+						</td>
+					</tr>
+				{/each}
+			{/if}
 
 			<tr class="bg-gray-200">
 				<td colspan="2" class="px-4 py-2 font-bold">PM</td>
 			</tr>
-			{#each renderScheduleTable(schedule).pmTimes as [hour, times]}
+			{#if renderScheduleTable(schedule).pmTimes.length === 0}
 				<tr>
-					<td class="border px-4 py-2 text-center">{formatHour(hour)}:00</td>
-					<td class="border px-4 py-2">
-						{#each times as stopTime, index (index)}
-							<span>
-								{extractMinutes(stopTime.arrivalTime)}
-								{index < times.length - 1 ? ', ' : ''}
-							</span>
-						{/each}
-					</td>
+					<td colspan="2" class="border px-4 py-2 text-center text-gray-500"
+						>No PM schedules available</td
+					>
 				</tr>
-			{/each}
+			{:else}
+				{#each renderScheduleTable(schedule).pmTimes as [hour, times]}
+					<tr>
+						<td class="border px-4 py-2 text-center">{formatHour(hour)}:00</td>
+						<td class="border px-4 py-2">
+							{#each times as stopTime, index (index)}
+								<span>
+									{extractMinutes(stopTime.arrivalTime)}
+									{index < times.length - 1 ? ', ' : ''}
+								</span>
+							{/each}
+						</td>
+					</tr>
+				{/each}
+			{/if}
 		</tbody>
 	</table>
 </AccordionItem>
