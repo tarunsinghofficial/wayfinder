@@ -75,22 +75,20 @@
 		"no_real_time_data": "Ma hayno xog ku saabsan wakhtiga dhabta ah ee gaarigan hadda.",
 		"next_stop": "Joogsiga xiga:"
 	},
+	"arrivals_and_departures_for_stop": {
+		"title": "Imaanshaha iyo Bixitaanka"
+	},
 	"schedule_for_stop": {
 		"view_schedule": "Eeg jadwalka",
 		"no_am_schedules_available": "Jadwal AM lama heli karo",
 		"no_pm_schedules_available": "Jadwal PM lama heli karo",
 		"minutes": "Daqiiqado",
 		"hour": "Saacad",
-		"selected_date": "Taariikhda la doortay",
-		"show_all_routes": "Tus dhammaan waddooyinka",
-		"collapse_all_routes": "Yaree dhammaan waddooyinka",
+		"show_all_routes": "Ballaari Dhamaan",
+		"collapse_all_routes": "Laabo Dhamaan",
 		"route_schedules": "Jadwalka waddooyinka",
 		"no_schedules_available": "Jadwal lama heli karo taariikhda la doortay.",
-		"stop_details": "Faahfaahinta joogsiga",
-		"select_date": "Dooro taariikhda",
 		"stop_id": "Aqoonsiga joogsiga",
-		"direction": "Jihada",
-		"click_for_realtime": "Riix halkan si aad u aragto macluumaadka wakhtiga dhabta ah",
-		"stop_name": "Magaca joogsiga"
+		"direction": "Jihada"
 	}
 }

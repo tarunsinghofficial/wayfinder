@@ -6,9 +6,8 @@
 </script>
 
 <button
-	class={`-mb-px px-4 py-2 font-semibold ${
-		activeTab === index ? 'border-b-2 border-green-500 text-green-500' : 'text-gray-500'
-	}`}
+	class="tab-container__item"
+	class:tab-container__item--active={activeTab === index}
 	on:click={() => setActiveTab(index)}
 >
 	{$t('trip-planner.itinerary')}

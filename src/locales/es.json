@@ -75,22 +75,20 @@
 		"no_real_time_data": "Actualmente no tenemos datos en tiempo real para este vehículo.",
 		"next_stop": "Próxima parada:"
 	},
+	"arrivals_and_departures_for_stop": {
+		"title": "Llegadas y Salidas"
+	},
 	"schedule_for_stop": {
 		"view_schedule": "Ver horario",
 		"no_am_schedules_available": "No hay horarios AM disponibles",
 		"no_pm_schedules_available": "No hay horarios PM disponibles",
 		"minutes": "Minutos",
 		"hour": "Hora",
-		"selected_date": "Fecha seleccionada",
-		"show_all_routes": "Mostrar todas las rutas",
-		"collapse_all_routes": "Colapsar todas las rutas",
+		"show_all_routes": "Expandir Todo",
+		"collapse_all_routes": "Contraer Todo",
 		"route_schedules": "Horarios de rutas",
 		"no_schedules_available": "No hay horarios disponibles para la fecha seleccionada.",
-		"stop_details": "Detalles de la parada",
-		"select_date": "Seleccionar fecha",
 		"stop_id": "ID de la parada",
-		"direction": "Dirección",
-		"click_for_realtime": "Haga clic aquí para información en tiempo real",
-		"stop_name": "Nombre de la parada"
+		"direction": "Dirección"
 	}
 }

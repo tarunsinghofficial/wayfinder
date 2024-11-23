@@ -2,7 +2,8 @@
 	import { page } from '$app/stores';
 	import LoadingSpinner from '$components/LoadingSpinner.svelte';
 	import ScheduleAccordionItem from '$components/schedule-for-stop/ScheduleAccordionItem.svelte';
-	import StopDetailsHeader from '$components/schedule-for-stop/StopDetailsHeader.svelte';
+	import StopPageHeader from '$components/stops/StopPageHeader.svelte';
+	import StandalonePage from '$components/StandalonePage.svelte';
 	import { formatTime } from '$lib/formatters.js';
 	import { Accordion } from 'flowbite-svelte';
 	import { Datepicker } from 'flowbite-svelte';
@@ -10,7 +11,7 @@
 	import { isLoading } from 'svelte-i18n';
 	import { t } from 'svelte-i18n';
 
-	let selectedDate = '';
+	let selectedDate = new Date();
 	let prevSelectedDate = null;
 	let schedulesMap = new Map();
 	let routeReference = new Map();
@@ -120,62 +121,51 @@
 		expandedItems = expandedItems.map((item, i) => (i === index ? !item : item));
 	}
 
-	onMount(() => {
+	onMount(async () => {
 		const formattedDate = currentDate.toISOString().split('T')[0];
-		fetchScheduleForStop(stopId, formattedDate);
+		await fetchScheduleForStop(stopId, formattedDate);
+		toggleAll(true);
 	});
 </script>
 
-{#if loading || $isLoading}
-	<LoadingSpinner />
-{:else}
-	<div class="mx-auto max-w-7xl overflow-y-auto p-5" style="max-height: calc(100vh - 100px);">
-		<StopDetailsHeader {stopName} {stopId} {stopDirection} />
+<svelte:head>
+	<title>{stopName} - {$t('schedule_for_stop.route_schedules')}</title>
+</svelte:head>
 
-		<div class="flex flex-col gap-6 md:flex-row">
-			<div class="md:w-1/3">
-				<h2 class="mb-4 text-xl font-semibold text-gray-800">
-					{$t('schedule_for_stop.select_date')}
-				</h2>
-				<div class="rounded-lg border border-gray-300 bg-white p-4 shadow">
-					<Datepicker inline bind:value={selectedDate} />
-					<p class="mt-4 text-sm text-gray-600">
-						{$t('schedule_for_stop.selected_date')}: {selectedDate
-							? selectedDate.toLocaleDateString()
-							: currentDate.toLocaleDateString()}
-					</p>
-				</div>
-			</div>
+<StandalonePage>
+	{#if loading || $isLoading}
+		<LoadingSpinner />
+	{:else}
+		<StopPageHeader {stopName} {stopId} {stopDirection} />
 
+		<div class="flex flex-col">
 			<div class="flex flex-1 flex-col">
 				<h2 class="mb-4 text-2xl font-bold text-gray-800">
 					{$t('schedule_for_stop.route_schedules')}
 				</h2>
 
 				<div class="mb-4 flex gap-4">
-					<button
-						class="text-md rounded-lg bg-green-500 px-6 py-2 text-white shadow hover:bg-green-600 active:bg-green-700"
-						on:click={() => toggleAll(true)}
-					>
-						{$t('schedule_for_stop.show_all_routes')}
-					</button>
-					<button
-						class="text-md rounded-lg bg-gray-500 px-6 py-2 text-white shadow hover:bg-gray-600 active:bg-gray-700"
-						on:click={() => toggleAll(false)}
-					>
-						{$t('schedule_for_stop.collapse_all_routes')}
-					</button>
+					<div class="min-w-32">
+						<Datepicker bind:value={selectedDate} inputClass="w-96" />
+					</div>
+
+					<div class="flex-1 text-right">
+						<button class="button" on:click={() => toggleAll(true)}>
+							{$t('schedule_for_stop.show_all_routes')}
+						</button>
+						<button class="button" on:click={() => toggleAll(false)}>
+							{$t('schedule_for_stop.collapse_all_routes')}
+						</button>
+					</div>
 				</div>
 
-				<div
-					class="flex-1 overflow-y-auto rounded-lg border border-gray-200 bg-white p-6 shadow-lg"
-				>
+				<div class="flex-1 rounded-lg border border-gray-200 bg-white p-6">
 					{#if emptySchedules}
 						<p class="text-center text-gray-700">
 							{$t('schedule_for_stop.no_schedules_available')}
 						</p>
 					{:else}
-						<Accordion flush>
+						<Accordion flush multiple>
 							{#each schedules as schedule, index (schedule.tripHeadsign)}
 								<ScheduleAccordionItem
 									{schedule}
@@ -188,5 +178,5 @@
 				</div>
 			</div>
 		</div>
-	</div>
-{/if}
+	{/if}
+</StandalonePage>
