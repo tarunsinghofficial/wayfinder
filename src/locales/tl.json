@@ -73,5 +73,23 @@
 		"data_updated": "Na-update ang data",
 		"no_real_time_data": "Wala kaming real-time na data para sa sasakyang ito ngayon.",
 		"next_stop": "Susunod na hintuan:"
+	},
+	"schedule_for_stop": {
+		"view_schedule": "Tingnan ang iskedyul",
+		"no_am_schedules_available": "Walang magagamit na AM na iskedyul",
+		"no_pm_schedules_available": "Walang magagamit na PM na iskedyul",
+		"minutes": "Minuto",
+		"hour": "Oras",
+		"selected_date": "Napiling petsa",
+		"show_all_routes": "Ipakita ang lahat ng ruta",
+		"collapse_all_routes": "I-collapse ang lahat ng ruta",
+		"route_schedules": "Mga iskedyul ng ruta",
+		"no_schedules_available": "Walang magagamit na iskedyul para sa napiling petsa.",
+		"stop_details": "Mga detalye ng hintuan",
+		"select_date": "Pumili ng petsa",
+		"stop_id": "ID ng hintuan",
+		"direction": "Direksyon",
+		"click_for_realtime": "I-click dito para sa real-time na impormasyon",
+		"stop_name": "Pangalan ng hintuan"
 	}
 }

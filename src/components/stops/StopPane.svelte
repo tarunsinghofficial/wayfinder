@@ -106,12 +106,21 @@
 		{#if arrivalsAndDepartures}
 			<div class="space-y-4">
 				<div>
-					<div class="flex flex-col gap-y-1 rounded-lg bg-[#1C1C1E] bg-opacity-80 p-4">
+					<div class="relative flex flex-col gap-y-1 rounded-lg bg-[#1C1C1E] bg-opacity-80 p-4">
 						<h1 class="h1 mb-0 text-white">{stop.name}</h1>
 						<h2 class="h2 mb-0 text-white">{$t('stop')} #{stop.id}</h2>
 						{#if routeShortNames()}
 							<h2 class="h2 mb-0 text-white">{$t('routes')}: {routeShortNames().join(', ')}</h2>
 						{/if}
+						<div class="mt-auto flex justify-end">
+							<a
+								href={`/stops/${stop.id}/schedule`}
+								class="inline-block rounded-lg border border-green-500 bg-green-500 px-3 py-1 text-sm font-medium text-white shadow-md transition duration-200 ease-in-out hover:bg-green-600"
+								target="_blank"
+							>
+								{$t('schedule_for_stop.view_schedule')}
+							</a>
+						</div>
 					</div>
 				</div>
 				{#if arrivalsAndDepartures.arrivalsAndDepartures.length === 0}

@@ -38,7 +38,7 @@
 			};
 		} else if (scheduledDiff <= 0) {
 			return {
-				status: 'on time',
+				status: `${$t('status.on_time')}`,
 				text: `${$t('status.arrives_on_time')}`,
 				color: 'text-green-500'
 			};

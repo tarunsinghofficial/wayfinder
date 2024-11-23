@@ -74,5 +74,23 @@
 		"data_updated": "የተሻሻለ ውሂብ",
 		"no_real_time_data": "ለዚህ ተሽከርካሪ በእሁድኛ ጊዜ ውሂብ አናስተውላም።",
 		"next_stop": "ቀጣይ ማቆሚያ:"
+	},
+	"schedule_for_stop": {
+		"view_schedule": "ጊዜ ሰንጠረዥን ይመልከቱ",
+		"no_am_schedules_available": "ምንም AM ጊዜ ሰንጠረዦች አልተገኙም",
+		"no_pm_schedules_available": "ምንም PM ጊዜ ሰንጠረዦች አልተገኙም",
+		"minutes": "ደቂቃዎች",
+		"hour": "ሰዓት",
+		"selected_date": "የተመረጠ ቀን",
+		"show_all_routes": "ሁሉንም መንገዶች አሳይ",
+		"collapse_all_routes": "ሁሉንም መንገዶች አጠፋ",
+		"route_schedules": "የመንገድ ጊዜ ሰንጠረዦች",
+		"no_schedules_available": "ምንም ጊዜ ሰንጠረዦች ለተመረጠው ቀን አልተገኙም።",
+		"stop_details": "የማቆሚያ ዝርዝሮች",
+		"select_date": "ቀን ይምረጡ",
+		"stop_id": "የማቆሚያ መታወቂያ",
+		"direction": "አቅጣጫ",
+		"click_for_realtime": "ለትክክለኛ ጊዜ መረጃ እዚህ ጠቅ ያድርጉ",
+		"stop_name": "የማቆሚያ ስም"
 	}
 }

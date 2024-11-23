@@ -2,6 +2,7 @@
 	import { onMount, onDestroy } from 'svelte';
 	import { faBus, faPersonWalking } from '@fortawesome/free-solid-svg-icons';
 	import { FontAwesomeIcon } from '@fortawesome/svelte-fontawesome';
+	import { convertUnixToTime } from '$lib/formatters';
 
 	export let stop;
 	export let tripId;
@@ -13,13 +14,6 @@
 	let error = null;
 	let interval;
 	let busPosition = 0;
-
-	function formatTime(seconds) {
-		if (!seconds) return '';
-		const date = new Date(seconds * 1000);
-		const utcDate = new Date(date.toUTCString().slice(0, -4));
-		return utcDate.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-	}
 
 	function calculateBusPosition() {
 		if (tripDetails && tripDetails.status && tripDetails.status.position) {
@@ -118,7 +112,7 @@
 							<div class="text-md font-semibold text-[#000000] dark:text-white">
 								{stopInfo[tripStop.stopId] ? stopInfo[tripStop.stopId].name : tripStop.stopId}
 							</div>
-							<div class="text-sm text-[#86858B]">{formatTime(tripStop.arrivalTime)}</div>
+							<div class="text-sm text-[#86858B]">{convertUnixToTime(tripStop.arrivalTime)}</div>
 						</div>
 					</div>
 				{/each}
