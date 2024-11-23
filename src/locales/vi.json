@@ -73,5 +73,23 @@
 		"data_updated": "Dữ liệu đã cập nhật",
 		"no_real_time_data": "Hiện tại không có dữ liệu thời gian thực cho xe này.",
 		"next_stop": "Trạm dừng tiếp theo:"
+	},
+	"schedule_for_stop": {
+		"view_schedule": "Xem lịch trình",
+		"no_am_schedules_available": "Không có lịch trình buổi sáng nào khả dụng",
+		"no_pm_schedules_available": "Không có lịch trình buổi chiều nào khả dụng",
+		"minutes": "Phút",
+		"hour": "Giờ",
+		"selected_date": "Ngày đã chọn",
+		"show_all_routes": "Hiển thị tất cả tuyến đường",
+		"collapse_all_routes": "Thu gọn tất cả tuyến đường",
+		"route_schedules": "Lịch trình tuyến đường",
+		"no_schedules_available": "Không có lịch trình nào khả dụng cho ngày đã chọn.",
+		"stop_details": "Chi tiết điểm dừng",
+		"select_date": "Chọn ngày",
+		"stop_id": "Mã điểm dừng",
+		"direction": "Hướng",
+		"click_for_realtime": "Nhấp vào đây để xem thông tin thời gian thực",
+		"stop_name": "Tên điểm dừng"
 	}
 }

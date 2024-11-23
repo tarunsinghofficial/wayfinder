@@ -74,5 +74,23 @@
 		"data_updated": "Dane zaktualizowane",
 		"no_real_time_data": "Obecnie nie mamy danych w czasie rzeczywistym dla tego pojazdu.",
 		"next_stop": "Następny przystanek:"
+	},
+	"schedule_for_stop": {
+		"view_schedule": "Zobacz rozkład",
+		"no_am_schedules_available": "Brak dostępnych rozkładów AM",
+		"no_pm_schedules_available": "Brak dostępnych rozkładów PM",
+		"minutes": "Minuty",
+		"hour": "Godzina",
+		"selected_date": "Wybrana data",
+		"show_all_routes": "Pokaż wszystkie trasy",
+		"collapse_all_routes": "Zwiń wszystkie trasy",
+		"route_schedules": "Rozkłady tras",
+		"no_schedules_available": "Brak dostępnych rozkładów na wybraną datę.",
+		"stop_details": "Szczegóły przystanku",
+		"select_date": "Wybierz datę",
+		"stop_id": "ID przystanku",
+		"direction": "Kierunek",
+		"click_for_realtime": "Kliknij tutaj, aby zobaczyć informacje w czasie rzeczywistym",
+		"stop_name": "Nazwa przystanku"
 	}
 }
