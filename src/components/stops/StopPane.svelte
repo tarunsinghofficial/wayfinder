@@ -118,7 +118,7 @@
 								class="inline-block rounded-lg border border-green-500 bg-green-500 px-3 py-1 text-sm font-medium text-white shadow-md transition duration-200 ease-in-out hover:bg-green-600"
 								target="_blank"
 							>
-								View Schedule
+								{$t('schedule_for_stop.view_schedule')}
 							</a>
 						</div>
 					</div>
