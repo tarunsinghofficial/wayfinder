@@ -40,6 +40,10 @@
 		<div class="relative flex-1">
 			<div class="absolute inset-0 overflow-y-auto">
 				<slot></slot>
+				<div class="mb-4">
+					<!-- this empty footer shows a user that the content in the pane hasn't been cut off. -->
+					&nbsp;
+				</div>
 			</div>
 		</div>
 	</div>
