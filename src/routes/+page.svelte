@@ -10,6 +10,7 @@
 	import StopModal from '$components/stops/StopModal.svelte';
 	import TripPlanModal from '$components/trip-planner/TripPlanModal.svelte';
 	import { browser } from '$app/environment';
+	import { PUBLIC_OBA_REGION_NAME } from '$env/static/public';
 
 	let stop;
 	let selectedTrip = null;
@@ -166,6 +167,10 @@
 		}
 	});
 </script>
+
+<svelte:head>
+	<title>{PUBLIC_OBA_REGION_NAME}</title>
+</svelte:head>
 
 {#if showAlertModal}
 	<AlertsModal {alert} />

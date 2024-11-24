@@ -69,7 +69,7 @@
 	{/if}
 
 	{#if itineraries.length > 0}
-		<div class="flex border-b border-gray-300">
+		<div class="tab-container">
 			<!-- eslint-disable no-unused-vars -->
 			{#each itineraries as _, index}
 				<ItineraryTab {index} {activeTab} {setActiveTab} />

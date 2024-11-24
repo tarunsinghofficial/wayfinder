@@ -75,22 +75,20 @@
 		"no_real_time_data": "We don't have real-time data for this vehicle now.",
 		"next_stop": "Next stop:"
 	},
+	"arrivals_and_departures_for_stop": {
+		"title": "Arrivals and Departures"
+	},
 	"schedule_for_stop": {
 		"view_schedule": "View Schedule",
 		"no_am_schedules_available": "No AM schedules available",
 		"no_pm_schedules_available": "No PM schedules available",
 		"minutes": "Minutes",
 		"hour": "Hour",
-		"selected_date": "Selected date",
 		"show_all_routes": "Show All Routes",
 		"collapse_all_routes": "Collapse All Routes",
 		"route_schedules": "Route Schedules",
 		"no_schedules_available": "No schedules available for the selected date.",
-		"stop_details": "Stop Details",
-		"select_date": "Select Date",
 		"stop_id": "Stop ID",
-		"direction": "Direction",
-		"click_for_realtime": "Click here for real-time info",
-		"stop_name": "Stop Name"
+		"direction": "Direction"
 	}
 }

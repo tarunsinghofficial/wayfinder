@@ -75,22 +75,20 @@
 		"no_real_time_data": "لا توجد بيانات في الوقت الحقيقي لهذه المركبة الآن.",
 		"next_stop": "المحطة التالية:"
 	},
+	"arrivals_and_departures_for_stop": {
+		"title": "الوصول والمغادرة"
+	},
 	"schedule_for_stop": {
 		"view_schedule": "عرض الجدول",
 		"no_am_schedules_available": "لا توجد جداول صباحية متاحة",
 		"no_pm_schedules_available": "لا توجد جداول مسائية متاحة",
 		"minutes": "دقائق",
 		"hour": "ساعة",
-		"selected_date": "التاريخ المحدد",
-		"show_all_routes": "عرض جميع المسارات",
-		"collapse_all_routes": "إخفاء جميع المسارات",
+		"show_all_routes": "توسيع الكل",
+		"collapse_all_routes": "طي الكل",
 		"route_schedules": "جداول المسارات",
 		"no_schedules_available": "لا توجد جداول متاحة للتاريخ المحدد.",
-		"stop_details": "تفاصيل المحطة",
-		"select_date": "اختر التاريخ",
 		"stop_id": "رقم المحطة",
-		"direction": "الاتجاه",
-		"click_for_realtime": "انقر هنا لمعلومات الوقت الفعلي",
-		"stop_name": "اسم المحطة"
+		"direction": "الاتجاه"
 	}
 }
