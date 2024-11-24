@@ -108,11 +108,13 @@
 								/>
 							{/if}
 						</div>
-						<div class="ml-4 flex w-full items-center justify-between">
-							<div class="text-md font-semibold text-[#000000] dark:text-white">
+						<div class="ml-4 flex w-full items-center justify-between space-x-1">
+							<div class="text-md font-semibold dark:text-white">
 								{stopInfo[tripStop.stopId] ? stopInfo[tripStop.stopId].name : tripStop.stopId}
 							</div>
-							<div class="text-sm text-[#86858B]">{convertUnixToTime(tripStop.arrivalTime)}</div>
+							<div class="whitespace-nowrap text-sm text-gray-500">
+								{convertUnixToTime(tripStop.arrivalTime)}
+							</div>
 						</div>
 					</div>
 				{/each}
