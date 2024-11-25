@@ -89,5 +89,16 @@
 		"no_schedules_available": "Walang magagamit na iskedyul para sa napiling petsa.",
 		"stop_id": "ID ng hintuan",
 		"direction": "Direksyon"
+	},
+
+	"direction": {
+		"N": "Hilaga",
+		"NE": "Hilagang-silangan",
+		"E": "Silangan",
+		"SE": "Timog-silangan",
+		"S": "Timog",
+		"SW": "Timog-kanluran",
+		"W": "Kanluran",
+		"NW": "Hilagang-kanluran"
 	}
 }

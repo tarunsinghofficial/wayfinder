@@ -89,5 +89,15 @@
 		"no_schedules_available": "Không có lịch trình nào khả dụng cho ngày đã chọn.",
 		"stop_id": "Mã điểm dừng",
 		"direction": "Hướng"
+	},
+	"direction": {
+		"N": "Bắc",
+		"NE": "Đông Bắc",
+		"E": "Đông",
+		"SE": "Đông Nam",
+		"S": "Nam",
+		"SW": "Tây Nam",
+		"W": "Tây",
+		"NW": "Tây Bắc"
 	}
 }
