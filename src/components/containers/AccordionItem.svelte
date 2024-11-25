@@ -10,7 +10,7 @@
 </script>
 
 <div class="relative">
-	<div class="sticky top-0 z-10 bg-white dark:bg-gray-800">
+	<div class="sticky top-0 z-0 bg-white dark:bg-gray-800">
 		<button
 			type="button"
 			class="flex w-full items-center justify-between py-3 text-left text-base font-medium text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white"
