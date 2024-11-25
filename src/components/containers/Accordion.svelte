@@ -49,7 +49,7 @@
 			return {
 				isActive,
 				skipAnimation,
-				activate: (_data) => {
+				activate: () => {
 					activeItems.update((items) => {
 						const newItems = new Set(items);
 						if (newItems.has(id)) {
