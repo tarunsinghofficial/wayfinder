@@ -10,7 +10,8 @@
 		"lint": "prettier --check . && eslint .",
 		"lint:prettier": "prettier --check .",
 		"lint:eslint": "eslint .",
-		"format": "prettier --write ."
+		"format": "prettier --write .",
+		"prepush": "prettier --write . && prettier --check . && eslint . && vitest run"
 	},
 	"devDependencies": {
 		"@fortawesome/fontawesome-svg-core": "^6.5.2",
