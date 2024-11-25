@@ -401,6 +401,11 @@ export default class OpenStreetMapProvider {
 		this.map.panTo([lat, lng]);
 	}
 
+	flyTo(lat, lng, zoom = 15) {
+		if (!browser || !this.map) return;
+		this.map.flyTo([lat, lng], zoom);
+	}
+
 	setZoom(zoom) {
 		if (!browser || !this.map) return;
 		this.map.setZoom(zoom);

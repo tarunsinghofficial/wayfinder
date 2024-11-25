@@ -137,10 +137,7 @@
 	}
 
 	function updateMarkers() {
-		if (showRoute) {
-			const stopsToShow = allStops.filter((s) => s.routeIds.includes(selectedRoute.id));
-			stopsToShow.forEach((s) => addMarker(s));
-		} else if (!selectedRoute && !isTripPlanModeActive) {
+		if (!selectedRoute && !isTripPlanModeActive) {
 			allStops.forEach((s) => addMarker(s));
 		}
 	}

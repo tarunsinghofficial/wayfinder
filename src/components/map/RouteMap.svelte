@@ -1,4 +1,5 @@
 <script>
+	import { calculateMidpoint } from '$lib/mathUtils';
 	import { clearVehicleMarkersMap, fetchAndUpdateVehicles } from '$lib/vehicleUtils';
 	import { onMount, onDestroy } from 'svelte';
 	export let mapProvider;
@@ -11,19 +12,26 @@
 
 	// used to clear interval api calls
 	let currentIntervalId = null;
+	let loadRouteDataPromise = null;
 
 	onMount(async () => {
-		await loadRouteData();
+		loadRouteDataPromise = loadRouteData();
+		await loadRouteDataPromise;
 	});
 
 	onDestroy(async () => {
 		isMounted = false;
-		mapProvider.removePolyline(await polyline);
-		mapProvider.removeStopMarkers();
-		mapProvider.cleanupInfoWindow();
-		clearInterval(currentIntervalId);
-		clearVehicleMarkersMap(mapProvider);
-		mapProvider.clearVehicleMarkers();
+		if (loadRouteDataPromise) {
+			await loadRouteDataPromise;
+		}
+		await Promise.all([
+			mapProvider.removePolyline(await polyline),
+			mapProvider.removeStopMarkers(),
+			mapProvider.cleanupInfoWindow(),
+			clearInterval(currentIntervalId),
+			clearVehicleMarkersMap(mapProvider),
+			mapProvider.clearVehicleMarkers()
+		]);
 	});
 
 	async function loadRouteData() {
@@ -40,7 +48,6 @@
 			const shapeResponse = await fetch(`/api/oba/shape/${shapeId}`);
 			shapeData = await shapeResponse.json();
 			const shapePoints = shapeData?.data?.entry?.points;
-
 			if (shapePoints && isMounted) {
 				polyline = await mapProvider.createPolyline(shapePoints);
 			}
@@ -48,6 +55,10 @@
 
 		const stopTimes = tripData?.data?.entry?.schedule?.stopTimes ?? [];
 		const stops = tripData?.data?.references?.stops ?? [];
+		// TODO: implement better way to transition to route shape
+		const location = calculateMidpoint(stops);
+
+		mapProvider.flyTo(location.lat, location.lng, 13);
 
 		for (const stopTime of stopTimes) {
 			const stop = stops.find((s) => s.id === stopTime.stopId);
@@ -56,6 +67,8 @@
 			}
 		}
 
-		currentIntervalId = await fetchAndUpdateVehicles(routeId, mapProvider);
+		if (routeId && isMounted) {
+			currentIntervalId = await fetchAndUpdateVehicles(routeId, mapProvider);
+		}
 	}
 </script>

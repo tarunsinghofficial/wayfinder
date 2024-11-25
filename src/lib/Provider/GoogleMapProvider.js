@@ -402,6 +402,10 @@ export default class GoogleMapProvider {
 		this.map.panTo({ lat, lng });
 	}
 
+	flyTo(lat, lng, zoom = 15) {
+		this.map.setZoom(zoom);
+		this.map.setCenter({ lat, lng });
+	}
 	setZoom(zoom) {
 		this.map.setZoom(zoom);
 	}
