@@ -90,5 +90,15 @@
 		"no_schedules_available": "No schedules available for the selected date.",
 		"stop_id": "Stop ID",
 		"direction": "Direction"
+	},
+	"direction": {
+		"N": "North",
+		"NE": "Northeast",
+		"E": "East",
+		"SE": "Southeast",
+		"S": "South",
+		"SW": "Southwest",
+		"W": "West",
+		"NW": "Northwest"
 	}
 }

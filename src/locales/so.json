@@ -90,5 +90,15 @@
 		"no_schedules_available": "Jadwal lama heli karo taariikhda la doortay.",
 		"stop_id": "Aqoonsiga joogsiga",
 		"direction": "Jihada"
+	},
+	"direction": {
+		"N": "Waqooyi",
+		"NE": "Waqooyi Bari",
+		"E": "Bari",
+		"SE": "Koonfur Bari",
+		"S": "Koonfur",
+		"SW": "Koonfur Galbeed",
+		"W": "Galbeed",
+		"NW": "Waqooyi Galbeed"
 	}
 }

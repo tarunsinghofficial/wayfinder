@@ -90,5 +90,15 @@
 		"no_schedules_available": "Brak dostępnych rozkładów na wybraną datę.",
 		"stop_id": "ID przystanku",
 		"direction": "Kierunek"
+	},
+	"direction": {
+		"N": "Północ",
+		"NE": "Północny wschód",
+		"E": "Wschód",
+		"SE": "Południowy wschód",
+		"S": "Południe",
+		"SW": "Południowy zachód",
+		"W": "Zachód",
+		"NW": "Północny zachód"
 	}
 }
