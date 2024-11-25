@@ -1,15 +1,10 @@
 <script>
-	export let routeShortName;
-	export let tripHeadsign;
-	export let scheduledArrivalTime;
-	export let predictedArrivalTime;
-	export let tripId;
-	export let vehicleId;
-	export let serviceDate;
-	import { createEventDispatcher } from 'svelte';
+	export let arrivalDeparture;
+	let routeShortName = arrivalDeparture.routeShortName;
+	let tripHeadsign = arrivalDeparture.tripHeadsign;
+	let scheduledArrivalTime = arrivalDeparture.scheduledArrivalTime;
+	let predictedArrivalTime = arrivalDeparture.predictedArrivalTime;
 	import { t } from 'svelte-i18n';
-
-	const dispatch = createEventDispatcher();
 
 	function formatTime(time) {
 		const date = new Date(time);
@@ -62,39 +57,21 @@
 
 		return `${Math.floor((chosenTime - now) / 60000)}m`;
 	}
-
-	function handleTripDetail() {
-		dispatch('showTripDetails', {
-			tripId,
-			vehicleId,
-			serviceDate,
-			routeShortName,
-			tripHeadsign,
-			scheduledArrivalTime,
-			timeToReach: calculateTimeToReach(predictedArrivalTime, scheduledArrivalTime),
-			arrivalStatus: getArrivalStatus(predictedArrivalTime, scheduledArrivalTime)
-		});
-	}
 </script>
 
-<button
-	on:click={handleTripDetail}
-	class="flex h-auto w-full items-center justify-between border-b-[1px] border-[#C6C6C8] bg-[#ffffff] p-4 hover:cursor-pointer hover:bg-[#e3e3e3] dark:border-[#313135] dark:bg-[#1c1c1c] hover:dark:bg-[#363636]"
->
-	<div class="flex flex-col gap-1">
-		<p class="text-left text-xl font-semibold text-black dark:text-white">
-			{routeShortName} - {tripHeadsign}
-		</p>
-		<p class="text-left font-semibold text-black dark:text-white">
-			<span class="text-md">{formatTime(scheduledArrivalTime)}</span> -
-			<span class={getArrivalStatus(predictedArrivalTime, scheduledArrivalTime).color}>
-				{getArrivalStatus(predictedArrivalTime, scheduledArrivalTime).text}
-			</span>
-		</p>
-	</div>
-	<div>
-		<p class="text-lg font-semibold text-black dark:text-white">
-			{calculateTimeToReach(predictedArrivalTime, scheduledArrivalTime)}
-		</p>
-	</div>
-</button>
+<div class="flex flex-col gap-1">
+	<p class="text-left text-xl font-semibold text-black dark:text-white">
+		{routeShortName} - {tripHeadsign}
+	</p>
+	<p class="text-left font-semibold text-black dark:text-white">
+		<span class="text-md">{formatTime(scheduledArrivalTime)}</span> -
+		<span class={getArrivalStatus(predictedArrivalTime, scheduledArrivalTime).color}>
+			{getArrivalStatus(predictedArrivalTime, scheduledArrivalTime).text}
+		</span>
+	</p>
+</div>
+<div>
+	<p class="text-lg font-semibold text-black dark:text-white">
+		{calculateTimeToReach(predictedArrivalTime, scheduledArrivalTime)}
+	</p>
+</div>
