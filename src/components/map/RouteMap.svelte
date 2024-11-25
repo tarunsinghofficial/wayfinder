@@ -11,19 +11,26 @@
 
 	// used to clear interval api calls
 	let currentIntervalId = null;
+	let loadRouteDataPromise = null;
 
 	onMount(async () => {
-		await loadRouteData();
+		loadRouteDataPromise = loadRouteData();
+		await loadRouteDataPromise;
 	});
 
 	onDestroy(async () => {
 		isMounted = false;
-		mapProvider.removePolyline(await polyline);
-		mapProvider.removeStopMarkers();
-		mapProvider.cleanupInfoWindow();
-		clearInterval(currentIntervalId);
-		clearVehicleMarkersMap(mapProvider);
-		mapProvider.clearVehicleMarkers();
+		if (loadRouteDataPromise) {
+			await loadRouteDataPromise;
+		}
+		await Promise.all([
+			mapProvider.removePolyline(await polyline),
+			mapProvider.removeStopMarkers(),
+			mapProvider.cleanupInfoWindow(),
+			clearInterval(currentIntervalId),
+			clearVehicleMarkersMap(mapProvider),
+			mapProvider.clearVehicleMarkers()
+		]);
 	});
 
 	async function loadRouteData() {
@@ -56,6 +63,8 @@
 			}
 		}
 
-		currentIntervalId = await fetchAndUpdateVehicles(routeId, mapProvider);
+		if (routeId && isMounted) {
+			currentIntervalId = await fetchAndUpdateVehicles(routeId, mapProvider);
+		}
 	}
 </script>
