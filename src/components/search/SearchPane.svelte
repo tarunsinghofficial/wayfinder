@@ -2,7 +2,6 @@
 	import SearchField from '$components/search/SearchField.svelte';
 	import SearchResultItem from '$components/search/SearchResultItem.svelte';
 	import { createEventDispatcher, onMount } from 'svelte';
-	import { compassDirection } from '$lib/formatters';
 	import { prioritizedRouteTypeForDisplay } from '$config/routeConfig';
 	import { faMapPin, faSignsPost } from '@fortawesome/free-solid-svg-icons';
 	import { t } from 'svelte-i18n';
@@ -154,14 +153,13 @@
 						/>
 					{/each}
 				{/if}
-
 				{#if stops?.length > 0}
 					{#each stops as stop}
 						<SearchResultItem
 							on:click={() => handleStopClick(stop)}
 							icon={faSignsPost}
 							title={stop.name}
-							subtitle={`${compassDirection(stop.direction)}; Code: ${stop.code}`}
+							subtitle={`${stop.direction ? $t(`direction.${stop.direction}`) : ''}; Code: ${stop.code}`}
 						/>
 					{/each}
 				{/if}
