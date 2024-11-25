@@ -1,14 +1,7 @@
 <script>
-	import { createEventDispatcher } from 'svelte';
 	import { t } from 'svelte-i18n';
 
 	export let schedule;
-
-	const dispatch = createEventDispatcher();
-
-	function handleToggle() {
-		dispatch('toggle');
-	}
 
 	function formatHour(hour) {
 		const hourInt = +hour;

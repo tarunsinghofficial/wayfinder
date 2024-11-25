@@ -20,10 +20,10 @@
 	let stopName = '';
 	let stopId = '';
 	let stopDirection = '';
-	let expandedItems = [];
 	let loading = true;
 	let emptySchedules = false;
 	let currentDate = new Date();
+	let accordionComponent;
 
 	$: stopId = $page.params.stopID;
 
@@ -55,7 +55,6 @@
 		if (!scheduleForStop.entry.stopRouteSchedules.length) {
 			emptySchedules = true;
 			schedules = [];
-			expandedItems = [];
 			return;
 		}
 
@@ -64,7 +63,6 @@
 		processRouteSchedules(scheduleForStop.entry.stopRouteSchedules);
 
 		schedules = Array.from(schedulesMap.values());
-		expandedItems = schedules.map(() => false);
 	}
 
 	function mapRoutes(routes) {
@@ -114,18 +112,10 @@
 		return grouped;
 	}
 
-	function toggleAll(expand) {
-		expandedItems = schedules.map(() => expand);
-	}
-
-	function toggleAccordion(index) {
-		expandedItems = expandedItems.map((item, i) => (i === index ? !item : item));
-	}
-
 	onMount(async () => {
 		const formattedDate = currentDate.toISOString().split('T')[0];
 		await fetchScheduleForStop(stopId, formattedDate);
-		toggleAll(true);
+		accordionComponent.openAll();
 	});
 </script>
 
@@ -151,10 +141,10 @@
 					</div>
 
 					<div class="flex-1 text-right">
-						<button class="button" on:click={() => toggleAll(true)}>
+						<button class="button" on:click={() => accordionComponent.openAll()}>
 							{$t('schedule_for_stop.show_all_routes')}
 						</button>
-						<button class="button" on:click={() => toggleAll(false)}>
+						<button class="button" on:click={() => accordionComponent.closeAll()}>
 							{$t('schedule_for_stop.collapse_all_routes')}
 						</button>
 					</div>
@@ -166,8 +156,8 @@
 							{$t('schedule_for_stop.no_schedules_available')}
 						</p>
 					{:else}
-						<Accordion>
-							{#each schedules as schedule, index (schedule.tripHeadsign)}
+						<Accordion bind:this={accordionComponent}>
+							{#each schedules as schedule}
 								<AccordionItem>
 									<span slot="header">{schedule.tripHeadsign}</span>
 									<RouteScheduleTable {schedule} />

@@ -2,29 +2,58 @@
 	import { setContext } from 'svelte';
 	import { writable, derived } from 'svelte/store';
 
-	// Create a store to track the active item
-	const activeItem = writable(null);
+	// Props to track all possible item IDs
+	export let items = [];
+
+	// Create a store to track multiple active items using a Set
+	const activeItems = writable(new Set());
 
 	// Create dispatch for activeChanged event
 	import { createEventDispatcher } from 'svelte';
 	const dispatch = createEventDispatcher();
 
-	// Watch for changes to activeItem and dispatch event
+	// Methods to open/close all items
+	export const openAll = () => {
+		activeItems.set(new Set(items));
+		dispatch('openAll');
+	};
+
+	export const closeAll = () => {
+		activeItems.set(new Set());
+		dispatch('closeAll');
+	};
+
+	// Watch for changes to activeItems and dispatch event
 	$: {
-		dispatch('activeChanged', { activeItem: $activeItem });
+		dispatch('activeChanged', { activeItems: Array.from($activeItems) });
 	}
 
-	// Provide context for child AccordionItems
+	// Provide context for child AccordionItems and expose methods
 	setContext('accordion', {
 		registerItem: (id) => {
-			const isActive = derived(activeItem, ($activeItem) => $activeItem === id);
+			// Add the item ID to our items array if not already present
+			if (!items.includes(id)) {
+				items = [...items, id];
+			}
+
+			const isActive = derived(activeItems, ($activeItems) => $activeItems.has(id));
 			return {
 				isActive,
 				activate: () => {
-					activeItem.set($activeItem === id ? null : id);
+					activeItems.update((items) => {
+						const newItems = new Set(items);
+						if (newItems.has(id)) {
+							newItems.delete(id);
+						} else {
+							newItems.add(id);
+						}
+						return newItems;
+					});
 				}
 			};
-		}
+		},
+		openAll,
+		closeAll
 	});
 </script>
 
