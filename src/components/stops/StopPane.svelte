@@ -1,14 +1,12 @@
 <script>
-	import ArrivalDeparture from '../ArrivalDeparture.svelte';
-	import TripDetailsModal from '../navigation/TripDetailsModal.svelte';
+	import ArrivalDeparture from '$components/ArrivalDeparture.svelte';
+	import TripDetailsModal from '$components/navigation/TripDetailsModal.svelte';
 	import LoadingSpinner from '$components/LoadingSpinner.svelte';
 	import { onDestroy, onMount } from 'svelte';
 	import { createEventDispatcher } from 'svelte';
 
 	import '$lib/i18n.js';
-	import { t } from 'svelte-i18n';
-
-	import { isLoading } from 'svelte-i18n';
+	import { isLoading, t } from 'svelte-i18n';
 
 	export let stop;
 	export let arrivalsAndDeparturesResponse = null;
@@ -128,16 +126,12 @@
 						<p>{$t('no_arrivals_or_departures_in_next_30_minutes')}</p>
 					</div>
 				{:else}
-					<div class="space-y-2 overflow-y-scroll rounded-lg">
-						<div>
-							{#each arrivalsAndDepartures.arrivalsAndDepartures as arrival}
-								<ArrivalDeparture
-									arrivalDeparture={arrival}
-									on:showTripDetails={handleShowTripDetails}
-								/>
-							{/each}
-						</div>
-					</div>
+					{#each arrivalsAndDepartures.arrivalsAndDepartures as arrival}
+						<ArrivalDeparture
+							arrivalDeparture={arrival}
+							on:showTripDetails={handleShowTripDetails}
+						/>
+					{/each}
 				{/if}
 			</div>
 		{/if}
