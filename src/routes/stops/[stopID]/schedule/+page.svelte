@@ -30,7 +30,11 @@
 	$: if (selectedDate && selectedDate !== prevSelectedDate) {
 		const formattedDate = selectedDate.toISOString().split('T')[0];
 		prevSelectedDate = selectedDate;
-		fetchScheduleForStop(stopId, formattedDate);
+
+		// we get an error if we try to fetch data on the server
+		if (typeof window !== 'undefined') {
+			fetchScheduleForStop(stopId, formattedDate);
+		}
 	}
 
 	async function fetchScheduleForStop(stopId, date) {
