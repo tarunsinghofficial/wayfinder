@@ -1,11 +1,12 @@
 <script>
 	import { page } from '$app/stores';
 	import LoadingSpinner from '$components/LoadingSpinner.svelte';
-	import ScheduleAccordionItem from '$components/schedule-for-stop/ScheduleAccordionItem.svelte';
+	import RouteScheduleTable from '$components/schedule-for-stop/RouteScheduleTable.svelte';
 	import StopPageHeader from '$components/stops/StopPageHeader.svelte';
 	import StandalonePage from '$components/StandalonePage.svelte';
 	import { formatTime } from '$lib/formatters.js';
-	import { Accordion } from 'flowbite-svelte';
+	import Accordion from '$components/containers/Accordion.svelte';
+	import AccordionItem from '$components/containers/AccordionItem.svelte';
 	import { Datepicker } from 'flowbite-svelte';
 	import { onMount } from 'svelte';
 	import { isLoading } from 'svelte-i18n';
@@ -165,13 +166,12 @@
 							{$t('schedule_for_stop.no_schedules_available')}
 						</p>
 					{:else}
-						<Accordion flush multiple>
+						<Accordion>
 							{#each schedules as schedule, index (schedule.tripHeadsign)}
-								<ScheduleAccordionItem
-									{schedule}
-									expanded={expandedItems[index]}
-									on:toggle={() => toggleAccordion(index)}
-								/>
+								<AccordionItem>
+									<span slot="header">{schedule.tripHeadsign}</span>
+									<RouteScheduleTable {schedule} />
+								</AccordionItem>
 							{/each}
 						</Accordion>
 					{/if}
