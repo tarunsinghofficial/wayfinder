@@ -1,11 +1,12 @@
 <script>
-	export let routeShortName;
-	export let tripHeadsign;
-	export let scheduledArrivalTime;
-	export let predictedArrivalTime;
-	export let tripId;
-	export let vehicleId;
-	export let serviceDate;
+	export let arrivalDeparture;
+	let routeShortName = arrivalDeparture.routeShortName;
+	let tripHeadsign = arrivalDeparture.tripHeadsign;
+	let scheduledArrivalTime = arrivalDeparture.scheduledArrivalTime;
+	let predictedArrivalTime = arrivalDeparture.predictedArrivalTime;
+	let tripId = arrivalDeparture.tripId;
+	let vehicleId = arrivalDeparture.vehicleId;
+	let serviceDate = arrivalDeparture.serviceDate;
 	import { createEventDispatcher } from 'svelte';
 	import { t } from 'svelte-i18n';
 

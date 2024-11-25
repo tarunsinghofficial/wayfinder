@@ -132,13 +132,7 @@
 						<div>
 							{#each arrivalsAndDepartures.arrivalsAndDepartures as arrival}
 								<ArrivalDeparture
-									routeShortName={arrival.routeShortName}
-									tripHeadsign={arrival.tripHeadsign}
-									scheduledArrivalTime={arrival.scheduledArrivalTime}
-									predictedArrivalTime={arrival.predictedArrivalTime}
-									tripId={arrival.tripId}
-									vehicleId={arrival.vehicleId}
-									serviceDate={arrival.serviceDate}
+									arrivalDeparture={arrival}
 									on:showTripDetails={handleShowTripDetails}
 								/>
 							{/each}
