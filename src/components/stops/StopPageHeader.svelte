@@ -12,7 +12,7 @@
 	export let stopDirection;
 </script>
 
-<div class="mb-8 text-center">
+<div class="my-4 text-center">
 	<h1 class="flex items-center justify-center gap-2 text-3xl font-bold text-green-700">
 		{stopName}
 	</h1>
