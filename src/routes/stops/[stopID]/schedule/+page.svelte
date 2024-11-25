@@ -115,7 +115,7 @@
 	onMount(async () => {
 		const formattedDate = currentDate.toISOString().split('T')[0];
 		await fetchScheduleForStop(stopId, formattedDate);
-		accordionComponent.openAll();
+		accordionComponent.openAll(false);
 	});
 </script>
 

@@ -5,6 +5,9 @@
 	// Props to track all possible item IDs
 	export let items = [];
 
+	// Store for animation state
+	const skipAnimation = writable(false);
+
 	// Create a store to track multiple active items using a Set
 	const activeItems = writable(new Set());
 
@@ -13,14 +16,20 @@
 	const dispatch = createEventDispatcher();
 
 	// Methods to open/close all items
-	export const openAll = () => {
+	export const openAll = (animate = true) => {
+		skipAnimation.set(!animate);
 		activeItems.set(new Set(items));
-		dispatch('openAll');
+		dispatch('openAll', { animated: animate });
+		// Reset skip animation after a short delay
+		setTimeout(() => skipAnimation.set(false), 0);
 	};
 
-	export const closeAll = () => {
+	export const closeAll = (animate = true) => {
+		skipAnimation.set(!animate);
 		activeItems.set(new Set());
-		dispatch('closeAll');
+		dispatch('closeAll', { animated: animate });
+		// Reset skip animation after a short delay
+		setTimeout(() => skipAnimation.set(false), 0);
 	};
 
 	// Watch for changes to activeItems and dispatch event
@@ -39,6 +48,7 @@
 			const isActive = derived(activeItems, ($activeItems) => $activeItems.has(id));
 			return {
 				isActive,
+				skipAnimation,
 				activate: () => {
 					activeItems.update((items) => {
 						const newItems = new Set(items);

@@ -3,7 +3,7 @@
 	import { slide } from 'svelte/transition';
 	const id = crypto.randomUUID();
 	const { registerItem } = getContext('accordion');
-	const { isActive, activate } = registerItem(id);
+	const { isActive, skipAnimation, activate } = registerItem(id);
 	function toggle() {
 		activate();
 	}
@@ -34,7 +34,11 @@
 	</div>
 
 	{#if $isActive}
-		<div transition:slide|local>
+		<div
+			transition:slide|local={{
+				duration: $skipAnimation ? 0 : 300
+			}}
+		>
 			<div class="py-3">
 				<slot />
 			</div>
