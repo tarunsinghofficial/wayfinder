@@ -1,11 +1,12 @@
 <script>
 	import { page } from '$app/stores';
 	import LoadingSpinner from '$components/LoadingSpinner.svelte';
-	import ScheduleAccordionItem from '$components/schedule-for-stop/ScheduleAccordionItem.svelte';
+	import RouteScheduleTable from '$components/schedule-for-stop/RouteScheduleTable.svelte';
 	import StopPageHeader from '$components/stops/StopPageHeader.svelte';
 	import StandalonePage from '$components/StandalonePage.svelte';
 	import { formatTime } from '$lib/formatters.js';
-	import { Accordion } from 'flowbite-svelte';
+	import Accordion from '$components/containers/Accordion.svelte';
+	import AccordionItem from '$components/containers/AccordionItem.svelte';
 	import { Datepicker } from 'flowbite-svelte';
 	import { onMount } from 'svelte';
 	import { isLoading } from 'svelte-i18n';
@@ -19,10 +20,10 @@
 	let stopName = '';
 	let stopId = '';
 	let stopDirection = '';
-	let expandedItems = [];
 	let loading = true;
 	let emptySchedules = false;
 	let currentDate = new Date();
+	let accordionComponent;
 
 	$: stopId = $page.params.stopID;
 
@@ -54,7 +55,6 @@
 		if (!scheduleForStop.entry.stopRouteSchedules.length) {
 			emptySchedules = true;
 			schedules = [];
-			expandedItems = [];
 			return;
 		}
 
@@ -63,7 +63,6 @@
 		processRouteSchedules(scheduleForStop.entry.stopRouteSchedules);
 
 		schedules = Array.from(schedulesMap.values());
-		expandedItems = schedules.map(() => false);
 	}
 
 	function mapRoutes(routes) {
@@ -113,18 +112,10 @@
 		return grouped;
 	}
 
-	function toggleAll(expand) {
-		expandedItems = schedules.map(() => expand);
-	}
-
-	function toggleAccordion(index) {
-		expandedItems = expandedItems.map((item, i) => (i === index ? !item : item));
-	}
-
 	onMount(async () => {
 		const formattedDate = currentDate.toISOString().split('T')[0];
 		await fetchScheduleForStop(stopId, formattedDate);
-		toggleAll(true);
+		accordionComponent.openAll(false);
 	});
 </script>
 
@@ -150,10 +141,10 @@
 					</div>
 
 					<div class="flex-1 text-right">
-						<button class="button" on:click={() => toggleAll(true)}>
+						<button class="button" on:click={() => accordionComponent.openAll()}>
 							{$t('schedule_for_stop.show_all_routes')}
 						</button>
-						<button class="button" on:click={() => toggleAll(false)}>
+						<button class="button" on:click={() => accordionComponent.closeAll()}>
 							{$t('schedule_for_stop.collapse_all_routes')}
 						</button>
 					</div>
@@ -165,13 +156,12 @@
 							{$t('schedule_for_stop.no_schedules_available')}
 						</p>
 					{:else}
-						<Accordion flush multiple>
-							{#each schedules as schedule, index (schedule.tripHeadsign)}
-								<ScheduleAccordionItem
-									{schedule}
-									expanded={expandedItems[index]}
-									on:toggle={() => toggleAccordion(index)}
-								/>
+						<Accordion bind:this={accordionComponent}>
+							{#each schedules as schedule}
+								<AccordionItem>
+									<span slot="header">{schedule.tripHeadsign}</span>
+									<RouteScheduleTable {schedule} />
+								</AccordionItem>
 							{/each}
 						</Accordion>
 					{/if}
