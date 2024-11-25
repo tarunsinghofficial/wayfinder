@@ -1,11 +1,14 @@
 <script>
 	import { getContext } from 'svelte';
 	import { slide } from 'svelte/transition';
+
+	export let data = null;
+
 	const id = crypto.randomUUID();
 	const { registerItem } = getContext('accordion');
 	const { isActive, skipAnimation, activate } = registerItem(id);
 	function toggle() {
-		activate();
+		activate(data);
 	}
 </script>
 
