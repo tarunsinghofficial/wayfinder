@@ -1,4 +1,5 @@
 <script>
+	import { calculateMidpoint } from '$lib/mathUtils';
 	import { clearVehicleMarkersMap, fetchAndUpdateVehicles } from '$lib/vehicleUtils';
 	import { onMount, onDestroy } from 'svelte';
 	export let mapProvider;
@@ -47,7 +48,6 @@
 			const shapeResponse = await fetch(`/api/oba/shape/${shapeId}`);
 			shapeData = await shapeResponse.json();
 			const shapePoints = shapeData?.data?.entry?.points;
-
 			if (shapePoints && isMounted) {
 				polyline = await mapProvider.createPolyline(shapePoints);
 			}
@@ -55,6 +55,10 @@
 
 		const stopTimes = tripData?.data?.entry?.schedule?.stopTimes ?? [];
 		const stops = tripData?.data?.references?.stops ?? [];
+		// TODO: implement better way to transition to route shape
+		const location = calculateMidpoint(stops);
+
+		mapProvider.flyTo(location.lat, location.lng, 13);
 
 		for (const stopTime of stopTimes) {
 			const stop = stops.find((s) => s.id === stopTime.stopId);
