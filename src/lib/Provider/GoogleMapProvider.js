@@ -370,7 +370,7 @@ export default class GoogleMapProvider {
 			const arrowSymbol = {
 				path: google.maps.SymbolPath.FORWARD_CLOSED_ARROW,
 				scale: 2,
-				strokeColor: COLORS.POLYLINE_ARROW,
+				strokeColor: COLORS.POLYLINE_ARROW_STROKE,
 				strokeWeight: 3
 			};
 

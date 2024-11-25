@@ -366,12 +366,14 @@ export default class OpenStreetMapProvider {
 			patterns: [
 				{
 					offset: 0,
-					repeat: 50,
+					repeat: 125,
 					symbol: this.L.Symbol.arrowHead({
-						pixelSize: 10,
+						pixelSize: 12,
 						pathOptions: {
-							color: COLORS.POLYLINE_ARROW,
-							fillOpacity: 1
+							color: COLORS.POLYLINE_ARROW_STROKE,
+							fill: true,
+							fillColor: COLORS.POLYLINE_ARROW_FILL,
+							fillOpacity: 0.85
 						}
 					})
 				}
