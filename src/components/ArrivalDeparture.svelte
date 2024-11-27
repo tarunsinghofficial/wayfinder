@@ -1,10 +1,11 @@
 <script>
-	export let arrivalDeparture;
+	import { t } from 'svelte-i18n';
+	let { arrivalDeparture } = $props();
+
 	let routeShortName = arrivalDeparture.routeShortName;
 	let tripHeadsign = arrivalDeparture.tripHeadsign;
 	let scheduledArrivalTime = arrivalDeparture.scheduledArrivalTime;
 	let predictedArrivalTime = arrivalDeparture.predictedArrivalTime;
-	import { t } from 'svelte-i18n';
 
 	function formatTime(time) {
 		const date = new Date(time);
