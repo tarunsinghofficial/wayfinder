@@ -3,7 +3,11 @@
 	import '$lib/i18n';
 	import { t } from 'svelte-i18n';
 
-	let { nextDestination, vehicleId, lastUpdateTime, nextStopName, predicted } = $props();
+	export let nextDestination;
+	export let vehicleId;
+	export let lastUpdateTime;
+	export let nextStopName;
+	export let predicted;
 
 	const lastUpdatedText = formatLastUpdated(lastUpdateTime, {
 		min: $t('time.min'),

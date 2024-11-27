@@ -8,7 +8,6 @@ import PopupContent from '$components/map/PopupContent.svelte';
 import { createVehicleIconSvg } from '$lib/MapHelpers/generateVehicleIcon';
 import VehiclePopupContent from '$components/map/VehiclePopupContent.svelte';
 import TripPlanPinMarker from '$components/trip-planner/tripPlanPinMarker.svelte';
-import { mount } from 'svelte';
 
 export default class OpenStreetMapProvider {
 	constructor() {
@@ -65,16 +64,13 @@ export default class OpenStreetMapProvider {
 
 		const container = document.createElement('div');
 
-		const props = $state({
-			stop: options.stop,
-			icon: options.icon || faBus,
-			onClick: options.onClick || (() => {}),
-			isHighlighted: false
-		});
-
-		const stopMarkerComponent = mount(StopMarker, {
+		const stopMarkerComponent = new StopMarker({
 			target: container,
-			props
+			props: {
+				stop: options.stop,
+				icon: options.icon || faBus,
+				onClick: options.onClick || (() => {})
+			}
 		});
 
 		const customIcon = this.L.divIcon({
@@ -87,8 +83,7 @@ export default class OpenStreetMapProvider {
 			icon: customIcon
 		}).addTo(this.map);
 
-		// marker.stopMarkerComponent = stopMarkerComponent;
-		marker.props = props;
+		marker.stopMarkerComponent = stopMarkerComponent;
 
 		this.markersMap.set(options.stop.id, marker);
 
@@ -100,7 +95,7 @@ export default class OpenStreetMapProvider {
 
 		const container = document.createElement('div');
 
-		mount(TripPlanPinMarker, {
+		new TripPlanPinMarker({
 			target: container,
 			props: {
 				text: text
@@ -130,16 +125,13 @@ export default class OpenStreetMapProvider {
 	highlightMarker(stopId) {
 		const marker = this.markersMap.get(stopId);
 		if (!marker) return;
-
-		// Update the reactive props (linked via $state)
-		marker.props.isHighlighted = true;
+		marker.stopMarkerComponent.$set({ isHighlighted: true });
 	}
 
 	unHighlightMarker(stopId) {
 		const marker = this.markersMap.get(stopId);
 		if (!marker) return;
-
-		marker.props.isHighlighted = false;
+		marker.stopMarkerComponent.$set({ isHighlighted: false });
 	}
 
 	addStopMarker(stop, stopTime = null) {
@@ -165,7 +157,7 @@ export default class OpenStreetMapProvider {
 
 			const popupContainer = document.createElement('div');
 
-			this.popupContentComponent = mount(PopupContent, {
+			this.popupContentComponent = new PopupContent({
 				target: popupContainer,
 				props: {
 					stopName: stop.name,
@@ -236,7 +228,7 @@ export default class OpenStreetMapProvider {
 		marker.on('popupopen', () => {
 			const popupContainer = document.createElement('div');
 
-			marker.popupComponent = mount(VehiclePopupContent, {
+			marker.popupComponent = new VehiclePopupContent({
 				target: popupContainer,
 				props: marker.vehicleData
 			});

@@ -6,26 +6,14 @@
 	import { onDestroy, onMount } from 'svelte';
 	import { t } from 'svelte-i18n';
 
-	/**
-	 * @typedef {Object} Props
-	 * @property {any} mapProvider
-	 * @property {any} [itineraries]
-	 * @property {boolean} [loading]
-	 * @property {any} [fromMarker]
-	 * @property {any} [toMarker]
-	 */
+	export let mapProvider;
+	export let itineraries = [];
+	export let loading = false;
+	export let fromMarker = null;
+	export let toMarker = null;
 
-	/** @type {Props} */
-	let {
-		mapProvider,
-		itineraries = [],
-		loading = false,
-		fromMarker = null,
-		toMarker = null
-	} = $props();
-
-	let expandedSteps = $state({});
-	let activeTab = $state(0);
+	let expandedSteps = {};
+	let activeTab = 0;
 
 	function toggleSteps(index) {
 		expandedSteps[index] = !expandedSteps[index];

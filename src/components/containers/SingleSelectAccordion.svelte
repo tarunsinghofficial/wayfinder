@@ -1,6 +1,4 @@
 <script>
-	import { run } from 'svelte/legacy';
-
 	import { setContext } from 'svelte';
 	import { writable, derived } from 'svelte/store';
 
@@ -10,22 +8,15 @@
 
 	// Create dispatch for activeChanged event
 	import { createEventDispatcher } from 'svelte';
-	/**
-	 * @typedef {Object} Props
-	 * @property {import('svelte').Snippet} [children]
-	 */
-
-	/** @type {Props} */
-	let { children } = $props();
 	const dispatch = createEventDispatcher();
 
 	// Watch for changes to activeItem and dispatch event
-	run(() => {
+	$: {
 		dispatch('activeChanged', {
 			activeItem: $activeItem,
 			activeData: $activeData
 		});
-	});
+	}
 
 	// Provide context for child AccordionItems
 	setContext('accordion', {
@@ -46,5 +37,5 @@
 <div
 	class="divide-y divide-gray-200 border-y border-gray-200 dark:divide-gray-700 dark:border-gray-700"
 >
-	{@render children?.()}
+	<slot />
 </div>

@@ -2,7 +2,9 @@
 	import LegDetails from './LegDetails.svelte';
 	import { formatTime } from '$lib/formatters';
 	import { t } from 'svelte-i18n';
-	let { itinerary, expandedSteps, toggleSteps } = $props();
+	export let itinerary;
+	export let expandedSteps;
+	export let toggleSteps;
 </script>
 
 <div class="mb-4 flex items-center justify-between rounded-lg bg-gray-100 p-4 shadow-md">

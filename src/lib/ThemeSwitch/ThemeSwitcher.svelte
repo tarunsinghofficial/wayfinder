@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { browser } from '$app/environment';
-	let darkMode = $state(true);
+	let darkMode = true;
 
 	function handleThemeSwitch() {
 		darkMode = !darkMode;
@@ -39,7 +39,7 @@
 			id="theme-toggle"
 			class="sr-only"
 			checked={darkMode}
-			onclick={handleThemeSwitch}
+			on:click={handleThemeSwitch}
 		/>
 		<label
 			for="theme-toggle"

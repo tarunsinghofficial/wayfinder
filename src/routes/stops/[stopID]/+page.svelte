@@ -5,7 +5,7 @@
 	import '$lib/i18n.js';
 	import { t } from 'svelte-i18n';
 
-	let { data } = $props();
+	export let data;
 	const stop = data.stopData.entry;
 	const arrivalsAndDeparturesResponse = data.arrivalsAndDeparturesResponse;
 </script>

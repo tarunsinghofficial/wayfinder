@@ -2,21 +2,15 @@
 	import { faCaretUp } from '@fortawesome/free-solid-svg-icons';
 	import { FontAwesomeIcon } from '@fortawesome/svelte-fontawesome';
 
-	/**
-	 * @typedef {Object} Props
-	 * @property {any} stop
-	 * @property {any} onClick
-	 * @property {any} icon
-	 * @property {boolean} [isHighlighted]
-	 */
-
-	/** @type {Props} */
-	let { stop, onClick, icon, isHighlighted = false } = $props();
+	export let stop;
+	export let onClick;
+	export let icon;
+	export let isHighlighted = false;
 </script>
 
 <button
 	class="custom-marker dark:border-[#5a2c2c] {isHighlighted ? 'highlight' : ''}"
-	onclick={onClick}
+	on:click={onClick}
 >
 	<span class="bus-icon dark:text-white">
 		<FontAwesomeIcon {icon} class=" text-black" />

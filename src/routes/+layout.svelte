@@ -6,13 +6,6 @@
 	import '$lib/i18n';
 	import { locale } from 'svelte-i18n';
 	import { onMount } from 'svelte';
-	/**
-	 * @typedef {Object} Props
-	 * @property {import('svelte').Snippet} [children]
-	 */
-
-	/** @type {Props} */
-	let { children } = $props();
 	config.autoAddCss = false; // Tell Font Awesome to skip adding the CSS automatically since it's being imported above
 
 	onMount(() => {
@@ -29,6 +22,6 @@
 <div class="flex h-dvh w-full flex-col">
 	<Header />
 	<div class="relative flex-1 overflow-hidden">
-		{@render children?.()}
+		<slot></slot>
 	</div>
 </div>

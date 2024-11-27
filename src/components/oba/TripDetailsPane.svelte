@@ -4,22 +4,16 @@
 	import { FontAwesomeIcon } from '@fortawesome/svelte-fontawesome';
 	import { convertUnixToTime } from '$lib/formatters';
 
-	/**
-	 * @typedef {Object} Props
-	 * @property {any} stop
-	 * @property {any} tripId
-	 * @property {any} [serviceDate]
-	 */
+	export let stop;
+	export let tripId;
+	export let serviceDate = null;
 
-	/** @type {Props} */
-	let { stop, tripId, serviceDate = null } = $props();
-
-	let tripDetails = $state(null);
-	let routeInfo = $state(null);
-	let stopInfo = $state({});
-	let error = $state(null);
+	let tripDetails = null;
+	let routeInfo = null;
+	let stopInfo = {};
+	let error = null;
 	let interval;
-	let busPosition = $state(0);
+	let busPosition = 0;
 
 	function calculateBusPosition() {
 		if (tripDetails && tripDetails.status && tripDetails.status.position) {

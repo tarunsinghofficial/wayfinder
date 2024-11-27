@@ -2,7 +2,8 @@
 	import { calculateMidpoint } from '$lib/mathUtils';
 	import { clearVehicleMarkersMap, fetchAndUpdateVehicles } from '$lib/vehicleUtils';
 	import { onMount, onDestroy } from 'svelte';
-	let { mapProvider, tripId } = $props();
+	export let mapProvider;
+	export let tripId;
 	let shapeId = null;
 	let polyline;
 	let tripData = null;

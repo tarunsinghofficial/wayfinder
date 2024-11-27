@@ -2,27 +2,13 @@
 	import { faMapMarkerAlt } from '@fortawesome/free-solid-svg-icons';
 	import { FontAwesomeIcon } from '@fortawesome/svelte-fontawesome';
 	import { t } from 'svelte-i18n';
-	/**
-	 * @typedef {Object} Props
-	 * @property {string} [label]
-	 * @property {string} [place]
-	 * @property {any} [results]
-	 * @property {boolean} [isLoading]
-	 * @property {any} onInput
-	 * @property {any} onClear
-	 * @property {any} onSelect
-	 */
-
-	/** @type {Props} */
-	let {
-		label = '',
-		place = $bindable(''),
-		results = [],
-		isLoading = false,
-		onInput,
-		onClear,
-		onSelect
-	} = $props();
+	export let label = '';
+	export let place = '';
+	export let results = [];
+	export let isLoading = false;
+	export let onInput;
+	export let onClear;
+	export let onSelect;
 
 	function handleInput(event) {
 		onInput(event.target.value);
@@ -46,7 +32,7 @@
 			id="location-input"
 			type="text"
 			bind:value={place}
-			oninput={handleInput}
+			on:input={handleInput}
 			placeholder="{$t('trip-planner.search_for_a_place')}..."
 			class="dark: mt-1 block w-full rounded-md border-gray-300 pr-10 text-black shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
 		/>
@@ -54,7 +40,7 @@
 			<button
 				type="button"
 				class="absolute inset-y-0 right-0 flex items-center pr-3"
-				onclick={handleClear}
+				on:click={handleClear}
 			>
 				<svg
 					xmlns="http://www.w3.org/2000/svg"
@@ -84,7 +70,7 @@
 			{#each results as result}
 				<button
 					class="flex w-full cursor-pointer items-center px-4 py-2 text-left hover:bg-gray-100 dark:text-black"
-					onclick={() => handleSelect(result)}
+					on:click={() => handleSelect(result)}
 				>
 					<FontAwesomeIcon icon={faMapMarkerAlt} class="mr-2 text-gray-400  " />
 					{result.text}

@@ -15,7 +15,7 @@
 	import ModalPane from '$components/navigation/ModalPane.svelte';
 	import StopPane from '$components/stops/StopPane.svelte';
 
-	let { stop } = $props();
+	export let stop;
 </script>
 
 <ModalPane on:close title={stop.name}>

@@ -8,9 +8,9 @@
 	import ThemeSwitcher from '$lib/ThemeSwitch/ThemeSwitcher.svelte';
 	import MobileMenu from './MobileMenu.svelte';
 
-	let isMobileMenuOpen = $state(false);
+	let isMobileMenuOpen = false;
 
-	let headerLinks = $state(null);
+	let headerLinks = null;
 
 	if (PUBLIC_NAV_BAR_LINKS) {
 		headerLinks = JSON.parse(PUBLIC_NAV_BAR_LINKS);
@@ -36,7 +36,7 @@
 			</div>
 
 			<div class="flex items-center justify-end md:hidden">
-				<button onclick={toggleNavbar}>
+				<button on:click={toggleNavbar}>
 					<svg
 						class="burger-icon h-6 w-6 text-gray-900 dark:text-white"
 						fill="none"

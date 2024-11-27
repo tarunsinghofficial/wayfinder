@@ -2,15 +2,7 @@
 	import { getContext } from 'svelte';
 	import { slide } from 'svelte/transition';
 
-	/**
-	 * @typedef {Object} Props
-	 * @property {any} [data]
-	 * @property {import('svelte').Snippet} [header]
-	 * @property {import('svelte').Snippet} [children]
-	 */
-
-	/** @type {Props} */
-	let { data = null, header, children } = $props();
+	export let data = null;
 
 	const id = crypto.randomUUID();
 	const { registerItem } = getContext('accordion');
@@ -27,10 +19,10 @@
 			class="flex w-full items-center justify-between py-3 text-left text-base font-medium text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white"
 			class:text-gray-900={$isActive}
 			class:dark:text-white={$isActive}
-			onclick={toggle}
+			on:click={toggle}
 			aria-expanded={$isActive}
 		>
-			{@render header?.()}
+			<slot name="header" />
 			<svg
 				class="h-6 w-6 shrink-0 transition-transform"
 				class:rotate-180={$isActive}
@@ -51,7 +43,7 @@
 			}}
 		>
 			<div class="py-3">
-				{@render children?.()}
+				<slot />
 			</div>
 		</div>
 	{/if}

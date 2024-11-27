@@ -2,14 +2,15 @@
 	import { fly } from 'svelte/transition';
 	import ThemeSwitcher from '$lib/ThemeSwitch/ThemeSwitcher.svelte';
 
-	let { headerLinks = {}, closeMenu } = $props();
+	export let headerLinks = {};
+	export let closeMenu;
 </script>
 
 <div
 	class="fixed inset-0 z-50 flex flex-col items-center justify-center space-y-6 bg-white p-4 dark:bg-black"
 	transition:fly={{ x: 1000, duration: 300 }}
 >
-	<button onclick={closeMenu}>
+	<button on:click={closeMenu}>
 		<svg
 			class="close-icon h-6 w-6 text-gray-900 dark:text-white"
 			fill="none"
@@ -27,7 +28,7 @@
 			<a
 				href={value}
 				class="block text-xl font-semibold text-gray-900 dark:text-white"
-				onclick={closeMenu}>{key}</a
+				on:click={closeMenu}>{key}</a
 			>
 		{/each}
 	</div>

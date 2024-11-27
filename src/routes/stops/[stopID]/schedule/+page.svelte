@@ -1,6 +1,4 @@
 <script>
-	import { run } from 'svelte/legacy';
-
 	import { page } from '$app/stores';
 	import LoadingSpinner from '$components/LoadingSpinner.svelte';
 	import RouteScheduleTable from '$components/schedule-for-stop/RouteScheduleTable.svelte';
@@ -14,18 +12,30 @@
 	import { isLoading } from 'svelte-i18n';
 	import { t } from 'svelte-i18n';
 
-	let selectedDate = $state(new Date());
-	let prevSelectedDate = $state(null);
+	let selectedDate = new Date();
+	let prevSelectedDate = null;
 	let schedulesMap = new Map();
 	let routeReference = new Map();
-	let schedules = $state([]);
-	let stopName = $state('');
-	let stopId = $state('');
-	let stopDirection = $state('');
-	let loading = $state(true);
-	let emptySchedules = $state(false);
+	let schedules = [];
+	let stopName = '';
+	let stopId = '';
+	let stopDirection = '';
+	let loading = true;
+	let emptySchedules = false;
 	let currentDate = new Date();
-	let accordionComponent = $state();
+	let accordionComponent;
+
+	$: stopId = $page.params.stopID;
+
+	$: if (selectedDate && selectedDate !== prevSelectedDate) {
+		const formattedDate = selectedDate.toISOString().split('T')[0];
+		prevSelectedDate = selectedDate;
+
+		// we get an error if we try to fetch data on the server
+		if (typeof window !== 'undefined') {
+			fetchScheduleForStop(stopId, formattedDate);
+		}
+	}
 
 	async function fetchScheduleForStop(stopId, date) {
 		try {
@@ -111,20 +121,6 @@
 		await fetchScheduleForStop(stopId, formattedDate);
 		accordionComponent.openAll(false);
 	});
-	run(() => {
-		stopId = $page.params.stopID;
-	});
-	run(() => {
-		if (selectedDate && selectedDate !== prevSelectedDate) {
-			const formattedDate = selectedDate.toISOString().split('T')[0];
-			prevSelectedDate = selectedDate;
-
-			// we get an error if we try to fetch data on the server
-			if (typeof window !== 'undefined') {
-				fetchScheduleForStop(stopId, formattedDate);
-			}
-		}
-	});
 </script>
 
 <svelte:head>
@@ -149,10 +145,10 @@
 					</div>
 
 					<div class="flex-1 text-right">
-						<button class="button" onclick={() => accordionComponent.openAll()}>
+						<button class="button" on:click={() => accordionComponent.openAll()}>
 							{$t('schedule_for_stop.show_all_routes')}
 						</button>
-						<button class="button" onclick={() => accordionComponent.closeAll()}>
+						<button class="button" on:click={() => accordionComponent.closeAll()}>
 							{$t('schedule_for_stop.collapse_all_routes')}
 						</button>
 					</div>
@@ -167,9 +163,7 @@
 						<Accordion bind:this={accordionComponent}>
 							{#each schedules as schedule}
 								<AccordionItem>
-									{#snippet header()}
-										<span>{schedule.tripHeadsign}</span>
-									{/snippet}
+									<span slot="header">{schedule.tripHeadsign}</span>
 									<RouteScheduleTable {schedule} />
 								</AccordionItem>
 							{/each}

@@ -4,13 +4,7 @@
 
 	const dispatch = createEventDispatcher();
 
-	/**
-	 * @typedef {Object} Props
-	 * @property {string} [value]
-	 */
-
-	/** @type {Props} */
-	let { value = $bindable('') } = $props();
+	export let value = '';
 
 	async function handleSearch() {
 		try {
@@ -60,12 +54,12 @@
 				class="block w-full rounded-none rounded-l-md border-0 py-1.5 pl-10 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-600 sm:text-sm sm:leading-6"
 				placeholder={$t('search.placeholder')}
 				bind:value
-				onkeydown={onHandleSearch}
+				on:keydown={onHandleSearch}
 			/>
 		</div>
 		<button
 			type="button"
-			onclick={onHandleSearch}
+			on:click={onHandleSearch}
 			disabled={!value}
 			class="rotate-rtl relative -ml-px inline-flex items-center gap-x-1.5 rounded-r-md px-3 py-2 text-sm font-semibold text-gray-900 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 disabled:cursor-not-allowed dark:text-gray-300 dark:hover:text-gray-900"
 		>

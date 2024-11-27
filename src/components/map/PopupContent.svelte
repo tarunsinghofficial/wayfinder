@@ -1,5 +1,6 @@
 <script>
-	let { stopName, arrivalTime } = $props();
+	export let stopName;
+	export let arrivalTime;
 </script>
 
 <div class="transform rounded-lg bg-white p-4 shadow-lg">

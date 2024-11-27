@@ -12,13 +12,7 @@
 	import { faArrowRight } from '@fortawesome/free-solid-svg-icons';
 	import { FontAwesomeIcon } from '@fortawesome/svelte-fontawesome';
 
-	/**
-	 * @typedef {Object} Props
-	 * @property {string} [stopDirection]
-	 */
-
-	/** @type {Props} */
-	let { stopDirection = '' } = $props();
+	export let stopDirection = '';
 
 	function rotationAngleClass() {
 		switch (stopDirection) {

@@ -1,12 +1,6 @@
 <script>
-	/**
-	 * @typedef {Object} Props
-	 * @property {string} [text]
-	 * @property {string} [color]
-	 */
-
-	/** @type {Props} */
-	let { text = 'From', color = '#79aa38' } = $props();
+	export let text = 'From';
+	export let color = '#79aa38';
 </script>
 
 <div

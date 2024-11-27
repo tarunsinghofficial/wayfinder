@@ -3,7 +3,9 @@
 	import ModalPane from '$components/navigation/ModalPane.svelte';
 	import { t } from 'svelte-i18n';
 
-	let { selectedRoute, stops, mapProvider } = $props();
+	export let selectedRoute;
+	export let stops;
+	export let mapProvider;
 
 	function handleStopItemClick(event) {
 		const { stop } = event.detail;

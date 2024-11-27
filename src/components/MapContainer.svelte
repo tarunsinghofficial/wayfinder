@@ -1,9 +1,8 @@
-<!-- @migration-task Error while migrating Svelte code: $$props is used together with named props in a way that cannot be automatically migrated. -->
 <script>
 	import '$lib/i18n.js';
 	import MapView from './map/MapView.svelte';
 	import GoogleMapProvider from '$lib/Provider/GoogleMapProvider';
-	import OpenStreetMapProvider from '$lib/Provider/OpenStreetMapProvider.svelte';
+	import OpenStreetMapProvider from '$lib/Provider/OpenStreetMapProvider';
 	import FullPageLoadingSpinner from '$components/FullPageLoadingSpinner.svelte';
 	import { env } from '$env/dynamic/public';
 	import { PUBLIC_OBA_MAP_PROVIDER } from '$env/static/public';

@@ -1,8 +1,9 @@
 <script>
-	import { run } from 'svelte/legacy';
-
 	import { setContext } from 'svelte';
 	import { writable, derived } from 'svelte/store';
+
+	// Props to track all possible item IDs
+	export let items = [];
 
 	// Store for animation state
 	const skipAnimation = writable(false);
@@ -12,14 +13,6 @@
 
 	// Create dispatch for activeChanged event
 	import { createEventDispatcher } from 'svelte';
-	/**
-	 * @typedef {Object} Props
-	 * @property {any} [items] - Props to track all possible item IDs
-	 * @property {import('svelte').Snippet} [children]
-	 */
-
-	/** @type {Props} */
-	let { items = $bindable([]), children } = $props();
 	const dispatch = createEventDispatcher();
 
 	// Methods to open/close all items
@@ -40,9 +33,9 @@
 	};
 
 	// Watch for changes to activeItems and dispatch event
-	$effect(() => {
+	$: {
 		dispatch('activeChanged', { activeItems: Array.from($activeItems) });
-	});
+	}
 
 	// Provide context for child AccordionItems and expose methods
 	setContext('accordion', {
@@ -77,5 +70,5 @@
 <div
 	class="divide-y divide-gray-200 border-y border-gray-200 dark:divide-gray-700 dark:border-gray-700"
 >
-	{@render children?.()}
+	<slot />
 </div>

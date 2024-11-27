@@ -1,6 +1,4 @@
 <script>
-	import { run } from 'svelte/legacy';
-
 	import { browser } from '$app/environment';
 	import { createEventDispatcher, onMount, onDestroy } from 'svelte';
 	import {
@@ -15,30 +13,19 @@
 	import { faBus } from '@fortawesome/free-solid-svg-icons';
 	import { RouteType, routePriorities, prioritizedRouteTypeForDisplay } from '$config/routeConfig';
 	import { isMapLoaded } from '$src/stores/mapStore';
-	/**
-	 * @typedef {Object} Props
-	 * @property {any} [selectedTrip]
-	 * @property {any} [selectedRoute]
-	 * @property {boolean} [showRoute]
-	 * @property {boolean} [showRouteMap]
-	 * @property {any} [mapProvider]
-	 */
 
-	/** @type {Props} */
-	let {
-		selectedTrip = null,
-		selectedRoute = null,
-		showRoute = false,
-		showRouteMap = false,
-		mapProvider = null
-	} = $props();
+	export let selectedTrip = null;
+	export let selectedRoute = null;
+	export let showRoute = false;
+	export let showRouteMap = false;
+	export let mapProvider = null;
 
-	let isTripPlanModeActive = $state(false);
-	let mapInstance = $state(null);
-	let mapElement = $state();
-	let allStops = $state([]);
+	let isTripPlanModeActive = false;
 
+	let mapInstance = null;
+	let mapElement;
 	let markers = [];
+	let allStops = [];
 	let stopsCache = new Map();
 
 	const dispatch = createEventDispatcher();
@@ -155,6 +142,19 @@
 		}
 	}
 
+	$: {
+		if (selectedRoute) {
+			clearAllMarkers();
+			updateMarkers();
+		} else if (!isTripPlanModeActive) {
+			allStops.forEach((s) => addMarker(s));
+		}
+	}
+
+	$: if (isTripPlanModeActive) {
+		clearAllMarkers();
+	}
+
 	function addMarker(s) {
 		if (!mapInstance) {
 			console.error('Map not initialized yet');
@@ -230,19 +230,6 @@
 				element.parentNode.removeChild(element);
 			}
 		});
-	});
-	run(() => {
-		if (selectedRoute) {
-			clearAllMarkers();
-			updateMarkers();
-		} else if (!isTripPlanModeActive) {
-			allStops.forEach((s) => addMarker(s));
-		}
-	});
-	run(() => {
-		if (isTripPlanModeActive) {
-			clearAllMarkers();
-		}
 	});
 </script>
 

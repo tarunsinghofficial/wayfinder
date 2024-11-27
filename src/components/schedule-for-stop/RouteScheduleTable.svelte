@@ -1,7 +1,7 @@
 <script>
 	import { t } from 'svelte-i18n';
 
-	let { schedule } = $props();
+	export let schedule;
 
 	function formatHour(hour) {
 		const hourInt = +hour;
