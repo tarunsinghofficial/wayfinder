@@ -1,4 +1,6 @@
 <script>
+	import { run } from 'svelte/legacy';
+
 	import { pushState } from '$app/navigation';
 	import SearchPane from '$components/search/SearchPane.svelte';
 	import MapContainer from '$components/MapContainer.svelte';
@@ -12,27 +14,27 @@
 	import { browser } from '$app/environment';
 	import { PUBLIC_OBA_REGION_NAME } from '$env/static/public';
 
-	let stop;
-	let selectedTrip = null;
-	let showRoute = false;
-	let selectedRoute = null;
-	let showRouteMap = false;
-	let showAllRoutesModal = false;
-	let showTripPlanModal = false;
-	let showRouteModal;
-	let mapProvider = null;
+	let stop = $state();
+	let selectedTrip = $state(null);
+	let showRoute = $state(false);
+	let selectedRoute = $state(null);
+	let showRouteMap = $state(false);
+	let showAllRoutesModal = $state(false);
+	let showTripPlanModal = $state(false);
+	let showRouteModal = $state();
+	let mapProvider = $state(null);
 	let currentIntervalId = null;
-	let alert = null;
-	let showAlertModal = false;
+	let alert = $state(null);
+	let showAlertModal = $state(false);
 	let polylines = [];
-	let stops = [];
+	let stops = $state([]);
 
-	let tripItineraries = [];
+	let tripItineraries = $state([]);
 	let loadingItineraries = false;
-	let fromMarker = null;
-	let toMarker = null;
+	let fromMarker = $state(null);
+	let toMarker = $state(null);
 
-	$: {
+	run(() => {
 		if (showRouteModal && showAllRoutesModal) {
 			showAllRoutesModal = false;
 		}
@@ -40,7 +42,7 @@
 		if (showAllRoutesModal) {
 			showRouteModal = false;
 		}
-	}
+	});
 
 	let currentHighlightedStopId = null;
 	function stopSelected(event) {

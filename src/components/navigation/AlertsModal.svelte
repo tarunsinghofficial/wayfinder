@@ -3,9 +3,9 @@
 	import { getLocaleFromNavigator } from 'svelte-i18n';
 	import { t } from 'svelte-i18n';
 
-	let showModal = true;
+	let showModal = $state(true);
 
-	export let alert;
+	let { alert } = $props();
 
 	const currentLanguage = String(getLocaleFromNavigator()).split('-')[0];
 
@@ -33,7 +33,7 @@
 	<p class="text-base leading-relaxed text-gray-500 dark:text-gray-200">
 		{getBodyTextTranslation()}
 	</p>
-	<svelte:fragment slot="footer">
+	{#snippet footer()}
 		<div class="flex-1 text-right">
 			<Button
 				class="bg-gray-300 text-black hover:bg-gray-400 dark:bg-gray-700 dark:text-white dark:hover:bg-gray-600"
@@ -48,5 +48,5 @@
 				{$t('alert.more_info')}
 			</Button>
 		</div>
-	</svelte:fragment>
+	{/snippet}
 </Modal>

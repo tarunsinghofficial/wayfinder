@@ -6,10 +6,10 @@
 	import { createEventDispatcher } from 'svelte';
 	import { t } from 'svelte-i18n';
 
-	let routes = [];
-	let filteredRoutes = [];
-	let query = '';
-	let loading = false;
+	let routes = $state([]);
+	let filteredRoutes = $state([]);
+	let query = $state('');
+	let loading = $state(false);
 	const dispatch = createEventDispatcher();
 
 	onMount(async () => {
@@ -79,7 +79,7 @@
 					placeholder={$t('search.search_for_routes')}
 					class="w-full rounded-lg border border-gray-300 p-2 pl-10 text-gray-700 placeholder-gray-500 dark:border-gray-700 dark:text-gray-900 dark:placeholder-gray-900"
 					bind:value={query}
-					on:input={handleSearch}
+					oninput={handleSearch}
 				/>
 				<svg
 					class="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 transform text-gray-500 dark:text-gray-400"

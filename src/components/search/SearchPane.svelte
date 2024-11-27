@@ -14,16 +14,22 @@
 
 	const dispatch = createEventDispatcher();
 
-	export let cssClasses = '';
-	export let mapProvider = null;
+	/**
+	 * @typedef {Object} Props
+	 * @property {string} [cssClasses]
+	 * @property {any} [mapProvider]
+	 */
 
-	let routes = null;
-	let stops = null;
-	let location = null;
-	let query = null;
+	/** @type {Props} */
+	let { cssClasses = '', mapProvider = null } = $props();
+
+	let routes = $state(null);
+	let stops = $state(null);
+	let location = $state(null);
+	let query = $state(null);
 	let polylines = [];
 	let currentIntervalId = null;
-	let mapLoaded = false;
+	let mapLoaded = $state(false);
 
 	function handleLocationClick(location) {
 		clearResults();
@@ -127,7 +133,7 @@
 			{#if query}
 				<p class="text-sm text-gray-700 dark:text-gray-400">
 					{$t('search.results_for')} "{query}".
-					<button type="button" on:click={clearResults} class="text-blue-600 hover:underline">
+					<button type="button" onclick={clearResults} class="text-blue-600 hover:underline">
 						{$t('search.clear_results')}
 					</button>
 				</p>
@@ -169,7 +175,7 @@
 				<button
 					type="button"
 					class="mt-3 text-sm font-medium text-green-600 underline hover:text-green-400 focus:outline-none"
-					on:click={handleViewAllRoutes}
+					onclick={handleViewAllRoutes}
 				>
 					{$t('search.click_here')}
 				</button>

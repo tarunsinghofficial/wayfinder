@@ -6,7 +6,7 @@
 
 	const dispatch = createEventDispatcher();
 
-	let button;
+	let button = $state();
 
 	function handleClick() {
 		if (!navigator.geolocation) {

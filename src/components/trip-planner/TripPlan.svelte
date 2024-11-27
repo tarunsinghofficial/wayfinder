@@ -5,19 +5,19 @@
 	import { error } from '@sveltejs/kit';
 	import { browser } from '$app/environment';
 	import { t } from 'svelte-i18n';
-	export let mapProvider;
+	let { mapProvider } = $props();
 
-	let fromPlace = '';
-	let toPlace = '';
-	let fromResults = [];
-	let toResults = [];
-	let selectedFrom = null;
-	let selectedTo = null;
-	let isLoadingFrom = false;
-	let isLoadingTo = false;
+	let fromPlace = $state('');
+	let toPlace = $state('');
+	let fromResults = $state([]);
+	let toResults = $state([]);
+	let selectedFrom = $state(null);
+	let selectedTo = $state(null);
+	let isLoadingFrom = $state(false);
+	let isLoadingTo = $state(false);
 	let fromMarker;
 	let toMarker;
-	let loading = false;
+	let loading = $state(false);
 	let lockSelectLocation = false;
 
 	const dispatch = createEventDispatcher();
@@ -188,7 +188,7 @@
 	/>
 
 	<button
-		on:click={planTrip}
+		onclick={planTrip}
 		class="mt-4 flex w-full items-center justify-center rounded-md bg-green-500 py-2 text-white shadow-md
            transition-colors
            hover:bg-green-600

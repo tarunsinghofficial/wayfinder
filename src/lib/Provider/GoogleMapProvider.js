@@ -6,6 +6,8 @@ import PopupContent from '$components/map/PopupContent.svelte';
 import VehiclePopupContent from '$components/map/VehiclePopupContent.svelte';
 import { createVehicleIconSvg } from '$lib/MapHelpers/generateVehicleIcon';
 import TripPlanPinMarker from '$components/trip-planner/tripPlanPinMarker.svelte';
+import { mount } from 'svelte';
+
 export default class GoogleMapProvider {
 	constructor(apiKey) {
 		this.apiKey = apiKey;
@@ -53,7 +55,7 @@ export default class GoogleMapProvider {
 			const container = document.createElement('div');
 			document.body.appendChild(container);
 
-			const marker = new StopMarker({
+			const marker = mount(StopMarker, {
 				target: container,
 				props: {
 					stop: options.stop,
@@ -130,7 +132,7 @@ export default class GoogleMapProvider {
 
 			const popupContainer = document.createElement('div');
 
-			this.popupContentComponent = new PopupContent({
+			this.popupContentComponent = mount(PopupContent, {
 				target: popupContainer,
 				props: {
 					stopName: stop.name,
@@ -173,7 +175,7 @@ export default class GoogleMapProvider {
 		const container = document.createElement('div');
 		document.body.appendChild(container);
 
-		new TripPlanPinMarker({
+		mount(TripPlanPinMarker, {
 			target: container,
 			props: {
 				text: text
@@ -253,7 +255,7 @@ export default class GoogleMapProvider {
 		};
 
 		const popupContainer = document.createElement('div');
-		marker.popupComponent = new VehiclePopupContent({
+		marker.popupComponent = mount(VehiclePopupContent, {
 			target: popupContainer,
 			props: vehicleData
 		});

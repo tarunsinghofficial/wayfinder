@@ -8,7 +8,14 @@
 
 	const dispatch = createEventDispatcher();
 
-	export let title = '';
+	/**
+	 * @typedef {Object} Props
+	 * @property {string} [title]
+	 * @property {import('svelte').Snippet} [children]
+	 */
+
+	/** @type {Props} */
+	let { title = '', children } = $props();
 
 	function closePane() {
 		pushState('/');
@@ -27,7 +34,7 @@
 			<div>
 				<button
 					type="button"
-					on:click={closePane}
+					onclick={closePane}
 					use:keybinding={{ code: 'Escape' }}
 					class="close-button"
 				>
@@ -39,7 +46,7 @@
 
 		<div class="relative flex-1">
 			<div class="absolute inset-0 overflow-y-auto">
-				<slot></slot>
+				{@render children?.()}
 				<div class="mb-4">
 					<!-- this empty footer shows a user that the content in the pane hasn't been cut off. -->
 					&nbsp;
