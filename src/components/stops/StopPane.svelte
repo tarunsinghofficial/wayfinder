@@ -1,4 +1,6 @@
 <script>
+	import { run } from 'svelte/legacy';
+
 	import ArrivalDeparture from '$components/ArrivalDeparture.svelte';
 	import TripDetailsPane from '$components/oba/TripDetailsPane.svelte';
 	import LoadingSpinner from '$components/LoadingSpinner.svelte';
@@ -10,15 +12,20 @@
 	import '$lib/i18n.js';
 	import { isLoading, t } from 'svelte-i18n';
 
-	export let stop;
-	export let arrivalsAndDeparturesResponse = null;
+	/**
+	 * @typedef {Object} Props
+	 * @property {any} stop
+	 * @property {any} [arrivalsAndDeparturesResponse]
+	 */
 
-	let arrivalsAndDepartures;
-	let loading = false;
-	let error;
+	/** @type {Props} */
+	let { stop, arrivalsAndDeparturesResponse = $bindable(null) } = $props();
+
+	let arrivalsAndDepartures = $state();
+	let loading = $state(false);
+	let error = $state();
 
 	let interval = null;
-	let initialDataLoaded = false;
 
 	const dispatch = createEventDispatcher();
 
@@ -45,14 +52,11 @@
 		}, 30000);
 	}
 
-	$: if (stop?.id && initialDataLoaded) {
-		clearInterval(interval);
-		resetDataFetchInterval(stop.id);
-	}
-
-	onMount(() => {
-		loadData(stop.id);
-		initialDataLoaded = true;
+	$effect(() => {
+		if (stop?.id) {
+			clearInterval(interval);
+			resetDataFetchInterval(stop.id);
+		}
 	});
 
 	onDestroy(() => {
@@ -118,9 +122,11 @@
 					<Accordion on:activeChanged={handleAccordionSelectionChanged}>
 						{#each arrivalsAndDepartures.arrivalsAndDepartures as arrival}
 							<AccordionItem data={arrival}>
-								<span slot="header">
-									<ArrivalDeparture arrivalDeparture={arrival} />
-								</span>
+								{#snippet header()}
+									<span>
+										<ArrivalDeparture arrivalDeparture={arrival} />
+									</span>
+								{/snippet}
 								<TripDetailsPane {stop} tripId={arrival.tripId} serviceDate={arrival.serviceDate} />
 							</AccordionItem>
 						{/each}
