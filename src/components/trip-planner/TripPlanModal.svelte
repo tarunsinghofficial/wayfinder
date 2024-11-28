@@ -6,14 +6,27 @@
 	import { onDestroy, onMount } from 'svelte';
 	import { t } from 'svelte-i18n';
 
-	export let mapProvider;
-	export let itineraries = [];
-	export let loading = false;
-	export let fromMarker = null;
-	export let toMarker = null;
+	/**
+	 * @typedef {Object} Props
+	 * @property {any} mapProvider
+	 * @property {any} [itineraries]
+	 * @property {boolean} [loading]
+	 * @property {any} [fromMarker]
+	 * @property {any} [toMarker]
+	 */
 
-	let expandedSteps = {};
-	let activeTab = 0;
+	/** @type {Props} */
+	let {
+		mapProvider,
+		itineraries = [],
+		loading = false,
+		fromMarker = null,
+		toMarker = null,
+		closePane
+	} = $props();
+
+	let expandedSteps = $state({});
+	let activeTab = $state(0);
 
 	function toggleSteps(index) {
 		expandedSteps[index] = !expandedSteps[index];
@@ -63,7 +76,7 @@
 	});
 </script>
 
-<ModalPane on:close title={$t('trip-planner.trip_itineraries')}>
+<ModalPane {closePane} title={$t('trip-planner.trip_itineraries')}>
 	{#if loading}
 		<LoadingSpinner />
 	{/if}
