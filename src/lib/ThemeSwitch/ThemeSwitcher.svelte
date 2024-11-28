@@ -39,7 +39,7 @@
 			id="theme-toggle"
 			class="sr-only"
 			checked={darkMode}
-			on:click={handleThemeSwitch}
+			onclick={handleThemeSwitch}
 		/>
 		<label
 			for="theme-toggle"
