@@ -1,14 +1,12 @@
 <script>
 	import { t } from 'svelte-i18n';
-	export let index;
-	export let activeTab;
-	export let setActiveTab;
+	let { index, activeTab, setActiveTab } = $props();
 </script>
 
 <button
 	class="tab-container__item"
 	class:tab-container__item--active={activeTab === index}
-	on:click={() => setActiveTab(index)}
+	onclick={() => setActiveTab(index)}
 >
 	{$t('trip-planner.itinerary')}
 	{index + 1}
