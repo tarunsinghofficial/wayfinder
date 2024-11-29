@@ -7,9 +7,7 @@
 	import { page } from '$app/stores';
 
 	import { t } from 'svelte-i18n';
-	export let stopName;
-	export let stopId;
-	export let stopDirection;
+	let { stopName, stopId, stopDirection } = $props();
 </script>
 
 <div class="my-4 text-center">
