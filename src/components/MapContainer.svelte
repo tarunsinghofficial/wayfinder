@@ -2,7 +2,7 @@
 <script>
 	import '$lib/i18n.js';
 	import MapView from './map/MapView.svelte';
-	import GoogleMapProvider from '$lib/Provider/GoogleMapProvider';
+	import GoogleMapProvider from '$lib/Provider/GoogleMapProvider.svelte';
 	import OpenStreetMapProvider from '$lib/Provider/OpenStreetMapProvider.svelte';
 	import FullPageLoadingSpinner from '$components/FullPageLoadingSpinner.svelte';
 	import { env } from '$env/dynamic/public';
