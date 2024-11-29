@@ -80,10 +80,10 @@
 	}
 
 	function handleSearchResults(results) {
-		routes = results.detail.routes;
-		stops = results.detail.stops;
-		location = results.detail.location;
-		query = results.detail.query;
+		routes = results.routes;
+		stops = results.stops;
+		location = results.location;
+		query = results.query;
 	}
 
 	function clearResults() {
@@ -124,7 +124,7 @@
 <div class={`modal-pane flex flex-col justify-between md:w-96 ${cssClasses}`}>
 	<Tabs tabStyle="underline" contentClass="pt-2 pb-4 bg-gray-50 rounded-lg dark:bg-black">
 		<TabItem open title={$t('tabs.stops-and-stations')} on:click={handleTabSwitch}>
-			<SearchField value={query} on:searchResults={handleSearchResults} />
+			<SearchField value={query} {handleSearchResults} />
 
 			{#if query}
 				<p class="text-sm text-gray-700 dark:text-gray-400">
