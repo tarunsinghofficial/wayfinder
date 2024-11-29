@@ -30,7 +30,7 @@
 				</div>
 			</div>
 
-			<div class="space-y-2 overflow-y-scroll rounded-lg">
+			<div class="space-y-2 rounded-lg">
 				<div>
 					{#each stops as stop}
 						<StopItem {stop} {handleStopItemClick} />
