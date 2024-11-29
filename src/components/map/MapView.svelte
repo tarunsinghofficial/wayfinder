@@ -13,19 +13,31 @@
 	import { faBus } from '@fortawesome/free-solid-svg-icons';
 	import { RouteType, routePriorities, prioritizedRouteTypeForDisplay } from '$config/routeConfig';
 	import { isMapLoaded } from '$src/stores/mapStore';
+	/**
+	 * @typedef {Object} Props
+	 * @property {any} [selectedTrip]
+	 * @property {any} [selectedRoute]
+	 * @property {boolean} [showRoute]
+	 * @property {boolean} [showRouteMap]
+	 * @property {any} [mapProvider]
+	 */
 
-	export let selectedTrip = null;
-	export let selectedRoute = null;
-	export let showRoute = false;
-	export let showRouteMap = false;
-	export let mapProvider = null;
+	/** @type {Props} */
+	let {
+		handleStopMarkerSelect,
+		selectedTrip = null,
+		selectedRoute = null,
+		showRoute = false,
+		showRouteMap = false,
+		mapProvider = null
+	} = $props();
 
-	let isTripPlanModeActive = false;
+	let isTripPlanModeActive = $state(false);
+	let mapInstance = $state(null);
+	let mapElement = $state();
+	let allStops = $state([]);
 
-	let mapInstance = null;
-	let mapElement;
 	let markers = [];
-	let allStops = [];
 	let stopsCache = new Map();
 
 	const dispatch = createEventDispatcher();
@@ -142,19 +154,6 @@
 		}
 	}
 
-	$: {
-		if (selectedRoute) {
-			clearAllMarkers();
-			updateMarkers();
-		} else if (!isTripPlanModeActive) {
-			allStops.forEach((s) => addMarker(s));
-		}
-	}
-
-	$: if (isTripPlanModeActive) {
-		clearAllMarkers();
-	}
-
 	function addMarker(s) {
 		if (!mapInstance) {
 			console.error('Map not initialized yet');
@@ -185,7 +184,7 @@
 			icon: icon,
 			stop: s,
 			onClick: () => {
-				dispatch('stopSelected', { stop: s });
+				handleStopMarkerSelect(s);
 			}
 		});
 
@@ -198,8 +197,7 @@
 		mapInstance.setTheme(darkMode ? 'dark' : 'light');
 	}
 
-	function handleLocationObtained(event) {
-		const { latitude, longitude } = event.detail;
+	function handleLocationObtained(latitude, longitude) {
 		mapInstance.setCenter({ lat: latitude, lng: longitude });
 		mapInstance.addUserLocationMarker({ lat: latitude, lng: longitude });
 	}
@@ -231,6 +229,19 @@
 			}
 		});
 	});
+	$effect(() => {
+		if (selectedRoute) {
+			clearAllMarkers();
+			updateMarkers();
+		} else if (!isTripPlanModeActive) {
+			allStops.forEach((s) => addMarker(s));
+		}
+	});
+	$effect(() => {
+		if (isTripPlanModeActive) {
+			clearAllMarkers();
+		}
+	});
 </script>
 
 <div class="map-container">
@@ -242,7 +253,7 @@
 </div>
 
 <div class="controls">
-	<LocationButton on:locationObtained={handleLocationObtained} />
+	<LocationButton {handleLocationObtained} />
 </div>
 
 <style>
