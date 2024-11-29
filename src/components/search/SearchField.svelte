@@ -10,13 +10,13 @@
 	 */
 
 	/** @type {Props} */
-	let { value = $bindable('') } = $props();
+	let { value = $bindable(''), handleSearchResults } = $props();
 
 	async function handleSearch() {
 		try {
 			const response = await fetch(`/api/oba/search?query=${encodeURIComponent(value)}`);
 			const results = await response.json();
-			dispatch('searchResults', results);
+			handleSearchResults(results);
 		} catch (error) {
 			console.error('Error fetching search results:', error);
 		}
