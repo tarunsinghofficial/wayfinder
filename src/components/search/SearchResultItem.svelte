@@ -1,14 +1,23 @@
 <script>
+	import { createBubbler } from 'svelte/legacy';
+
+	const bubble = createBubbler();
 	import { FontAwesomeIcon } from '@fortawesome/svelte-fontawesome';
-	export let icon = null;
-	export let title = null;
-	export let subtitle = null;
+	/**
+	 * @typedef {Object} Props
+	 * @property {any} [icon]
+	 * @property {any} [title]
+	 * @property {any} [subtitle]
+	 */
+
+	/** @type {Props} */
+	let { icon = null, title = null, subtitle = null } = $props();
 </script>
 
 <button
 	type="button"
-	on:click
-	class="block flex w-full items-center gap-x-4 rounded-md px-2 py-1 text-left hover:bg-gray-200"
+	onclick={bubble('click')}
+	class="flex w-full items-center gap-x-4 rounded-md px-2 py-1 text-left hover:bg-gray-200"
 >
 	<div class="flex items-center gap-x-4">
 		<div
