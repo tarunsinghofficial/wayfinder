@@ -4,8 +4,7 @@
 	import LoadingSpinner from '$components/LoadingSpinner.svelte';
 	import Accordion from '$components/containers/SingleSelectAccordion.svelte';
 	import AccordionItem from '$components/containers/AccordionItem.svelte';
-	import { onDestroy, onMount } from 'svelte';
-	import { createEventDispatcher } from 'svelte';
+	import { onDestroy } from 'svelte';
 
 	import '$lib/i18n.js';
 	import { isLoading, t } from 'svelte-i18n';
@@ -17,15 +16,18 @@
 	 */
 
 	/** @type {Props} */
-	let { stop, arrivalsAndDeparturesResponse = $bindable(null) } = $props();
+	let {
+		handleUpdateRouteMap,
+		tripSelected,
+		stop,
+		arrivalsAndDeparturesResponse = $bindable(null)
+	} = $props();
 
 	let arrivalsAndDepartures = $state();
 	let loading = $state(false);
 	let error = $state();
 
 	let interval = null;
-
-	const dispatch = createEventDispatcher();
 
 	async function loadData(stopID) {
 		loading = true;
@@ -73,10 +75,10 @@
 	}
 
 	function handleAccordionSelectionChanged(event) {
-		const data = event.detail.activeData; // this is the ArrivalDeparture object plumbed into the AccordionItem
+		const data = event.activeData; // this is the ArrivalDeparture object plumbed into the AccordionItem
 		const show = !!data;
-		dispatch('tripSelected', data);
-		dispatch('updateRouteMap', { show });
+		tripSelected({ detail: data });
+		handleUpdateRouteMap({ detail: { show } });
 	}
 </script>
 
@@ -117,7 +119,7 @@
 						<p>{$t('no_arrivals_or_departures_in_next_30_minutes')}</p>
 					</div>
 				{:else}
-					<Accordion on:activeChanged={handleAccordionSelectionChanged}>
+					<Accordion {handleAccordionSelectionChanged}>
 						{#each arrivalsAndDepartures.arrivalsAndDepartures as arrival}
 							<AccordionItem data={arrival}>
 								{#snippet header()}
