@@ -1,7 +1,7 @@
 <script>
 	import SearchField from '$components/search/SearchField.svelte';
 	import SearchResultItem from '$components/search/SearchResultItem.svelte';
-	import { createEventDispatcher, onMount } from 'svelte';
+	import { onMount } from 'svelte';
 	import { prioritizedRouteTypeForDisplay } from '$config/routeConfig';
 	import { faMapPin, faSignsPost } from '@fortawesome/free-solid-svg-icons';
 	import { t } from 'svelte-i18n';
@@ -11,8 +11,6 @@
 	import { env } from '$env/dynamic/public';
 	import TripPlan from '$components/trip-planner/TripPlan.svelte';
 	import { isMapLoaded } from '$src/stores/mapStore';
-
-	const dispatch = createEventDispatcher();
 
 	let {
 		clearPolylines,
