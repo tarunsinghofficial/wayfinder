@@ -1,6 +1,6 @@
 <script>
 	import { browser } from '$app/environment';
-	import { createEventDispatcher, onMount, onDestroy } from 'svelte';
+	import { onMount, onDestroy } from 'svelte';
 	import {
 		PUBLIC_OBA_REGION_CENTER_LAT as initialLat,
 		PUBLIC_OBA_REGION_CENTER_LNG as initialLng
@@ -39,8 +39,6 @@
 
 	let markers = [];
 	let stopsCache = new Map();
-
-	const dispatch = createEventDispatcher();
 
 	function cacheKey(zoomLevel, boundingBox) {
 		const decimalPlaces = 2; // 2 decimal places equals between 0.5 and 1.1 km depending on where you are in the world.
