@@ -6,17 +6,21 @@
 	const activeItem = writable(null);
 	const activeData = writable(null);
 
-	// Create dispatch for activeChanged event
-	import { createEventDispatcher } from 'svelte';
-	const dispatch = createEventDispatcher();
+	/**
+	 * @typedef {Object} Props
+	 * @property {import('svelte').Snippet} [children]
+	 */
+
+	/** @type {Props} */
+	let { children, handleAccordionSelectionChanged } = $props();
 
 	// Watch for changes to activeItem and dispatch event
-	$: {
-		dispatch('activeChanged', {
+	$effect(() => {
+		handleAccordionSelectionChanged({
 			activeItem: $activeItem,
 			activeData: $activeData
 		});
-	}
+	});
 
 	// Provide context for child AccordionItems
 	setContext('accordion', {
@@ -37,5 +41,5 @@
 <div
 	class="divide-y divide-gray-200 border-y border-gray-200 dark:divide-gray-700 dark:border-gray-700"
 >
-	<slot />
+	{@render children?.()}
 </div>
