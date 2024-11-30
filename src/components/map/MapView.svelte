@@ -1,6 +1,6 @@
 <script>
 	import { browser } from '$app/environment';
-	import { createEventDispatcher, onMount, onDestroy } from 'svelte';
+	import { onMount, onDestroy } from 'svelte';
 	import {
 		PUBLIC_OBA_REGION_CENTER_LAT as initialLat,
 		PUBLIC_OBA_REGION_CENTER_LNG as initialLng
@@ -13,22 +13,32 @@
 	import { faBus } from '@fortawesome/free-solid-svg-icons';
 	import { RouteType, routePriorities, prioritizedRouteTypeForDisplay } from '$config/routeConfig';
 	import { isMapLoaded } from '$src/stores/mapStore';
+	/**
+	 * @typedef {Object} Props
+	 * @property {any} [selectedTrip]
+	 * @property {any} [selectedRoute]
+	 * @property {boolean} [showRoute]
+	 * @property {boolean} [showRouteMap]
+	 * @property {any} [mapProvider]
+	 */
 
-	export let selectedTrip = null;
-	export let selectedRoute = null;
-	export let showRoute = false;
-	export let showRouteMap = false;
-	export let mapProvider = null;
+	/** @type {Props} */
+	let {
+		handleStopMarkerSelect,
+		selectedTrip = null,
+		selectedRoute = null,
+		showRoute = false,
+		showRouteMap = false,
+		mapProvider = null
+	} = $props();
 
-	let isTripPlanModeActive = false;
+	let isTripPlanModeActive = $state(false);
+	let mapInstance = $state(null);
+	let mapElement = $state();
+	let allStops = $state([]);
 
-	let mapInstance = null;
-	let mapElement;
 	let markers = [];
-	let allStops = [];
 	let stopsCache = new Map();
-
-	const dispatch = createEventDispatcher();
 
 	function cacheKey(zoomLevel, boundingBox) {
 		const decimalPlaces = 2; // 2 decimal places equals between 0.5 and 1.1 km depending on where you are in the world.
@@ -142,19 +152,6 @@
 		}
 	}
 
-	$: {
-		if (selectedRoute) {
-			clearAllMarkers();
-			updateMarkers();
-		} else if (!isTripPlanModeActive) {
-			allStops.forEach((s) => addMarker(s));
-		}
-	}
-
-	$: if (isTripPlanModeActive) {
-		clearAllMarkers();
-	}
-
 	function addMarker(s) {
 		if (!mapInstance) {
 			console.error('Map not initialized yet');
@@ -185,7 +182,7 @@
 			icon: icon,
 			stop: s,
 			onClick: () => {
-				dispatch('stopSelected', { stop: s });
+				handleStopMarkerSelect(s);
 			}
 		});
 
@@ -198,8 +195,7 @@
 		mapInstance.setTheme(darkMode ? 'dark' : 'light');
 	}
 
-	function handleLocationObtained(event) {
-		const { latitude, longitude } = event.detail;
+	function handleLocationObtained(latitude, longitude) {
 		mapInstance.setCenter({ lat: latitude, lng: longitude });
 		mapInstance.addUserLocationMarker({ lat: latitude, lng: longitude });
 	}
@@ -231,6 +227,19 @@
 			}
 		});
 	});
+	$effect(() => {
+		if (selectedRoute) {
+			clearAllMarkers();
+			updateMarkers();
+		} else if (!isTripPlanModeActive) {
+			allStops.forEach((s) => addMarker(s));
+		}
+	});
+	$effect(() => {
+		if (isTripPlanModeActive) {
+			clearAllMarkers();
+		}
+	});
 </script>
 
 <div class="map-container">
@@ -242,7 +251,7 @@
 </div>
 
 <div class="controls">
-	<LocationButton on:locationObtained={handleLocationObtained} />
+	<LocationButton {handleLocationObtained} />
 </div>
 
 <style>

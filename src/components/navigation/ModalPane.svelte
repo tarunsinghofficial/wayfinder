@@ -3,17 +3,15 @@
 	import { FontAwesomeIcon } from '@fortawesome/svelte-fontawesome';
 	import { faX } from '@fortawesome/free-solid-svg-icons';
 	import { keybinding } from '$lib/keybinding';
-	import { createEventDispatcher } from 'svelte';
-	import { pushState } from '$app/navigation';
 
-	const dispatch = createEventDispatcher();
+	/**
+	 * @typedef {Object} Props
+	 * @property {string} [title]
+	 * @property {import('svelte').Snippet} [children]
+	 */
 
-	export let title = '';
-
-	function closePane() {
-		pushState('/');
-		dispatch('close');
-	}
+	/** @type {Props} */
+	let { title = '', children, closePane } = $props();
 </script>
 
 <div
@@ -27,7 +25,7 @@
 			<div>
 				<button
 					type="button"
-					on:click={closePane}
+					onclick={closePane}
 					use:keybinding={{ code: 'Escape' }}
 					class="close-button"
 				>
@@ -39,7 +37,7 @@
 
 		<div class="relative flex-1">
 			<div class="absolute inset-0 overflow-y-auto">
-				<slot></slot>
+				{@render children?.()}
 				<div class="mb-4">
 					<!-- this empty footer shows a user that the content in the pane hasn't been cut off. -->
 					&nbsp;

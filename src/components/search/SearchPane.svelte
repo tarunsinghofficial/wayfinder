@@ -1,7 +1,7 @@
 <script>
 	import SearchField from '$components/search/SearchField.svelte';
 	import SearchResultItem from '$components/search/SearchResultItem.svelte';
-	import { createEventDispatcher, onMount } from 'svelte';
+	import { onMount } from 'svelte';
 	import { prioritizedRouteTypeForDisplay } from '$config/routeConfig';
 	import { faMapPin, faSignsPost } from '@fortawesome/free-solid-svg-icons';
 	import { t } from 'svelte-i18n';
@@ -12,18 +12,22 @@
 	import TripPlan from '$components/trip-planner/TripPlan.svelte';
 	import { isMapLoaded } from '$src/stores/mapStore';
 
-	const dispatch = createEventDispatcher();
+	let {
+		clearPolylines,
+		handleRouteSelected,
+		handleViewAllRoutes,
+		handleTripPlan,
+		cssClasses = '',
+		mapProvider = null
+	} = $props();
 
-	export let cssClasses = '';
-	export let mapProvider = null;
-
-	let routes = null;
-	let stops = null;
-	let location = null;
-	let query = null;
+	let routes = $state(null);
+	let stops = $state(null);
+	let location = $state(null);
+	let query = $state(null);
 	let polylines = [];
 	let currentIntervalId = null;
-	let mapLoaded = false;
+	let mapLoaded = $state(false);
 
 	function handleLocationClick(location) {
 		clearResults();
@@ -31,14 +35,12 @@
 		const lng = location.geometry.location.lng;
 		mapProvider.panTo(lat, lng);
 		mapProvider.setZoom(20);
-		dispatch('locationSelected', { location });
 	}
 
 	function handleStopClick(stop) {
 		clearResults();
 		mapProvider.panTo(stop.lat, stop.lon);
 		mapProvider.setZoom(20);
-		dispatch('stopSelected', { stop });
 	}
 
 	async function handleRouteClick(route) {
@@ -47,6 +49,9 @@
 		const stopsForRoute = await response.json();
 		const stops = stopsForRoute.data.references.stops;
 		const polylinesData = stopsForRoute.data.entry.polylines;
+
+		const midpoint = calculateMidpoint(stopsForRoute.data.references.stops);
+		mapProvider.flyTo(midpoint.lat, midpoint.lng, 12);
 
 		for (const polylineData of polylinesData) {
 			const shape = polylineData.points;
@@ -57,10 +62,15 @@
 
 		await showStopsOnRoute(stops);
 		currentIntervalId = await fetchAndUpdateVehicles(route.id, mapProvider);
-		const midpoint = calculateMidpoint(stopsForRoute.data.references.stops);
-		mapProvider.panTo(midpoint.lat, midpoint.lng);
-		mapProvider.setZoom(12);
-		dispatch('routeSelected', { route, stopsForRoute, stops, polylines, currentIntervalId });
+
+		const routeData = {
+			route,
+			stops,
+			polylines,
+			currentIntervalId
+		};
+
+		handleRouteSelected(routeData);
 	}
 
 	async function showStopsOnRoute(stops) {
@@ -70,19 +80,15 @@
 	}
 
 	function handleSearchResults(results) {
-		routes = results.detail.routes;
-		stops = results.detail.stops;
-		location = results.detail.location;
-		query = results.detail.query;
-	}
-
-	function handleViewAllRoutes() {
-		dispatch('viewAllRoutes');
+		routes = results.routes;
+		stops = results.stops;
+		location = results.location;
+		query = results.query;
 	}
 
 	function clearResults() {
 		if (polylines) {
-			dispatch('clearResults', polylines);
+			clearPolylines();
 		}
 		routes = null;
 		stops = null;
@@ -92,10 +98,6 @@
 		clearVehicleMarkersMap();
 		mapProvider.clearVehicleMarkers();
 		clearInterval(currentIntervalId);
-	}
-
-	function handleTripPlan(event) {
-		dispatch('tripPlanned', event.detail);
 	}
 
 	function handlePlanTripTabClick() {
@@ -122,12 +124,12 @@
 <div class={`modal-pane flex flex-col justify-between md:w-96 ${cssClasses}`}>
 	<Tabs tabStyle="underline" contentClass="pt-2 pb-4 bg-gray-50 rounded-lg dark:bg-black">
 		<TabItem open title={$t('tabs.stops-and-stations')} on:click={handleTabSwitch}>
-			<SearchField value={query} on:searchResults={handleSearchResults} />
+			<SearchField value={query} {handleSearchResults} />
 
 			{#if query}
 				<p class="text-sm text-gray-700 dark:text-gray-400">
 					{$t('search.results_for')} "{query}".
-					<button type="button" on:click={clearResults} class="text-blue-600 hover:underline">
+					<button type="button" onclick={clearResults} class="text-blue-600 hover:underline">
 						{$t('search.clear_results')}
 					</button>
 				</p>
@@ -169,7 +171,7 @@
 				<button
 					type="button"
 					class="mt-3 text-sm font-medium text-green-600 underline hover:text-green-400 focus:outline-none"
-					on:click={handleViewAllRoutes}
+					onclick={handleViewAllRoutes}
 				>
 					{$t('search.click_here')}
 				</button>
@@ -181,7 +183,7 @@
 
 		{#if env.PUBLIC_OTP_SERVER_URL}
 			<TabItem title={$t('tabs.plan_trip')} on:click={handlePlanTripTabClick} disabled={!mapLoaded}>
-				<TripPlan {mapProvider} on:tripPlanned={handleTripPlan} />
+				<TripPlan {mapProvider} {handleTripPlan} />
 			</TabItem>
 		{/if}
 	</Tabs>

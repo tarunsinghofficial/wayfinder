@@ -3,14 +3,14 @@
 	import LoadingSpinner from '$components/LoadingSpinner.svelte';
 	import RouteItem from '$components/RouteItem.svelte';
 	import { onMount } from 'svelte';
-	import { createEventDispatcher } from 'svelte';
 	import { t } from 'svelte-i18n';
 
-	let routes = [];
-	let filteredRoutes = [];
-	let query = '';
-	let loading = false;
-	const dispatch = createEventDispatcher();
+	let { handleModalRouteClick, closePane } = $props();
+
+	let routes = $state([]);
+	let filteredRoutes = $state([]);
+	let query = $state('');
+	let loading = $state(false);
 
 	onMount(async () => {
 		await fetchRoutes();
@@ -44,12 +44,6 @@
 		filterRoutes();
 	}
 
-	function handleRouteClick(event) {
-		const { route } = event.detail;
-
-		dispatch('routeSelected', { route });
-	}
-
 	function filterRoutes() {
 		const lowerCaseQuery = query.toLowerCase();
 		filteredRoutes = routes.filter((route) => {
@@ -66,7 +60,7 @@
 	}
 </script>
 
-<ModalPane on:close title={$t('search.all_routes')}>
+<ModalPane {closePane} title={$t('search.all_routes')}>
 	{#if loading}
 		<LoadingSpinner />
 	{/if}
@@ -79,7 +73,7 @@
 					placeholder={$t('search.search_for_routes')}
 					class="w-full rounded-lg border border-gray-300 p-2 pl-10 text-gray-700 placeholder-gray-500 dark:border-gray-700 dark:text-gray-900 dark:placeholder-gray-900"
 					bind:value={query}
-					on:input={handleSearch}
+					oninput={handleSearch}
 				/>
 				<svg
 					class="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 transform text-gray-500 dark:text-gray-400"
@@ -101,7 +95,7 @@
 			<div>
 				{#if filteredRoutes.length > 0}
 					{#each filteredRoutes as route}
-						<RouteItem {route} on:routeClick={handleRouteClick} />
+						<RouteItem {route} {handleModalRouteClick} />
 					{/each}
 				{:else}
 					<div class="flex h-full items-center justify-center text-gray-400 dark:text-gray-500">

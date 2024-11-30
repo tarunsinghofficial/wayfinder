@@ -4,23 +4,30 @@
 	import LoadingSpinner from '$components/LoadingSpinner.svelte';
 	import Accordion from '$components/containers/SingleSelectAccordion.svelte';
 	import AccordionItem from '$components/containers/AccordionItem.svelte';
-	import { onDestroy, onMount } from 'svelte';
-	import { createEventDispatcher } from 'svelte';
+	import { onDestroy } from 'svelte';
 
 	import '$lib/i18n.js';
 	import { isLoading, t } from 'svelte-i18n';
 
-	export let stop;
-	export let arrivalsAndDeparturesResponse = null;
+	/**
+	 * @typedef {Object} Props
+	 * @property {any} stop
+	 * @property {any} [arrivalsAndDeparturesResponse]
+	 */
 
-	let arrivalsAndDepartures;
-	let loading = false;
-	let error;
+	/** @type {Props} */
+	let {
+		handleUpdateRouteMap,
+		tripSelected,
+		stop,
+		arrivalsAndDeparturesResponse = $bindable(null)
+	} = $props();
+
+	let arrivalsAndDepartures = $state();
+	let loading = $state(false);
+	let error = $state();
 
 	let interval = null;
-	let initialDataLoaded = false;
-
-	const dispatch = createEventDispatcher();
 
 	async function loadData(stopID) {
 		loading = true;
@@ -45,14 +52,11 @@
 		}, 30000);
 	}
 
-	$: if (stop?.id && initialDataLoaded) {
-		clearInterval(interval);
-		resetDataFetchInterval(stop.id);
-	}
-
-	onMount(() => {
-		loadData(stop.id);
-		initialDataLoaded = true;
+	$effect(() => {
+		if (stop?.id) {
+			clearInterval(interval);
+			resetDataFetchInterval(stop.id);
+		}
 	});
 
 	onDestroy(() => {
@@ -71,10 +75,10 @@
 	}
 
 	function handleAccordionSelectionChanged(event) {
-		const data = event.detail.activeData; // this is the ArrivalDeparture object plumbed into the AccordionItem
+		const data = event.activeData; // this is the ArrivalDeparture object plumbed into the AccordionItem
 		const show = !!data;
-		dispatch('tripSelected', data);
-		dispatch('updateRouteMap', { show });
+		tripSelected({ detail: data });
+		handleUpdateRouteMap({ detail: { show } });
 	}
 </script>
 
@@ -115,12 +119,14 @@
 						<p>{$t('no_arrivals_or_departures_in_next_30_minutes')}</p>
 					</div>
 				{:else}
-					<Accordion on:activeChanged={handleAccordionSelectionChanged}>
+					<Accordion {handleAccordionSelectionChanged}>
 						{#each arrivalsAndDepartures.arrivalsAndDepartures as arrival}
 							<AccordionItem data={arrival}>
-								<span slot="header">
-									<ArrivalDeparture arrivalDeparture={arrival} />
-								</span>
+								{#snippet header()}
+									<span>
+										<ArrivalDeparture arrivalDeparture={arrival} />
+									</span>
+								{/snippet}
 								<TripDetailsPane {stop} tripId={arrival.tripId} serviceDate={arrival.serviceDate} />
 							</AccordionItem>
 						{/each}

@@ -1,12 +1,11 @@
 <script>
 	import { onMount } from 'svelte';
-	import { createEventDispatcher } from 'svelte';
 	import { FontAwesomeIcon } from '@fortawesome/svelte-fontawesome';
 	import { faLocationCrosshairs } from '@fortawesome/free-solid-svg-icons';
 
-	const dispatch = createEventDispatcher();
+	let { handleLocationObtained } = $props();
 
-	let button;
+	let button = $state();
 
 	function handleClick() {
 		if (!navigator.geolocation) {
@@ -17,7 +16,7 @@
 		navigator.geolocation.getCurrentPosition(
 			(position) => {
 				const { latitude, longitude } = position.coords;
-				dispatch('locationObtained', { latitude, longitude });
+				handleLocationObtained(latitude, longitude);
 			},
 			() => {
 				alert('Unable to retrieve your location.');

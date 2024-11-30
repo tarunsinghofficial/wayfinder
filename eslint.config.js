@@ -15,7 +15,8 @@ export default [
 				...globals.browser,
 				...globals.node,
 				L: 'readonly',
-				google: 'readonly'
+				google: 'readonly',
+				$state: 'readonly'
 			}
 		}
 	},

@@ -12,27 +12,28 @@
 	import { browser } from '$app/environment';
 	import { PUBLIC_OBA_REGION_NAME } from '$env/static/public';
 
-	let stop;
-	let selectedTrip = null;
-	let showRoute = false;
-	let selectedRoute = null;
-	let showRouteMap = false;
-	let showAllRoutesModal = false;
-	let showTripPlanModal = false;
-	let showRouteModal;
-	let mapProvider = null;
+	let stop = $state();
+	let selectedTrip = $state(null);
+	let showRoute = $state(false);
+	let selectedRoute = $state(null);
+	let showRouteMap = $state(false);
+	let showAllRoutesModal = $state(false);
+	let showTripPlanModal = $state(false);
+	let showRouteModal = $state();
+	let mapProvider = $state(null);
 	let currentIntervalId = null;
-	let alert = null;
-	let showAlertModal = false;
+	let alert = $state(null);
+	let showAlertModal = $state(false);
+	let stops = $state([]);
 	let polylines = [];
-	let stops = [];
 
-	let tripItineraries = [];
+	let tripItineraries = $state([]);
 	let loadingItineraries = false;
-	let fromMarker = null;
-	let toMarker = null;
+	let fromMarker = $state(null);
+	let toMarker = $state(null);
+	let currentHighlightedStopId = null;
 
-	$: {
+	$effect(() => {
 		if (showRouteModal && showAllRoutesModal) {
 			showAllRoutesModal = false;
 		}
@@ -40,11 +41,10 @@
 		if (showAllRoutesModal) {
 			showRouteModal = false;
 		}
-	}
+	});
 
-	let currentHighlightedStopId = null;
-	function stopSelected(event) {
-		stop = event.detail.stop;
+	function handleStopMarkerSelect(stopData) {
+		stop = stopData;
 		pushState(`/stops/${stop.id}`);
 		showAllRoutesModal = false;
 		if (currentHighlightedStopId !== null) {
@@ -54,13 +54,12 @@
 		currentHighlightedStopId = stop.id;
 	}
 
-	function handleShowAllRoutes() {
+	function handleViewAllRoutes() {
 		showRouteModal = false;
 		showAllRoutesModal = true;
 	}
 
-	function handleRouteSelectedFromModal(event) {
-		const route = event.detail.route;
+	function handleModalRouteClick(route) {
 		const customEvent = new CustomEvent('routeSelectedFromModal', {
 			detail: { route }
 		});
@@ -69,6 +68,7 @@
 	}
 
 	function closePane() {
+		pushState('/');
 		if (polylines) {
 			clearPolylines();
 			mapProvider.removeStopMarkers();
@@ -106,17 +106,25 @@
 		showRouteMap = event.detail.show;
 	}
 
-	function handleRouteSelected(event) {
-		selectedRoute = event.detail.route;
-		polylines = event.detail.polylines;
-		stops = event.detail.stops;
-		currentIntervalId = event.detail.currentIntervalId;
+	/**
+	 *
+	 * @param {Object} routeData - The data related to the selected route.
+	 * @param {Object} routeData.route - The selected route object.
+	 * @param {Array} routeData.polylines - An array of polylines for the route.
+	 * @param {Array} routeData.stops - An array of stops for the route.
+	 * @param {number} routeData.currentIntervalId - The current interval ID.
+	 */
+	function handleRouteSelected(routeData) {
+		selectedRoute = routeData.route;
+		polylines = routeData.polylines;
+		stops = routeData.stops;
+		currentIntervalId = routeData.currentIntervalId;
 		showRouteModal = true;
 	}
 
 	function clearPolylines() {
-		polylines.map(async (p) => {
-			mapProvider.removePolyline(await p);
+		polylines.map((p) => {
+			mapProvider.removePolyline(p);
 		});
 
 		mapProvider.removeStopMarkers();
@@ -140,11 +148,17 @@
 			console.error('Error loading alerts:', error);
 		}
 	}
-
-	function handleTripPlan(event) {
-		const tripData = event.detail.data;
-		fromMarker = event.detail.fromMarker;
-		toMarker = event.detail.toMarker;
+	/**
+	 *
+	 * @param {Object} tripPlanData - The data returned from the trip planning API.
+	 * @param {Object} tripPlanData.data - The trip planning data.
+	 * @param {Object} tripPlanData.fromMarker - The marker for the from location.
+	 * @param {Object} tripPlanData.toMarker - The marker for the to location.
+	 */
+	function handleTripPlan(tripPlanData) {
+		const tripData = tripPlanData.data;
+		fromMarker = tripPlanData.fromMarker;
+		toMarker = tripPlanData.toMarker;
 		tripItineraries = tripData.plan?.itineraries;
 		if (!tripItineraries) {
 			console.error('No itineraries found', 404);
@@ -184,31 +198,24 @@
 			<SearchPane
 				{mapProvider}
 				cssClasses="pointer-events-auto"
-				on:routeSelected={handleRouteSelected}
 				on:clearResults={clearPolylines}
-				on:viewAllRoutes={handleShowAllRoutes}
-				on:tripPlanned={handleTripPlan}
+				{handleRouteSelected}
+				{handleViewAllRoutes}
+				{clearPolylines}
+				{handleTripPlan}
 			/>
 
 			<div class="mt-4 flex-1">
 				{#if stop}
-					<StopModal
-						on:close={closePane}
-						on:tripSelected={tripSelected}
-						on:updateRouteMap={handleUpdateRouteMap}
-						{stop}
-					/>
+					<StopModal {closePane} {tripSelected} {handleUpdateRouteMap} {stop} />
 				{/if}
 
 				{#if showRouteModal}
-					<RouteModal on:close={closePane} {mapProvider} {stops} {selectedRoute} />
+					<RouteModal {closePane} {mapProvider} {stops} {selectedRoute} />
 				{/if}
 
 				{#if showAllRoutesModal}
-					<ViewAllRoutesModal
-						on:close={closePane}
-						on:routeSelected={handleRouteSelectedFromModal}
-					/>
+					<ViewAllRoutesModal {closePane} {handleModalRouteClick} />
 				{/if}
 
 				{#if showTripPlanModal}
@@ -218,7 +225,7 @@
 						{fromMarker}
 						{toMarker}
 						loading={loadingItineraries}
-						on:close={closePane}
+						{closePane}
 					/>
 				{/if}
 			</div>
@@ -228,7 +235,7 @@
 	<MapContainer
 		{selectedTrip}
 		{selectedRoute}
-		on:stopSelected={stopSelected}
+		{handleStopMarkerSelect}
 		{showRoute}
 		{showRouteMap}
 		bind:mapProvider

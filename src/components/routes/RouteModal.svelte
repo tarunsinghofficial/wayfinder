@@ -3,15 +3,10 @@
 	import ModalPane from '$components/navigation/ModalPane.svelte';
 	import { t } from 'svelte-i18n';
 
-	export let selectedRoute;
-	export let stops;
-	export let mapProvider;
+	let { selectedRoute, stops, mapProvider, closePane } = $props();
 
-	function handleStopItemClick(event) {
-		const { stop } = event.detail;
-
-		mapProvider.panTo(stop.lat, stop.lon);
-		mapProvider.setZoom(20);
+	function handleStopItemClick(stop) {
+		mapProvider.flyTo(stop.lat, stop.lon, 18);
 	}
 
 	function title() {
@@ -23,7 +18,7 @@
 	}
 </script>
 
-<ModalPane on:close title={title()}>
+<ModalPane {closePane} title={title()}>
 	{#if stops && selectedRoute}
 		<div class="space-y-4">
 			<div>
@@ -35,10 +30,10 @@
 				</div>
 			</div>
 
-			<div class="space-y-2 overflow-y-scroll rounded-lg">
+			<div class="space-y-2 rounded-lg">
 				<div>
 					{#each stops as stop}
-						<StopItem {stop} on:stopClick={handleStopItemClick} />
+						<StopItem {stop} {handleStopItemClick} />
 					{/each}
 				</div>
 			</div>

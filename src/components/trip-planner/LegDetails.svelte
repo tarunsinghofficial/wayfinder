@@ -15,11 +15,10 @@
 	} from '@fortawesome/free-solid-svg-icons';
 	import { FontAwesomeIcon } from '@fortawesome/svelte-fontawesome';
 	import { t } from 'svelte-i18n';
-	export let leg;
-	export let index;
-	export let expandedSteps;
-	export let toggleSteps;
-	let icon, iconColor;
+	let { leg, index, expandedSteps, toggleSteps } = $props();
+	let icon = $state();
+	let iconColor = $state();
+
 	let isWalking = leg.mode === 'WALK';
 
 	// TODO: Add more icons for different modes of transport
@@ -109,7 +108,7 @@
 		</div>
 
 		{#if isWalking}
-			<button class="mt-4 flex items-center text-blue-500" on:click={() => toggleSteps(index)}>
+			<button class="mt-4 flex items-center text-blue-500" onclick={() => toggleSteps(index)}>
 				<FontAwesomeIcon icon={expandedSteps[index] ? faChevronUp : faChevronDown} class="mr-2" />
 				{expandedSteps[index] ? 'Hide Steps' : 'Show Steps'}
 			</button>

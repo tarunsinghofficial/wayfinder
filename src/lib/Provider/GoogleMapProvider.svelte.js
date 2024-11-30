@@ -6,6 +6,8 @@ import PopupContent from '$components/map/PopupContent.svelte';
 import VehiclePopupContent from '$components/map/VehiclePopupContent.svelte';
 import { createVehicleIconSvg } from '$lib/MapHelpers/generateVehicleIcon';
 import TripPlanPinMarker from '$components/trip-planner/tripPlanPinMarker.svelte';
+import { mount, unmount } from 'svelte';
+
 export default class GoogleMapProvider {
 	constructor(apiKey) {
 		this.apiKey = apiKey;
@@ -53,15 +55,16 @@ export default class GoogleMapProvider {
 			const container = document.createElement('div');
 			document.body.appendChild(container);
 
-			const marker = new StopMarker({
+			const props = $state({
+				stop: options.stop,
+				icon: options.icon || faBus,
+				onClick: options.onClick || (() => {}),
+				isHighlighted: false
+			});
+
+			const marker = mount(StopMarker, {
 				target: container,
-				props: {
-					stop: options.stop,
-					icon: options.icon || faBus,
-					onClick: () => {
-						options.onClick && options.onClick();
-					}
-				}
+				props
 			});
 
 			this.markersMap.set(options.stop.id, marker);
@@ -125,12 +128,12 @@ export default class GoogleMapProvider {
 			}
 
 			if (this.popupContentComponent) {
-				this.popupContentComponent.$destroy();
+				unmount(this.popupContentComponent);
 			}
 
 			const popupContainer = document.createElement('div');
 
-			this.popupContentComponent = new PopupContent({
+			this.popupContentComponent = mount(PopupContent, {
 				target: popupContainer,
 				props: {
 					stopName: stop.name,
@@ -150,16 +153,16 @@ export default class GoogleMapProvider {
 
 	highlightMarker(stopId) {
 		const marker = this.markersMap.get(stopId);
-		marker.$set({ isHighlighted: true });
+		if (!marker) return;
+
+		marker.props.isHighlighted = true;
 	}
 
 	unHighlightMarker(stopId) {
 		const marker = this.markersMap.get(stopId);
+		if (!marker) return;
 
-		if (!marker) {
-			return;
-		}
-		marker.$set({ isHighlighted: false });
+		marker.props.isHighlighted = false;
 	}
 
 	removeStopMarkers() {
@@ -173,7 +176,7 @@ export default class GoogleMapProvider {
 		const container = document.createElement('div');
 		document.body.appendChild(container);
 
-		new TripPlanPinMarker({
+		mount(TripPlanPinMarker, {
 			target: container,
 			props: {
 				text: text
@@ -253,7 +256,7 @@ export default class GoogleMapProvider {
 		};
 
 		const popupContainer = document.createElement('div');
-		marker.popupComponent = new VehiclePopupContent({
+		marker.popupComponent = mount(VehiclePopupContent, {
 			target: popupContainer,
 			props: vehicleData
 		});
