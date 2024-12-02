@@ -3,7 +3,7 @@
 </script>
 
 <div
-	class="absolute inset-0 z-10 flex items-center justify-center bg-neutral-800 bg-opacity-80 md:rounded-lg"
+	class="absolute inset-0 z-50 flex items-center justify-center bg-neutral-800 bg-opacity-80 md:rounded-lg"
 >
 	<div class="flex items-center text-white">
 		<svg
