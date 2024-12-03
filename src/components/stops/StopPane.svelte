@@ -119,18 +119,24 @@
 						<p>{$t('no_arrivals_or_departures_in_next_30_minutes')}</p>
 					</div>
 				{:else}
-					<Accordion {handleAccordionSelectionChanged}>
-						{#each arrivalsAndDepartures.arrivalsAndDepartures as arrival}
-							<AccordionItem data={arrival}>
-								{#snippet header()}
-									<span>
-										<ArrivalDeparture arrivalDeparture={arrival} />
-									</span>
-								{/snippet}
-								<TripDetailsPane {stop} tripId={arrival.tripId} serviceDate={arrival.serviceDate} />
-							</AccordionItem>
-						{/each}
-					</Accordion>
+					{#key arrivalsAndDepartures.arrivalsAndDepartures}
+						<Accordion {handleAccordionSelectionChanged}>
+							{#each arrivalsAndDepartures.arrivalsAndDepartures as arrival}
+								<AccordionItem data={arrival}>
+									{#snippet header()}
+										<span>
+											<ArrivalDeparture arrivalDeparture={arrival} />
+										</span>
+									{/snippet}
+									<TripDetailsPane
+										{stop}
+										tripId={arrival.tripId}
+										serviceDate={arrival.serviceDate}
+									/>
+								</AccordionItem>
+							{/each}
+						</Accordion>
+					{/key}
 				{/if}
 			</div>
 		{/if}
