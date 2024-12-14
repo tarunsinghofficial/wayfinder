@@ -5,10 +5,5 @@ export default defineConfig({
 	plugins: [sveltekit()],
 	test: {
 		include: ['src/**/*.{test,spec}.{js,ts}']
-	},
-	esbuild: {
-		supported: {
-			'top-level-await': true
-		}
 	}
 });
