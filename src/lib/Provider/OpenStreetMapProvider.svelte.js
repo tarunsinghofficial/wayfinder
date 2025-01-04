@@ -273,17 +273,19 @@ export default class OpenStreetMapProvider {
 		marker.setLatLng([vehicleStatus.position.lat, vehicleStatus.position.lon]);
 		marker.setIcon(updatedIcon);
 
-		marker.vehicleData = {
+		let vehicleData = $state({
 			...marker.vehicleData,
 			nextDestination: activeTrip.tripHeadsign,
 			vehicleId: vehicleStatus.vehicleId,
 			lastUpdateTime: vehicleStatus.lastUpdateTime,
 			nextStopName: this.stopsMap.get(vehicleStatus.nextStop)?.name || 'N/A',
 			predicted: vehicleStatus.predicted
-		};
+		})
+
+		marker.vehicleData = vehicleData;
 
 		if (marker.isPopupOpen() && marker.popupComponent) {
-			marker.popupComponent.$set(marker.vehicleData);
+			marker.popupComponent = vehicleData
 		}
 	}
 	removeVehicleMarker(marker) {
