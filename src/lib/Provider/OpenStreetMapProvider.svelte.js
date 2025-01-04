@@ -280,12 +280,12 @@ export default class OpenStreetMapProvider {
 			lastUpdateTime: vehicleStatus.lastUpdateTime,
 			nextStopName: this.stopsMap.get(vehicleStatus.nextStop)?.name || 'N/A',
 			predicted: vehicleStatus.predicted
-		})
+		});
 
 		marker.vehicleData = vehicleData;
 
 		if (marker.isPopupOpen() && marker.popupComponent) {
-			marker.popupComponent = vehicleData
+			marker.popupComponent = vehicleData;
 		}
 	}
 	removeVehicleMarker(marker) {
