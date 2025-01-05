@@ -119,7 +119,7 @@
 						<p>{$t('no_arrivals_or_departures_in_next_30_minutes')}</p>
 					</div>
 				{:else}
-					{#key arrivalsAndDepartures.arrivalsAndDepartures}
+					{#key arrivalsAndDepartures.stopId}
 						<Accordion {handleAccordionSelectionChanged}>
 							{#each arrivalsAndDepartures.arrivalsAndDepartures as arrival}
 								<AccordionItem data={arrival}>
