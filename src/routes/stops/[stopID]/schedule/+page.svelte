@@ -157,9 +157,11 @@
 					</div>
 				</div>
 
-				<div class="flex-1 rounded-lg border border-gray-200 bg-white p-6">
+				<div
+					class="flex-1 rounded-lg border border-gray-200 bg-white p-6 dark:border-gray-700 dark:bg-black"
+				>
 					{#if emptySchedules}
-						<p class="text-center text-gray-700">
+						<p class="text-center text-gray-700 dark:text-gray-400">
 							{$t('schedule_for_stop.no_schedules_available')}
 						</p>
 					{:else}
