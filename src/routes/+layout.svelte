@@ -28,7 +28,7 @@
 
 <div class="flex h-dvh w-full flex-col">
 	<Header />
-	<div class="relative flex-1 overflow-hidden">
+	<div class="relative flex-1 overflow-hidden dark:bg-black">
 		{@render children?.()}
 	</div>
 </div>
