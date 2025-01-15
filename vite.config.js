@@ -10,7 +10,7 @@ export default defineConfig({
 			reportsDirectory: './coverage',
 			reporter: ['text', 'html'],
 			all: true,
-			exclude: ['node_modules'],
+			exclude: ['node_modules']
 		}
 	}
 });
