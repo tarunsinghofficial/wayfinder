@@ -8,7 +8,7 @@ export default defineConfig({
 		coverage: {
 			provider: 'v8',
 			reportsDirectory: './coverage',
-			reporter: ['html'],
+			reporter: ['html', 'lcov'],
 			all: true,
 			exclude: ['**/tests', '.svelte-kit', 'build', 'coverage', 'node_modules']
 		}
