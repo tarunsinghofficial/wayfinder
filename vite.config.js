@@ -10,12 +10,7 @@ export default defineConfig({
 			reportsDirectory: './coverage',
 			reporter: ['text', 'html'],
 			all: true,
-			exclude: [
-				'node_modules',
-				'coverage',
-				'.svelte-kit',
-				'build',
-			]
+			exclude: ['node_modules', 'coverage', '.svelte-kit', 'build']
 		}
 	}
 });
