@@ -8,140 +8,133 @@ vi.mock('onebusaway-sdk');
 
 // Mock @sveltejs/kit error and json functions
 vi.mock('@sveltejs/kit', () => ({
-    error: vi.fn((status, message) => { 
-        throw new Error(message);
-    }),
-    json: vi.fn((data) => ({
-        status: 200,
-        body: data
-    }))
+	error: vi.fn((status, message) => {
+		throw new Error(message);
+	}),
+	json: vi.fn((data) => ({
+		status: 200,
+		body: data
+	}))
 }));
 
 // Mock environment variables
 vi.mock('$env/static/public', () => ({
-    PUBLIC_OBA_SERVER_URL: 'https://test-api.example.com'
+	PUBLIC_OBA_SERVER_URL: 'https://test-api.example.com'
 }));
 
 vi.mock('$env/static/private', () => ({
-    PRIVATE_OBA_API_KEY: 'test-api-key'
+	PRIVATE_OBA_API_KEY: 'test-api-key'
 }));
 
 describe('OneBusAway Client', () => {
-    beforeEach(() => {
-        vi.clearAllMocks();
-    });
+	beforeEach(() => {
+		vi.clearAllMocks();
+	});
 
-    describe('OBA Client Initialization', () => {
-        it('should initialize with correct configuration', () => {
-            const oba = new onebusaway({
-                baseURL: 'https://test-api.example.com',
-                apiKey: 'test-api-key'
-            });
+	describe('OBA Client Initialization', () => {
+		it('should initialize with correct configuration', () => {
+			new onebusaway({
+				baseURL: 'https://test-api.example.com',
+				apiKey: 'test-api-key'
+			});
 
-            expect(onebusaway).toHaveBeenCalledWith({
-                baseURL: 'https://test-api.example.com',
-                apiKey: 'test-api-key'
-            });
-        });
-    });
+			expect(onebusaway).toHaveBeenCalledWith({
+				baseURL: 'https://test-api.example.com',
+				apiKey: 'test-api-key'
+			});
+		});
+	});
 
-    describe('handleOBAResponse', () => {
-        it('should return JSON response when status code is 200', () => {
-            const mockResponse = {
-                code: 200,
-                data: {
-                    stops: []
-                }
-            };
+	describe('handleOBAResponse', () => {
+		it('should return JSON response when status code is 200', () => {
+			const mockResponse = {
+				code: 200,
+				data: {
+					stops: []
+				}
+			};
 
-            const result = handleOBAResponse(mockResponse, 'stops');
-            expect(json).toHaveBeenCalledWith(mockResponse);
-            expect(result.status).toBe(200);
-            expect(result.body).toEqual(mockResponse);
-        });
+			const result = handleOBAResponse(mockResponse, 'stops');
+			expect(json).toHaveBeenCalledWith(mockResponse);
+			expect(result.status).toBe(200);
+			expect(result.body).toEqual(mockResponse);
+		});
 
-        it('should throw error when status code is not 200', () => {
-            const mockResponse = {
-                code: 404,
-                data: null
-            };
+		it('should throw error when status code is not 200', () => {
+			const mockResponse = {
+				code: 404,
+				data: null
+			};
 
-            expect(() => handleOBAResponse(mockResponse, 'stops'))
-                .toThrow(/Unable to fetch stops/);
-            expect(error).toHaveBeenCalledWith(500, 'Unable to fetch stops.');
-        });
+			expect(() => handleOBAResponse(mockResponse, 'stops')).toThrow(/Unable to fetch stops/);
+			expect(error).toHaveBeenCalledWith(500, 'Unable to fetch stops.');
+		});
 
-        it('should handle undefined response gracefully', () => {
-            expect(() => handleOBAResponse(undefined, 'stops'))
-                .toThrow(/Unable to fetch stops/);
-            expect(error).toHaveBeenCalledWith(500, 'Unable to fetch stops.');
-        });
+		it('should handle undefined response gracefully', () => {
+			expect(() => handleOBAResponse(undefined, 'stops')).toThrow(/Unable to fetch stops/);
+			expect(error).toHaveBeenCalledWith(500, 'Unable to fetch stops.');
+		});
 
-        it('should handle null response gracefully', () => {
-            expect(() => handleOBAResponse(null, 'stops'))
-                .toThrow(/Unable to fetch stops/);
-            expect(error).toHaveBeenCalledWith(500, 'Unable to fetch stops.');
-        });
+		it('should handle null response gracefully', () => {
+			expect(() => handleOBAResponse(null, 'stops')).toThrow(/Unable to fetch stops/);
+			expect(error).toHaveBeenCalledWith(500, 'Unable to fetch stops.');
+		});
 
-        it('should handle response with missing code gracefully', () => {
-            const mockResponse = {
-                data: {
-                    stops: []
-                }
-            };
+		it('should handle response with missing code gracefully', () => {
+			const mockResponse = {
+				data: {
+					stops: []
+				}
+			};
 
-            expect(() => handleOBAResponse(mockResponse, 'stops'))
-                .toThrow(/Unable to fetch stops/);
-            expect(error).toHaveBeenCalledWith(500, 'Unable to fetch stops.');
-        });
-    });
+			expect(() => handleOBAResponse(mockResponse, 'stops')).toThrow(/Unable to fetch stops/);
+			expect(error).toHaveBeenCalledWith(500, 'Unable to fetch stops.');
+		});
+	});
 });
 
 describe('OBA Client Integration', () => {
-    let oba;
+	let oba;
 
-    beforeEach(() => {
-        vi.clearAllMocks();
-        oba = new onebusaway({
-            baseURL: 'https://test-api.example.com',
-            apiKey: 'test-api-key'
-        });
-    });
+	beforeEach(() => {
+		vi.clearAllMocks();
+		oba = new onebusaway({
+			baseURL: 'https://test-api.example.com',
+			apiKey: 'test-api-key'
+		});
+	});
 
-    it('should handle successful API responses', async () => {
-        const mockApiResponse = {
-            code: 200,
-            data: {
-                stops: [
-                    { id: 1, name: 'Test Stop' }
-                ]
-            }
-        };
+	it('should handle successful API responses', async () => {
+		const mockApiResponse = {
+			code: 200,
+			data: {
+				stops: [{ id: 1, name: 'Test Stop' }]
+			}
+		};
 
-        // Mock a successful API call
-        oba.stops = vi.fn().mockResolvedValue(mockApiResponse);
+		// Mock a successful API call
+		oba.stops = vi.fn().mockResolvedValue(mockApiResponse);
 
-        const response = await oba.stops();
-        const result = handleOBAResponse(response, 'stops');
-        
-        expect(json).toHaveBeenCalledWith(mockApiResponse);
-        expect(result.status).toBe(200);
-        expect(result.body).toEqual(mockApiResponse);
-    });
+		const response = await oba.stops();
+		const result = handleOBAResponse(response, 'stops');
 
-    it('should handle failed API responses', async () => {
-        const mockApiResponse = {
-            code: 500,
-            data: null
-        };
+		expect(json).toHaveBeenCalledWith(mockApiResponse);
+		expect(result.status).toBe(200);
+		expect(result.body).toEqual(mockApiResponse);
+	});
 
-        // Mock a failed API call
-        oba.stops = vi.fn().mockResolvedValue(mockApiResponse);
+	it('should handle failed API responses', async () => {
+		const mockApiResponse = {
+			code: 500,
+			data: null
+		};
 
-        const response = await oba.stops();
-        
-        expect(() => handleOBAResponse(response, 'stops'))
-            .toThrow(/Unable to fetch stops/);
-        expect(error).toHaveBeenCalledWith(500, 'Unable to fetch stops.');
-    });
+		// Mock a failed API call
+		oba.stops = vi.fn().mockResolvedValue(mockApiResponse);
+
+		const response = await oba.stops();
+
+		expect(() => handleOBAResponse(response, 'stops')).toThrow(/Unable to fetch stops/);
+		expect(error).toHaveBeenCalledWith(500, 'Unable to fetch stops.');
+	});
 });
