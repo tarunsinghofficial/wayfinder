@@ -14,7 +14,7 @@ export function toDirection(orientation) {
 		direction += 360;
 	}
 
-	return direction;
+	return direction === 0 ? 0 : direction;
 }
 
 /**
