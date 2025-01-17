@@ -29,7 +29,7 @@
 			break;
 		case 'BUS':
 			icon = faBus;
-			iconColor = 'text-green-600';
+			iconColor = 'text-brand-secondary';
 			break;
 		case 'TRAIN':
 			icon = faTrain;
@@ -54,7 +54,7 @@
 
 <div class="relative flex items-start pb-8">
 	<div
-		class="absolute left-5 top-5 border-l-4 border-green-400 {isWalking
+		class="absolute left-5 top-5 border-l-4 border-brand {isWalking
 			? 'border-dotted'
 			: 'border-gray-300'} h-full"
 	></div>
@@ -92,7 +92,7 @@
 
 		<div class="mt-4 space-y-4 text-sm text-gray-600 dark:text-gray-100">
 			<div class="mb-2 flex items-center">
-				<FontAwesomeIcon icon={faArrowRight} class="mr-2 text-green-500" />
+				<FontAwesomeIcon icon={faArrowRight} class="mr-2 text-brand" />
 				<span class="font-medium">{leg.to.name}</span>
 			</div>
 			<div class="mb-2 flex items-center">

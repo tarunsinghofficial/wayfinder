@@ -36,7 +36,7 @@
 			return {
 				status: `${$t('status.on_time')}`,
 				text: `${$t('status.arrives_on_time')}`,
-				color: 'text-green-500'
+				color: 'text-brand'
 			};
 		} else {
 			return {

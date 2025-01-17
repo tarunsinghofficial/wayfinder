@@ -192,15 +192,7 @@
 
 	<button
 		onclick={planTrip}
-		class="mt-4 flex w-full items-center justify-center rounded-md bg-green-500 py-2 text-white shadow-md
-           transition-colors
-           hover:bg-green-600
-           disabled:cursor-not-allowed
-           disabled:bg-gray-300
-           dark:bg-green-800
-           dark:hover:bg-green-900
-           disabled:dark:bg-gray-700/50
-           disabled:dark:text-gray-400"
+		class="mt-4 flex w-full items-center justify-center rounded-md bg-brand py-2 text-white shadow-md transition-colors hover:bg-brand-secondary disabled:cursor-not-allowed disabled:bg-gray-300 dark:bg-green-800 dark:hover:bg-green-900 disabled:dark:bg-gray-700/50 disabled:dark:text-gray-400"
 		disabled={!selectedFrom || !selectedTo}
 	>
 		{#if loading}
