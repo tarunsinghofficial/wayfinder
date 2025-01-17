@@ -10,6 +10,8 @@ export default {
 	theme: {
 		extend: {
 			colors: {
+				brand: process.env.APP_PRIMARY_COLOR || '#78aa36',
+				'brand-secondary': '#486621', 
 				// flowbite-svelte
 				primary: {
 					50: '#FFF5F2',
