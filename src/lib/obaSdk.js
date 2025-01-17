@@ -9,8 +9,16 @@ const oba = new onebusaway({
 });
 
 export function handleOBAResponse(response, entityName) {
+	if (!response) {
+		throw error(500, `Unable to fetch ${entityName}.`);
+	}
+
+	if (typeof response.code === 'undefined') {
+		throw error(500, `Unable to fetch ${entityName}.`);
+	}
+
 	if (response.code !== 200) {
-		return error(500, `Unable to fetch ${entityName}.`);
+		throw error(500, `Unable to fetch ${entityName}.`);
 	}
 
 	return json(response);
