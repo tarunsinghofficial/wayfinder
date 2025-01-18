@@ -22,11 +22,11 @@
 	{#if stops && selectedRoute}
 		<div class="space-y-4">
 			<div>
-				<div class="h-36 rounded-lg bg-[#1C1C1E] bg-opacity-80 p-4">
-					<h1 class="mb-6 text-center text-2xl font-bold text-white">
+				<div class="h-36 bg-brand-secondary bg-opacity-80 p-4 rounded-lg">
+					<h1 class="mb-6 text-2xl font-bold text-center text-white">
 						Route: {selectedRoute.shortName}
 					</h1>
-					<h2 class="mb-6 text-center text-xl text-white">{selectedRoute.description}</h2>
+					<h2 class="mb-6 text-xl text-center text-white">{selectedRoute.description}</h2>
 				</div>
 			</div>
 
