@@ -63,11 +63,12 @@
 						>
 							{formatHour(hour)} <span class="text-sm text-gray-600 dark:text-gray-100">AM</span>
 						</td>
-						<td class="border px-6 py-3 text-lg dark:border-gray-700 dark:text-white">
+						<td
+							class="flex items-start gap-3 border px-6 py-3 text-lg underline dark:border-gray-700 dark:text-white"
+						>
 							{#each times as stopTime, index (index)}
 								<span>
 									{extractMinutes(stopTime.arrivalTime)}
-									{index < times.length - 1 ? ', ' : ''}
 								</span>
 							{/each}
 						</td>
@@ -96,11 +97,12 @@
 						>
 							{formatHour(hour)} <span class="text-sm text-gray-600 dark:text-gray-100">PM</span>
 						</td>
-						<td class="border px-6 py-3 text-lg dark:border-gray-700 dark:text-white">
+						<td
+							class="flex items-start gap-3 border px-6 py-3 text-lg underline dark:border-gray-700 dark:text-white"
+						>
 							{#each times as stopTime, index (index)}
 								<span>
 									{extractMinutes(stopTime.arrivalTime)}
-									{index < times.length - 1 ? ', ' : ''}
 								</span>
 							{/each}
 						</td>
