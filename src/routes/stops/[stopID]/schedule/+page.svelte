@@ -21,6 +21,7 @@
 	let stopDirection = $state('');
 	let loading = $state(true);
 	let accordionComponent = $state();
+	let allRoutesExpanded = $state(false);
 
 	let schedulesMap = new Map();
 	let routeReference = new Map();
@@ -105,6 +106,15 @@
 		return grouped;
 	}
 
+	function toggleAllRoutes() {
+		if (allRoutesExpanded) {
+			accordionComponent.closeAll();
+		} else {
+			accordionComponent.openAll();
+		}
+		allRoutesExpanded = !allRoutesExpanded;
+	}
+
 	onMount(async () => {
 		const formattedDate = currentDate.toISOString().split('T')[0];
 		await fetchScheduleForStop(stopId, formattedDate);
@@ -148,11 +158,10 @@
 					</div>
 
 					<div class="flex-1 text-right">
-						<button class="button" onclick={() => accordionComponent.openAll()}>
-							{$t('schedule_for_stop.show_all_routes')}
-						</button>
-						<button class="button" onclick={() => accordionComponent.closeAll()}>
-							{$t('schedule_for_stop.collapse_all_routes')}
+						<button class="button" onclick={toggleAllRoutes}>
+							{allRoutesExpanded
+								? $t('schedule_for_stop.collapse_all_routes')
+								: $t('schedule_for_stop.show_all_routes')}
 						</button>
 					</div>
 				</div>
