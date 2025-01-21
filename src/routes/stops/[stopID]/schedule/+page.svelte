@@ -153,7 +153,7 @@
 				</h2>
 
 				<div class="mb-4 flex gap-4">
-					<div class="min-w-32">
+					<div class="z-20 w-[30%] min-w-32">
 						<Datepicker bind:value={selectedDate} inputClass="w-96" />
 					</div>
 
@@ -167,7 +167,7 @@
 				</div>
 
 				<div
-					class="flex-1 rounded-lg border border-gray-200 bg-white p-6 dark:border-gray-700 dark:bg-black"
+					class="flex-1 rounded-lg border border-gray-200 bg-white p-2 dark:border-gray-700 dark:bg-black"
 				>
 					{#if emptySchedules}
 						<p class="text-center text-gray-700 dark:text-gray-400">
