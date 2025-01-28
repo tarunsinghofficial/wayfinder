@@ -147,13 +147,13 @@
 		<StopPageHeader {stopName} {stopId} {stopDirection} />
 
 		<div class="flex flex-col">
-			<div class="flex flex-1 flex-col">
+			<div class="flex flex-col flex-1">
 				<h2 class="mb-4 text-2xl font-bold text-gray-800">
 					{$t('schedule_for_stop.route_schedules')}
 				</h2>
 
-				<div class="mb-4 flex gap-4">
-					<div class="z-20 w-[30%] min-w-32">
+				<div class="flex gap-4 mb-4">
+					<div class="z-20 w-[70%] md:w-[50%] lg:w-[50%]">
 						<Datepicker bind:value={selectedDate} inputClass="w-96" />
 					</div>
 
@@ -167,10 +167,10 @@
 				</div>
 
 				<div
-					class="flex-1 rounded-lg border border-gray-200 bg-white p-2 dark:border-gray-700 dark:bg-black"
+					class="dark:border-gray-700 dark:bg-black flex-1 p-2 bg-white rounded-lg border border-gray-200"
 				>
 					{#if emptySchedules}
-						<p class="text-center text-gray-700 dark:text-gray-400">
+						<p class="dark:text-gray-400 text-center text-gray-700">
 							{$t('schedule_for_stop.no_schedules_available')}
 						</p>
 					{:else}
