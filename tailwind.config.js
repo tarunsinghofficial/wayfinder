@@ -14,7 +14,7 @@ export default {
 		extend: {
 			colors: {
 				brand: process.env.PUBLIC_APP_PRIMARY_COLOR || '#78aa36',
-				'brand-secondary': '#486621',
+				'brand-secondary': process.env.PUBLIC_APP_SECONDARY_COLOR || '#486621',
 				// flowbite-svelte
 				primary: {
 					50: '#FFF5F2',
