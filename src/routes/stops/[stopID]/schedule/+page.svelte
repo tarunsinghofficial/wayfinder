@@ -118,7 +118,6 @@
 	onMount(async () => {
 		const formattedDate = currentDate.toISOString().split('T')[0];
 		await fetchScheduleForStop(stopId, formattedDate);
-		accordionComponent.openAll(false);
 	});
 
 	stopId = $page.params.stopID;
