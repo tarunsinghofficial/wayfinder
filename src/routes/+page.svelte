@@ -4,13 +4,17 @@
 	import MapContainer from '$components/MapContainer.svelte';
 	import RouteModal from '$components/routes/RouteModal.svelte';
 	import ViewAllRoutesModal from '$components/routes/ViewAllRoutesModal.svelte';
-	import { isLoading } from 'svelte-i18n';
+	import { isLoading, time } from 'svelte-i18n';
 	import AlertsModal from '$components/navigation/AlertsModal.svelte';
 	import { onMount } from 'svelte';
 	import StopModal from '$components/stops/StopModal.svelte';
 	import TripPlanModal from '$components/trip-planner/TripPlanModal.svelte';
 	import { browser } from '$app/environment';
 	import { PUBLIC_OBA_REGION_NAME } from '$env/static/public';
+	import SurveyModal from '$components/surveys/SurveyModal.svelte';
+	import { loadSurveys } from '$lib/Surveys/surveyUtils';
+	import { showSurveyModal } from '$stores/surveyStore';
+	import { getUserId } from '$lib/utils/user';
 
 	let stop = $state();
 	let selectedTrip = $state(null);
@@ -47,6 +51,7 @@
 		stop = stopData;
 		pushState(`/stops/${stop.id}`);
 		showAllRoutesModal = false;
+		loadSurveys(stop.id, getUserId());
 		if (currentHighlightedStopId !== null) {
 			mapProvider.unHighlightMarker(currentHighlightedStopId);
 		}
@@ -169,7 +174,10 @@
 	onMount(() => {
 		loadAlerts();
 
-		// close the trip plan modal when the tab is switched
+		const userId = getUserId();
+
+		loadSurveys(null, userId);
+
 		if (browser) {
 			window.addEventListener('tabSwitched', () => {
 				showTripPlanModal = false;
@@ -198,7 +206,6 @@
 			<SearchPane
 				{mapProvider}
 				cssClasses="pointer-events-auto"
-				on:clearResults={clearPolylines}
 				{handleRouteSelected}
 				{handleViewAllRoutes}
 				{clearPolylines}
@@ -231,6 +238,10 @@
 			</div>
 		</div>
 	</div>
+
+	{#if $showSurveyModal}
+		<SurveyModal />
+	{/if}
 
 	<MapContainer
 		{selectedTrip}
