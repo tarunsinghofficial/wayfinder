@@ -4,10 +4,17 @@
 	import StandalonePage from '$components/StandalonePage.svelte';
 	import '$lib/i18n.js';
 	import { t } from 'svelte-i18n';
+	import { onMount } from 'svelte';
+	import { loadSurveys } from '$lib/Surveys/surveyUtils.js';
+	import { getUserId } from '$lib/utils/user.js';
 
 	let { data } = $props();
 	const stop = data.stopData.entry;
 	const arrivalsAndDeparturesResponse = data.arrivalsAndDeparturesResponse;
+
+	onMount(() => {
+		loadSurveys(stop, getUserId());
+	});
 </script>
 
 <svelte:head>
