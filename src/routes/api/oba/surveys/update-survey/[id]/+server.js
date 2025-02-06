@@ -7,7 +7,7 @@ export async function POST({ request, params }) {
 		const { id } = params;
 		const body = await request.text();
 
-		const url = buildURL(env.PRIVATE_OBACO_API_BASE_URL, `/surveys_responses/${id}`);
+		const url = buildURL(env.PRIVATE_OBACO_API_BASE_URL, `/survey_responses/${id}`);
 
 		const response = await fetch(url, {
 			method: 'POST',
