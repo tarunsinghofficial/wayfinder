@@ -51,7 +51,7 @@
 		stop = stopData;
 		pushState(`/stops/${stop.id}`);
 		showAllRoutesModal = false;
-		loadSurveys(stop.id, getUserId());
+		loadSurveys(stop, getUserId());
 		if (currentHighlightedStopId !== null) {
 			mapProvider.unHighlightMarker(currentHighlightedStopId);
 		}
