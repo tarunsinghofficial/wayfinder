@@ -3,7 +3,7 @@ import { showSurveyModal, surveyStore } from '$stores/surveyStore.js';
 
 
 
-export async function loadSurveys(stopId = null, userId = null) {
+export async function loadSurveys(stop = null, userId = null) {
     try {
         const response = await fetch(`/api/oba/surveys?userId=${userId}`);
         if (!response.ok) throw new Error('Failed to fetch surveys');
@@ -13,8 +13,8 @@ export async function loadSurveys(stopId = null, userId = null) {
 
         let selectedSurvey = null;
 
-        if (stopId) {
-            selectedSurvey = getValidStopSurvey(validSurveys, stopId) || getShowSurveyOnAllStops(validSurveys);
+        if (stop) {
+            selectedSurvey = getValidStopSurvey(validSurveys, stop) || getShowSurveyOnAllStops(validSurveys);
         } else {
             selectedSurvey = getMapSurvey(validSurveys);
         }
@@ -37,12 +37,19 @@ export function getValidSurveys(surveys) {
     );
 }
 
-export function getValidStopSurvey(surveys, stopId) {
-    return surveys.find(survey =>
-        survey.show_on_stops &&
-        survey.visible_stop_list?.includes(stopId)
-    ) || null;
+export function getValidStopSurvey(surveys, stop) {
+
+  return surveys.find(survey =>
+    survey.show_on_stops &&
+    (
+      (survey.visible_stop_list && survey.visible_stop_list.includes(stop.id)) ||
+       survey.visible_route_list !== null &&
+        survey.visible_route_list.some(routeId => stop.routeIds.includes(routeId)))
+
+  ) || null;
 }
+
+
 
 export function getShowSurveyOnAllStops(surveys) {
     return surveys.find(survey =>
