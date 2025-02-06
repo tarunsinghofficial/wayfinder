@@ -2,11 +2,14 @@ import GtfsRealtimeBindings from 'gtfs-realtime-bindings';
 import { env } from '$env/dynamic/private';
 import { buildURL } from '$lib/urls.js';
 
+
+const REGION_PATH = `regions/${env.PRIVATE_REGION_ID}/`;
+
 export async function GET() {
 	try {
 		const alertsURL = buildURL(
 			env.PRIVATE_OBACO_API_BASE_URL,
-			'alerts.pb',
+			REGION_PATH+'alerts.pb',
 			env.PRIVATE_OBACO_SHOW_TEST_ALERTS == 'true' ? { test: 1 } : {}
 		);
 
