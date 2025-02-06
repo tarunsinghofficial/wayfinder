@@ -11,7 +11,7 @@
 	import { showSurveyModal, surveyStore } from '$stores/surveyStore';
 	import { getUserId } from '$lib/utils/user';
 
-	let { stop = $bindable(null), skipHeroQuestion, surveyPublicIdentifierOutside } = $props();
+	let { stop = $bindable(null), skipHeroQuestion, surveyPublicId } = $props();
 
 	let userAnswers = $state([]);
 	let heroQuestionAnswered = $state(false);
@@ -97,7 +97,7 @@
 	}
 
 	async function updateSurveyResponse() {
-		if (surveyPublicIdentifierOutside) [(surveyPublicIdentifier = surveyPublicIdentifierOutside)];
+		if (surveyPublicId) [(surveyPublicIdentifier = surveyPublicId)];
 		updateSurveyResponseUtil(surveyPublicIdentifier, surveyResponse);
 	}
 

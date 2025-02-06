@@ -195,7 +195,7 @@
 						currentSurvey={currentStopSurvey}
 						{stop}
 						skipHeroQuestion={true}
-						surveyPublicIdentifierOutside={surveyPublicIdentifier}
+						surveyPublicId={surveyPublicIdentifier}
 					/>
 				{/if}
 
