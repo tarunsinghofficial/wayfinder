@@ -4,7 +4,7 @@
 	import MapContainer from '$components/MapContainer.svelte';
 	import RouteModal from '$components/routes/RouteModal.svelte';
 	import ViewAllRoutesModal from '$components/routes/ViewAllRoutesModal.svelte';
-	import { isLoading, time } from 'svelte-i18n';
+	import { isLoading } from 'svelte-i18n';
 	import AlertsModal from '$components/navigation/AlertsModal.svelte';
 	import { onMount } from 'svelte';
 	import StopModal from '$components/stops/StopModal.svelte';
