@@ -17,9 +17,9 @@
 
 	/** @type {Props} */
 	let {
-		handleUpdateRouteMap,
-		tripSelected,
 		stop,
+		handleUpdateRouteMap = null,
+		tripSelected = null,
 		arrivalsAndDeparturesResponse = $bindable(null)
 	} = $props();
 
@@ -77,8 +77,12 @@
 	function handleAccordionSelectionChanged(event) {
 		const data = event.activeData; // this is the ArrivalDeparture object plumbed into the AccordionItem
 		const show = !!data;
-		tripSelected({ detail: data });
-		handleUpdateRouteMap({ detail: { show } });
+		if (tripSelected) {
+			tripSelected({ detail: data });
+		}
+		if (handleUpdateRouteMap) {
+			handleUpdateRouteMap({ detail: { show } });
+		}
 	}
 </script>
 

@@ -152,7 +152,7 @@
 				</h2>
 
 				<div class="mb-4 flex gap-4">
-					<div class="z-20 w-[30%] min-w-32">
+					<div class="z-20 min-w-32 md:w-[30%]">
 						<Datepicker bind:value={selectedDate} inputClass="w-96" />
 					</div>
 
