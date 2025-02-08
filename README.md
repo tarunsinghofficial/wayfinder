@@ -22,6 +22,8 @@ See `.env.example` for an example of the required keys and values.
 - `PUBLIC_OBA_REGION_NAME` - string: (required) displayed in the header.
 - `PUBLIC_OBA_LOGO_URL` - string: (required) The URL of your transit agency's logo.
 - `PUBLIC_NAV_BAR_LINKS` - JSON string: (required) A dictionary of the links displayed across the navigation bar.
+- `PUBLIC_APP_PRIMARY_COLOR` - string: (required) The hex color code for the application's primary brand color. Must be wrapped in quotes (e.g., "#214666").
+- `PUBLIC_APP_SECONDARY_COLOR` - string: (required) The hex color code for the application's secondary brand color. Must be wrapped in quotes (e.g., "#486621").
 
 ### OBA Server
 

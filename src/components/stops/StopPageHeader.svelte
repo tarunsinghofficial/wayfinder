@@ -11,7 +11,7 @@
 </script>
 
 <div class="my-4 text-center">
-	<h1 class="flex items-center justify-center gap-2 text-3xl font-bold text-green-700">
+	<h1 class="flex items-center justify-center gap-2 text-3xl font-bold text-brand-secondary">
 		{stopName}
 	</h1>
 	<div class="text-normal mt-2 flex items-center justify-center gap-x-8 text-gray-700">

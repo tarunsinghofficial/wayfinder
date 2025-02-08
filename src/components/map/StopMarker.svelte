@@ -40,7 +40,7 @@
 	}
 
 	.highlight {
-		@apply scale-125 border-green-600 drop-shadow-md;
+		@apply scale-125 border-brand-secondary drop-shadow-md;
 	}
 
 	.custom-marker:hover {

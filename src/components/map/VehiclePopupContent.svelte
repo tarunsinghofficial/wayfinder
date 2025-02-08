@@ -14,7 +14,7 @@
 
 <div class="max-w-xs rounded-lg bg-white p-4 text-gray-800 shadow-md">
 	<div class="mb-2 flex items-center">
-		<div class="rounded bg-green-100 px-2 py-1 text-lg font-bold text-green-600">
+		<div class="rounded bg-green-100 px-2 py-1 text-lg font-bold text-brand-secondary">
 			{nextDestination}
 		</div>
 	</div>
