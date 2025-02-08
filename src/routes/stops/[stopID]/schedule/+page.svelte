@@ -21,6 +21,7 @@
 	let stopDirection = $state('');
 	let loading = $state(true);
 	let accordionComponent = $state();
+	let allRoutesExpanded = $state(false);
 
 	let schedulesMap = new Map();
 	let routeReference = new Map();
@@ -105,10 +106,18 @@
 		return grouped;
 	}
 
+	function toggleAllRoutes() {
+		if (allRoutesExpanded) {
+			accordionComponent.closeAll();
+		} else {
+			accordionComponent.openAll();
+		}
+		allRoutesExpanded = !allRoutesExpanded;
+	}
+
 	onMount(async () => {
 		const formattedDate = currentDate.toISOString().split('T')[0];
 		await fetchScheduleForStop(stopId, formattedDate);
-		accordionComponent.openAll(false);
 	});
 
 	stopId = $page.params.stopID;
@@ -143,22 +152,21 @@
 				</h2>
 
 				<div class="mb-4 flex gap-4">
-					<div class="min-w-32">
+					<div class="z-20 w-[30%] min-w-32">
 						<Datepicker bind:value={selectedDate} inputClass="w-96" />
 					</div>
 
 					<div class="flex-1 text-right">
-						<button class="button" onclick={() => accordionComponent.openAll()}>
-							{$t('schedule_for_stop.show_all_routes')}
-						</button>
-						<button class="button" onclick={() => accordionComponent.closeAll()}>
-							{$t('schedule_for_stop.collapse_all_routes')}
+						<button class="button" onclick={toggleAllRoutes}>
+							{allRoutesExpanded
+								? $t('schedule_for_stop.collapse_all_routes')
+								: $t('schedule_for_stop.show_all_routes')}
 						</button>
 					</div>
 				</div>
 
 				<div
-					class="flex-1 rounded-lg border border-gray-200 bg-white p-6 dark:border-gray-700 dark:bg-black"
+					class="flex-1 rounded-lg border border-gray-200 bg-white p-2 dark:border-gray-700 dark:bg-black"
 				>
 					{#if emptySchedules}
 						<p class="text-center text-gray-700 dark:text-gray-400">
