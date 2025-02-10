@@ -4,10 +4,14 @@
 	import LoadingSpinner from '$components/LoadingSpinner.svelte';
 	import Accordion from '$components/containers/SingleSelectAccordion.svelte';
 	import AccordionItem from '$components/containers/AccordionItem.svelte';
+	import SurveyModal from '$components/surveys/SurveyModal.svelte';
 	import { onDestroy } from 'svelte';
-
 	import '$lib/i18n.js';
 	import { isLoading, t } from 'svelte-i18n';
+	import { submitHeroQuestion, skipSurvey } from '$lib/Surveys/surveyUtils';
+	import { surveyStore, showSurveyModal } from '$stores/surveyStore';
+	import { getUserId } from '$lib/utils/user';
+	import HeroQuestion from '$components/surveys/HeroQuestion.svelte';
 
 	/**
 	 * @typedef {Object} Props
@@ -28,6 +32,7 @@
 	let error = $state();
 
 	let interval = null;
+	let currentStopSurvey = $state(null);
 
 	async function loadData(stopID) {
 		loading = true;
@@ -84,6 +89,52 @@
 			handleUpdateRouteMap({ detail: { show } });
 		}
 	}
+
+	let heroAnswer = '';
+	let nextSurveyQuestion = $state(false);
+	let surveyPublicIdentifier = $state(null);
+	let showHeroQuestion = $state(true);
+
+	async function handleNext() {
+		let heroQuestion = currentStopSurvey.questions[0];
+
+		if (heroQuestion.content.type !== 'label' && (!heroAnswer || heroAnswer.trim() === '')) {
+			return;
+		}
+		showSurveyModal.set(true);
+		nextSurveyQuestion = true;
+
+		let surveyResponse = {
+			survey_id: currentStopSurvey.id,
+			user_identifier: getUserId(),
+			stop_identifier: stop.id,
+			stop_latitude: stop.lat,
+			stop_longitude: stop.lon,
+			responses: []
+		};
+
+		surveyResponse.responses[0] = {
+			question_id: heroQuestion.id,
+			question_label: heroQuestion.content.label_text,
+			question_type: heroQuestion.content.type,
+			answer: heroAnswer
+		};
+
+		surveyPublicIdentifier = await submitHeroQuestion(surveyResponse);
+		showHeroQuestion = false;
+	}
+
+	function handleSkip() {
+		skipSurvey(currentStopSurvey);
+		showHeroQuestion = false;
+	}
+	function handleHeroQuestionChange(event) {
+		heroAnswer = event.target.value;
+	}
+
+	$effect(() => {
+		currentStopSurvey = $surveyStore;
+	});
 </script>
 
 {#if $isLoading}
@@ -97,7 +148,6 @@
 		{#if error}
 			<p>{error}</p>
 		{/if}
-
 		{#if arrivalsAndDepartures}
 			<div class="space-y-4">
 				<div>
@@ -120,6 +170,18 @@
 						</div>
 					</div>
 				</div>
+				{#if showHeroQuestion && currentStopSurvey}
+					<HeroQuestion {currentStopSurvey} {handleSkip} {handleNext} {handleHeroQuestionChange} />
+				{/if}
+				{#if nextSurveyQuestion}
+					<SurveyModal
+						currentSurvey={currentStopSurvey}
+						{stop}
+						skipHeroQuestion={true}
+						surveyPublicId={surveyPublicIdentifier}
+					/>
+				{/if}
+
 				{#if arrivalsAndDepartures.arrivalsAndDepartures.length === 0}
 					<div class="flex items-center justify-center">
 						<p>{$t('no_arrivals_or_departures_in_next_30_minutes')}</p>
