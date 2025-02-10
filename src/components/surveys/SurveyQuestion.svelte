@@ -35,8 +35,10 @@
 
 <label class={`${baseClasses.label} ${sizeClasses.label}`} for="question-{index}">
 	<span class="absolute inset-0 -z-10 rounded-md bg-gray-100 px-3 py-2 dark:bg-gray-800"></span>
-	{question.content.label_text}
-	{#if required}
+	{#if question.content.type !== 'label'}
+		{question.content.label_text}
+	{/if}
+	{#if required && question.content.type !== 'label'}
 		<span class="ml-1 text-red-500">*</span>
 	{/if}
 </label>
@@ -78,6 +80,10 @@
 			</Checkbox>
 		{/each}
 	</div>
+{:else if question.content.type === 'label'}
+	<p class={`${sizeClasses.label} mt-4 font-bold text-black`}>
+		{question.content.label_text}
+	</p>
 {:else if question.content.type === 'external_survey'}
 	<div class="mt-4">
 		<a
@@ -89,11 +95,13 @@
 			{question.content.label_text}
 		</a>
 		{#if question.content.survey_provider}
-			<p class="mt-1 text-2xl text-gray-500">Powered by {question.content.survey_provider}</p>
+			<p class="mt-1 text-2xl text-gray-500">
+				Powered by {question.content.survey_provider}
+			</p>
 		{/if}
 	</div>
 {/if}
 
-{#if error}
-	<p class={`mt-4 ${errorClasses.label}`}>This question is required.</p>
+{#if error && question.content.type !== 'label'}
+	<p class={`${errorClasses.label} mt-4`}>This question is required.</p>
 {/if}

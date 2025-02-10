@@ -92,7 +92,9 @@
 	let showHeroQuestion = $state(true);
 
 	async function handleNext() {
-		if (!heroAnswer || heroAnswer.trim() === '') {
+		let heroQuestion = currentStopSurvey.questions[0];
+
+		if (heroQuestion.content.type !== 'label' && (!heroAnswer || heroAnswer.trim() === '')) {
 			return;
 		}
 		showSurveyModal.set(true);
@@ -108,9 +110,9 @@
 		};
 
 		surveyResponse.responses[0] = {
-			question_id: currentStopSurvey.questions[0].id,
-			question_label: currentStopSurvey.questions[0].content.label_text,
-			question_type: currentStopSurvey.questions[0].content.type,
+			question_id: heroQuestion.id,
+			question_label: heroQuestion.content.label_text,
+			question_type: heroQuestion.content.type,
 			answer: heroAnswer
 		};
 
