@@ -171,7 +171,6 @@
 					class="sticky bottom-0 flex justify-end gap-4 rounded-b-2xl border-t border-gray-200 bg-white p-6 dark:border-gray-700 dark:bg-gray-800"
 				>
 					{#if !heroQuestionAnswered && !skipHeroQuestion}
-
 						<Button
 							onclick={() => skipSurvey(currentSurvey)}
 							color="red"
@@ -186,7 +185,6 @@
 						>
 							Next
 						</Button>
-
 					{:else}
 						<Button
 							onclick={() => skipSurvey(currentSurvey)}
