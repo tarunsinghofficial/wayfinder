@@ -172,6 +172,13 @@
 				>
 					{#if !heroQuestionAnswered && !skipHeroQuestion}
 						<Button
+							onclick={() => skipSurvey(currentSurvey)}
+							color="red"
+							class="rounded-lg px-10 py-3 shadow-md transition-shadow hover:shadow-lg"
+						>
+							Skip
+						</Button>
+						<Button
 							onclick={submitHeroQuestion}
 							color="green"
 							class="rounded-lg px-10 py-3 shadow-md transition-shadow hover:shadow-lg"
@@ -180,7 +187,7 @@
 						</Button>
 					{:else}
 						<Button
-							onclick={skipSurvey}
+							onclick={() => skipSurvey(currentSurvey)}
 							color="red"
 							class="rounded-lg px-10 py-3 shadow-md transition-shadow hover:shadow-lg"
 						>

@@ -5,7 +5,8 @@ import {
 	getShowSurveyOnAllStops,
 	getMapSurvey,
 	submitHeroQuestion,
-	updateSurveyResponse
+	updateSurveyResponse,
+	getPrioritySurvey
 } from '../../lib/Surveys/surveyUtils';
 
 beforeEach(() => {
@@ -53,6 +54,36 @@ describe('getValidSurveys', () => {
 
 		localStorage.setItem('survey_1_answered', 'true');
 		localStorage.setItem('survey_2_skipped', 'true');
+
+		const valid = getValidSurveys(surveys);
+		expect(valid).toEqual([]);
+	});
+
+	it('should exclude surveys with expired end_date even if always_visible is true', () => {
+		const now = new Date();
+		const pastDate = new Date(now.getTime() - 10000).toISOString();
+		const futureDate = new Date(now.getTime() + 10000).toISOString();
+
+		const surveys = [
+			{ id: 1, end_date: pastDate, always_visible: true },
+			{ id: 2, end_date: futureDate, always_visible: true },
+			{ id: 3, always_visible: true }
+		];
+
+		const valid = getValidSurveys(surveys);
+		expect(valid).toEqual([
+			{ id: 2, end_date: futureDate, always_visible: true },
+			{ id: 3, always_visible: true }
+		]);
+	});
+
+	it('should exclude surveys that are expired even if they have extra attributes', () => {
+		const now = new Date();
+		const pastDate = new Date(now.getTime() - 10000).toISOString();
+
+		const surveys = [
+			{ id: 1, end_date: pastDate, always_visible: true, allows_multiple_responses: true }
+		];
 
 		const valid = getValidSurveys(surveys);
 		expect(valid).toEqual([]);
@@ -219,5 +250,71 @@ describe('updateSurveyResponse', () => {
 		await expect(updateSurveyResponse(surveyPublicIdentifier, surveyResponse)).rejects.toThrow(
 			'Failed to update survey response'
 		);
+	});
+});
+
+describe('Survey Visibility and Multiple Responses', () => {
+	it('should allow multiple responses if allows_multiple_responses is true', () => {
+		const surveys = [{ id: 1, allows_multiple_responses: true, always_visible: true }];
+		localStorage.setItem('survey_1_answered', 'true');
+		expect(getValidSurveys(surveys)).toEqual(surveys);
+	});
+
+	it('should only allow one response if allows_multiple_responses is true and always_visible is false', () => {
+		const surveys = [{ id: 1, allows_multiple_responses: true, always_visible: false }];
+		localStorage.setItem('survey_1_answered', 'true');
+
+		expect(getValidSurveys(surveys)).toEqual([]);
+	});
+
+	it('should display surveys normally if always_visible is false or null', () => {
+		const surveys = [
+			{ id: 1, always_visible: false },
+			{ id: 2, always_visible: null }
+		];
+
+		expect(getValidSurveys(surveys)).toEqual(surveys);
+	});
+
+	it('should display always_visible survey unless user has completed it', () => {
+		const surveys = [{ id: 1, always_visible: true, allows_multiple_responses: false }];
+		localStorage.setItem('survey_1_answered', 'true');
+
+		expect(getValidSurveys(surveys)).toEqual([]);
+	});
+
+	it('should always display always_visible survey if allows_multiple_responses is true', () => {
+		const surveys = [{ id: 1, always_visible: true, allows_multiple_responses: true }];
+		localStorage.setItem('survey_1_answered', 'true');
+
+		expect(getValidSurveys(surveys)).toEqual(surveys);
+	});
+
+	it('should prioritize one-time survey over always_visible survey', async () => {
+		const now = new Date();
+		const surveys = [
+			{
+				id: 1,
+				always_visible: true,
+				allows_multiple_responses: true,
+				end_date: now.getTime() + 1000
+			},
+			{
+				id: 2,
+				always_visible: true,
+				allows_multiple_responses: false,
+				end_date: now.getTime() + 10000
+			},
+			{
+				id: 3,
+				always_visible: false,
+				allows_multiple_responses: false,
+				end_date: now.getTime() - 1000
+			}
+		];
+
+		const selectedSurvey = await getPrioritySurvey(surveys, null);
+
+		expect(selectedSurvey).toEqual(surveys[2]);
 	});
 });

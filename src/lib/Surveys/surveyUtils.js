@@ -8,6 +8,8 @@ export async function loadSurveys(stop = null, userId = null) {
 		const data = await response.json();
 		const validSurveys = getValidSurveys(data.surveys);
 
+		console.log("I'm the validSurveys", validSurveys);
+
 		let selectedSurvey = null;
 
 		if (stop) {
@@ -17,22 +19,74 @@ export async function loadSurveys(stop = null, userId = null) {
 			selectedSurvey = getMapSurvey(validSurveys);
 		}
 
+		// This is the case when there's multiple surveys and we need to prioritize the one-time survey over the always visible one
+		selectedSurvey = getPrioritySurvey(validSurveys, selectedSurvey);
+
 		surveyStore.set(selectedSurvey);
 
-		showSurveyModal.set(selectedSurvey?.show_on_map === true);
+		showSurveyModal.set(shouldShowSurvey(selectedSurvey));
 	} catch (error) {
 		console.error('Error loading surveys:', error);
 	}
 }
 
+export function getPrioritySurvey(validSurveys, selectedSurvey) {
+	const oneTimeSurvey = validSurveys.find((s) => !s.always_visible);
+	const alwaysVisibleSurvey = validSurveys.find((s) => s.always_visible);
+	return oneTimeSurvey || alwaysVisibleSurvey || selectedSurvey;
+}
+
 export function getValidSurveys(surveys) {
-	const now = new Date();
-	return surveys.filter((survey) => {
-		const isValidEndDate = survey.end_date ? new Date(survey.end_date) > now : true;
-		const isNotAnswered = !localStorage.getItem(`survey_${survey.id}_answered`);
-		const isNotSkipped = !localStorage.getItem(`survey_${survey.id}_skipped`);
-		return isValidEndDate && isNotAnswered && isNotSkipped;
-	});
+	const now = Date.now();
+	const oneWeekInMs = 7 * 24 * 60 * 60 * 1000;
+	const validSurveys = [];
+
+	for (const survey of surveys) {
+		const isValidEndDate = survey.end_date ? new Date(survey.end_date).getTime() > now : true;
+		const hasResponded = !!localStorage.getItem(`survey_${survey.id}_answered`);
+		const hasSkipped = !!localStorage.getItem(`survey_${survey.id}_skipped`);
+
+		// Get skip timestamp and check if it's within the last week
+		const skipTimestamp = localStorage.getItem(`survey_${survey.id}_skipped_timestamp`);
+		const wasRecentlySkipped = skipTimestamp && now - parseInt(skipTimestamp, 10) < oneWeekInMs;
+
+		//! Skip if end date is in the past or if it was recently skipped (1 week)
+		if (!isValidEndDate || wasRecentlySkipped || hasSkipped) continue;
+
+		if (survey.always_visible) {
+			if (survey.allows_multiple_responses) {
+				validSurveys.push(survey); // Always visible & allows multiple responses, show regardless
+			} else {
+				if (!hasResponded) {
+					validSurveys.push(survey);
+				}
+			}
+		} else {
+			// Standard behavior for surveys, show if not answered and not skipped
+			if (!hasResponded && !hasSkipped) {
+				validSurveys.push(survey);
+			}
+		}
+	}
+
+	return validSurveys;
+}
+
+export function shouldShowSurvey(survey) {
+	if (!survey) return false;
+
+	if (!survey.always_visible) {
+		return true;
+	}
+
+	if (survey.allows_multiple_responses) {
+		return true;
+	}
+
+	return (
+		!localStorage.getItem(`survey_${survey.id}_answered`) &&
+		!localStorage.getItem(`survey_${survey.id}_skipped`)
+	);
 }
 
 export function getValidStopSurvey(surveys, stop) {
@@ -44,7 +98,7 @@ export function getValidStopSurvey(surveys, stop) {
 		}
 
 		if (
-			survey.visible_route_list !== null &&
+			survey.visible_route_list &&
 			Array.isArray(survey.visible_route_list) &&
 			stop.routeIds &&
 			Array.isArray(stop.routeIds)
@@ -60,9 +114,7 @@ export function getValidStopSurvey(surveys, stop) {
 }
 
 export function getShowSurveyOnAllStops(surveys) {
-	return (
-		surveys.find((survey) => survey.show_on_stops && survey.visible_stop_list === null) || null
-	);
+	return surveys.find((survey) => survey.show_on_stops && !survey.visible_stop_list) || null;
 }
 
 export function getMapSurvey(surveys) {
@@ -128,6 +180,11 @@ export function submitSurvey(survey, hideSurveyModal) {
 }
 
 export function skipSurvey(survey) {
+	const now = Date.now();
+
+	if (survey.allows_multiple_responses && survey.always_visible) {
+		localStorage.setItem(`survey_${survey.id}_skipped_timestamp`, now);
+	}
 	localStorage.setItem(`survey_${survey.id}_skipped`, true);
 	showSurveyModal.set(false);
 }
