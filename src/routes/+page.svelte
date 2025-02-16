@@ -15,6 +15,9 @@
 	import { loadSurveys } from '$lib/Surveys/surveyUtils';
 	import { showSurveyModal } from '$stores/surveyStore';
 	import { getUserId } from '$lib/utils/user';
+	import analytics from '$lib/Analytics/PlausibleAnalytics';
+	import { userLocation } from '$src/stores/userLocationStore';
+	import { analyticsDistanceToStop } from '$lib/Analytics/analyticsUtils';
 
 	let stop = $state();
 	let selectedTrip = $state(null);
@@ -37,6 +40,8 @@
 	let toMarker = $state(null);
 	let currentHighlightedStopId = null;
 
+	let currentUserLocation = $state($userLocation);
+
 	$effect(() => {
 		if (showRouteModal && showAllRoutesModal) {
 			showAllRoutesModal = false;
@@ -52,11 +57,20 @@
 		pushState(`/stops/${stop.id}`);
 		showAllRoutesModal = false;
 		loadSurveys(stop, getUserId());
+
 		if (currentHighlightedStopId !== null) {
 			mapProvider.unHighlightMarker(currentHighlightedStopId);
 		}
 		mapProvider.highlightMarker(stop.id);
 		currentHighlightedStopId = stop.id;
+
+		const distanceCategory = analyticsDistanceToStop(
+			currentUserLocation.lat,
+			currentUserLocation.lng,
+			stop.lat,
+			stop.lon
+		);
+		analytics.reportStopViewed(stop.id, distanceCategory);
 	}
 
 	function handleViewAllRoutes() {
@@ -125,6 +139,7 @@
 		stops = routeData.stops;
 		currentIntervalId = routeData.currentIntervalId;
 		showRouteModal = true;
+		analytics.reportRouteClicked(selectedRoute.id);
 	}
 
 	function clearPolylines() {
@@ -189,6 +204,8 @@
 		}
 	});
 </script>
+
+<!-- <PlausibleAnalytics  domain={"api.pugetsound.onebusaway.org/stop"} enabled={true}    /> -->
 
 <svelte:head>
 	<title>{PUBLIC_OBA_REGION_NAME}</title>

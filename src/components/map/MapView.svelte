@@ -13,6 +13,7 @@
 	import { faBus } from '@fortawesome/free-solid-svg-icons';
 	import { RouteType, routePriorities, prioritizedRouteTypeForDisplay } from '$config/routeConfig';
 	import { isMapLoaded } from '$src/stores/mapStore';
+	import { userLocation } from '$src/stores/userLocationStore';
 	/**
 	 * @typedef {Object} Props
 	 * @property {any} [selectedTrip]
@@ -198,6 +199,7 @@
 	function handleLocationObtained(latitude, longitude) {
 		mapInstance.setCenter({ lat: latitude, lng: longitude });
 		mapInstance.addUserLocationMarker({ lat: latitude, lng: longitude });
+		userLocation.set({ lat: latitude, lng: longitude });
 	}
 
 	onMount(async () => {

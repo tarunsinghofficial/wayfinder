@@ -7,12 +7,24 @@
 	import { onMount } from 'svelte';
 	import { loadSurveys } from '$lib/Surveys/surveyUtils.js';
 	import { getUserId } from '$lib/utils/user.js';
+	import analytics from '$lib/Analytics/PlausibleAnalytics.js';
+	import { analyticsDistanceToStop } from '$lib/Analytics/analyticsUtils.js';
+	import { userLocation } from '$src/stores/userLocationStore.js';
 
 	let { data } = $props();
 	const stop = data.stopData.entry;
 	const arrivalsAndDeparturesResponse = data.arrivalsAndDeparturesResponse;
 
+	const currentUserLocation = $state($userLocation);
+
 	onMount(() => {
+		const distanceCategory = analyticsDistanceToStop(
+			currentUserLocation.lat,
+			currentUserLocation.lng,
+			stop.lat,
+			stop.lon
+		);
+		analytics.reportStopViewed(stop.id, distanceCategory);
 		loadSurveys(stop, getUserId());
 	});
 </script>
