@@ -205,7 +205,6 @@
 	});
 </script>
 
-
 <svelte:head>
 	<title>{PUBLIC_OBA_REGION_NAME}</title>
 </svelte:head>

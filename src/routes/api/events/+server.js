@@ -1,18 +1,14 @@
+import { PUBLIC_ANALYTICS_DOMAIN, PUBLIC_ANALYTICS_API_HOST } from '$env/static/public';
+
 export async function POST({ request }) {
 	try {
-		const {
-			domain,
-			name,
-			url,
-			referrer,
-			props,
-			apiHost = 'https://plausible.io'
-		} = await request.json();
-		const res = await fetch(`${apiHost}/api/event`, {
+		const { name, url, referrer, props } = await request.json();
+
+		const res = await fetch(`${PUBLIC_ANALYTICS_API_HOST}/api/event`, {
 			method: 'POST',
 			headers: { 'Content-Type': 'application/json' },
 			body: JSON.stringify({
-				domain,
+				domain: PUBLIC_ANALYTICS_DOMAIN,
 				name,
 				url,
 				referrer,

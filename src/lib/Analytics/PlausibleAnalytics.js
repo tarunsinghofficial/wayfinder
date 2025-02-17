@@ -1,8 +1,7 @@
 import { PUBLIC_ANALYTICS_DOMAIN, PUBLIC_ANALYTICS_ENABLED } from '$env/static/public';
 
 class PlausibleAnalytics {
-	constructor(domain) {
-		this.domain = domain;
+	constructor() {
 		this.defaultProperties = {};
 		this.enabled = PUBLIC_ANALYTICS_ENABLED === 'true' && PUBLIC_ANALYTICS_DOMAIN !== '';
 	}
@@ -14,7 +13,6 @@ class PlausibleAnalytics {
 		}
 
 		const payload = {
-			domain: this.domain,
 			name: eventName,
 			url: pageURL,
 			props: this.buildProps(props)
@@ -63,5 +61,5 @@ class PlausibleAnalytics {
 	}
 }
 
-const analytics = new PlausibleAnalytics(PUBLIC_ANALYTICS_DOMAIN);
+const analytics = new PlausibleAnalytics();
 export default analytics;
