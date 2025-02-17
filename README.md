@@ -26,6 +26,7 @@ See `.env.example` for an example of the required keys and values.
 - `PUBLIC_APP_SECONDARY_COLOR` - string: (required) The hex color code for the application's secondary brand color. Must be wrapped in quotes (e.g., "#486621").
 - `PUBLIC_ANALYTICS_DOMAIN` - string: (optional).
 - `PUBLIC_ANALYTICS_ENABLED` - boolean: (optional).
+- `PUBLIC_ANALYTICS_API_HOST` - string: (optional).
 
 ### OBA Server
 
