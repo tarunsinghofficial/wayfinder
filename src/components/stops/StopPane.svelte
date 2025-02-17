@@ -12,6 +12,7 @@
 	import { surveyStore, showSurveyModal } from '$stores/surveyStore';
 	import { getUserId } from '$lib/utils/user';
 	import HeroQuestion from '$components/surveys/HeroQuestion.svelte';
+	import analytics from '$lib/Analytics/PlausibleAnalytics';
 
 	/**
 	 * @typedef {Object} Props
@@ -88,6 +89,7 @@
 		if (handleUpdateRouteMap) {
 			handleUpdateRouteMap({ detail: { show } });
 		}
+		analytics.reportArrivalClicked('Clicked on arrival/departure');
 	}
 
 	let heroAnswer = '';

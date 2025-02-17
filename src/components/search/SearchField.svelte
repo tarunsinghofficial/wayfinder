@@ -1,5 +1,6 @@
 <script>
 	import { t } from 'svelte-i18n';
+	import analytics from '$lib/Analytics/PlausibleAnalytics';
 
 	/**
 	 * @typedef {Object} Props
@@ -14,6 +15,7 @@
 			const response = await fetch(`/api/oba/search?query=${encodeURIComponent(value)}`);
 			const results = await response.json();
 			handleSearchResults(results);
+			analytics.reportSearchQuery(value);
 		} catch (error) {
 			console.error('Error fetching search results:', error);
 		}

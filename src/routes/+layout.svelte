@@ -6,6 +6,8 @@
 	import '$lib/i18n';
 	import { locale } from 'svelte-i18n';
 	import { onMount } from 'svelte';
+	import analytics from '$lib/Analytics/PlausibleAnalytics.js';
+
 	/**
 	 * @typedef {Object} Props
 	 * @property {import('svelte').Snippet} [children]
@@ -23,6 +25,8 @@
 				document.documentElement.classList.remove('rtl');
 			}
 		});
+
+		analytics.reportPageView('/');
 	});
 </script>
 
