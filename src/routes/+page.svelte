@@ -17,7 +17,7 @@
 	import { getUserId } from '$lib/utils/user';
 	import analytics from '$lib/Analytics/PlausibleAnalytics';
 	import { userLocation } from '$src/stores/userLocationStore';
-	import { analyticsDistanceToStop } from '$lib/Analytics/analyticsUtils';
+	import { analyticsDistanceToStop } from '$lib/Analytics/plausibleUtils';
 
 	let stop = $state();
 	let selectedTrip = $state(null);

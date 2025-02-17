@@ -8,8 +8,6 @@ export async function loadSurveys(stop = null, userId = null) {
 		const data = await response.json();
 		const validSurveys = getValidSurveys(data.surveys);
 
-		console.log("I'm the validSurveys", validSurveys);
-
 		let selectedSurvey = null;
 
 		if (stop) {
