@@ -81,7 +81,7 @@
 		{/each}
 	</div>
 {:else if question.content.type === 'label'}
-	<p class={`${sizeClasses.label} mt-4 font-bold text-black`}>
+	<p class={`${sizeClasses.label} mt-4 font-bold text-black dark:text-white`}>
 		{question.content.label_text}
 	</p>
 {:else if question.content.type === 'external_survey'}
