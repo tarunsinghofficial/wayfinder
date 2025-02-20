@@ -225,7 +225,11 @@
 				{handleViewAllRoutes}
 				{clearPolylines}
 				{handleTripPlan}
-			/>
+			>
+				{#snippet childContent()}
+					<!-- optional child content -->
+				{/snippet}
+			</SearchPane>
 
 			<div class="mt-4 flex-1">
 				{#if stop}

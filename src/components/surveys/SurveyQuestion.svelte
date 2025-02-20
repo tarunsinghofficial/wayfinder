@@ -18,13 +18,13 @@
 	};
 
 	const sizeClasses = {
-		label: variant === 'compact' ? 'mb-2 text-xl' : 'mb-4 text-3xl',
+		label: variant === 'compact' ? 'mb-2 text-xl' : 'mb-4 text-2xl',
 		input: variant === 'compact' ? 'mt-1 px-3 py-2 text-lg' : 'mt-2 px-5 py-4 text-xl',
-		option: variant === 'compact' ? 'p-2 text-lg' : 'p-3 text-xl'
+		option: variant === 'compact' ? 'p-1 text-lg' : 'p-2 text-lg'
 	};
 
 	const errorClasses = {
-		label: variant === 'compact' ? 'text-red-500' : 'text-2xl text-red-500'
+		label: variant === 'compact' ? 'text-red-500' : 'text-xl text-red-500'
 	};
 
 	function handleInput(event) {
@@ -34,12 +34,11 @@
 </script>
 
 <label class={`${baseClasses.label} ${sizeClasses.label}`} for="question-{index}">
-	<span class="absolute inset-0 -z-10 rounded-md bg-gray-100 px-3 py-2 dark:bg-gray-800"></span>
 	{#if question.content.type !== 'label'}
 		{question.content.label_text}
 	{/if}
 	{#if required && question.content.type !== 'label'}
-		<span class="ml-1 text-red-500">*</span>
+		<span class="ml-1 text-red-500" aria-label="Required question">*</span>
 	{/if}
 </label>
 
@@ -53,7 +52,7 @@
 		class={`${baseClasses.input} ${sizeClasses.input} ${error ? 'border-red-500' : ''}`}
 	/>
 {:else if question.content.type === 'radio'}
-	<div class={`mt-2 space-y-${variant === 'compact' ? '1' : '4'}`}>
+	<div class={`mt-2 space-y-${variant === 'compact' ? '0' : '2'}`}>
 		{#each question.content.options as option}
 			<Radio
 				name="radio-{index}"
@@ -67,7 +66,7 @@
 		{/each}
 	</div>
 {:else if question.content.type === 'checkbox'}
-	<div class={`mt-2 space-y-${variant === 'compact' ? '1' : '4'}`}>
+	<div class={`mt-2 space-y-${variant === 'compact' ? '0' : '2'}`}>
 		{#each question.content.options as option}
 			<Checkbox
 				name="checkbox-{index}"
@@ -81,7 +80,7 @@
 		{/each}
 	</div>
 {:else if question.content.type === 'label'}
-	<p class={`${sizeClasses.label} mt-4 font-bold text-black dark:text-white`}>
+	<p class={`${sizeClasses.label} text-semibold mt-4 font-bold dark:text-white`}>
 		{question.content.label_text}
 	</p>
 {:else if question.content.type === 'external_survey'}
@@ -90,12 +89,12 @@
 			href={question.content.url}
 			target="_blank"
 			rel="noopener noreferrer"
-			class="inline-block text-2xl font-semibold text-blue-500 underline transition-all hover:text-blue-600"
+			class="inline-block text-xl font-semibold text-blue-500 underline transition-all hover:text-blue-600"
 		>
 			{question.content.label_text}
 		</a>
 		{#if question.content.survey_provider}
-			<p class="mt-1 text-2xl text-gray-500">
+			<p class="mt-1 text-gray-500">
 				Powered by {question.content.survey_provider}
 			</p>
 		{/if}

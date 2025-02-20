@@ -111,14 +111,13 @@
 </script>
 
 {#if $showSurveyModal && currentSurvey}
-	<Modal open={$showSurveyModal} size="3xl" class="max-w-5xl rounded-2xl">
-		<div
-			class="flex items-center justify-between rounded-t-2xl border-b border-gray-200 p-6 dark:border-gray-700"
-		>
-			<h2 class="text-2xl font-bold text-gray-900 dark:text-white">{currentSurvey.name}</h2>
-		</div>
-
-		<div class="flex flex-col space-y-6 p-6">
+	<Modal
+		title={currentSurvey.name}
+		open={$showSurveyModal}
+		size="3xl"
+		class="max-w-5xl rounded-2xl"
+	>
+		<div class="flex flex-col space-y-2">
 			{#if surveySubmitted}
 				<div class="flex flex-1 flex-col items-center justify-center p-12">
 					<svg
@@ -141,7 +140,7 @@
 					</p>
 				</div>
 			{:else}
-				<div class="max-h-[60vh] overflow-y-auto p-6">
+				<div class="max-h-[60vh] overflow-y-auto p-2">
 					{#if !heroQuestionAnswered && !skipHeroQuestion}
 						<SurveyQuestion
 							question={heroQuestion}
@@ -168,7 +167,7 @@
 				</div>
 
 				<div
-					class="sticky bottom-0 flex justify-end gap-4 rounded-b-2xl border-t border-gray-200 bg-white p-6 dark:border-gray-700 dark:bg-gray-800"
+					class="sticky bottom-0 flex justify-end gap-4 rounded-b-2xl border-t border-gray-200 bg-white pt-4 dark:border-gray-700 dark:bg-gray-800"
 				>
 					{#if !heroQuestionAnswered && !skipHeroQuestion}
 						<Button
