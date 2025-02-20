@@ -24,3 +24,31 @@ export async function googlePlacesAutocomplete({ apiKey, input }) {
 
 	return data.suggestions;
 }
+
+export async function bingGeocode({ apiKey, query }) {
+	const rawBingResult = await fetch(
+		`https://dev.virtualearth.net/REST/v1/Locations?query=${query}&key=${apiKey}`,
+		{
+			method: 'GET',
+			headers: {
+				Accept: 'application/json'
+			}
+		}
+	);
+
+	const data = await rawBingResult.json();
+
+	if (data.resourceSets[0].estimatedTotal === 0) {
+		return null;
+	}
+
+	return {
+		geometry: {
+			location: {
+				lat: data.resourceSets[0].resources[0].point.coordinates[0] ?? null,
+				lng: data.resourceSets[0].resources[0].point.coordinates[1] ?? null
+			}
+		},
+		formatted_address: data.resourceSets[0].resources[0].address.formattedAddress
+	};
+}

@@ -6,11 +6,11 @@ import { env } from '$env/dynamic/private';
 
 let geocoderApiKey = env.PRIVATE_OBA_GEOCODER_API_KEY;
 
+// Trip planner location search
+// TODO: add bing support
 async function locationSearch(query) {
 	if (geocoderProvider === 'google') {
 		return googleGeocode({ apiKey: geocoderApiKey, query });
-	} else {
-		return [];
 	}
 }
 
