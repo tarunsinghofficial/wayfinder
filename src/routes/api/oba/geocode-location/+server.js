@@ -1,4 +1,4 @@
-import { googleGeocode } from '$lib/geocoder';
+import { bingGeocode, googleGeocode } from '$lib/geocoder';
 
 import { PRIVATE_OBA_GEOCODER_PROVIDER as geocoderProvider } from '$env/static/private';
 
@@ -6,11 +6,11 @@ import { env } from '$env/dynamic/private';
 
 let geocoderApiKey = env.PRIVATE_OBA_GEOCODER_API_KEY;
 
-// Trip planner location search
-// TODO: add bing support
 async function locationSearch(query) {
 	if (geocoderProvider === 'google') {
 		return googleGeocode({ apiKey: geocoderApiKey, query });
+	} else {
+		return bingGeocode({ apiKey: geocoderApiKey, query });
 	}
 }
 

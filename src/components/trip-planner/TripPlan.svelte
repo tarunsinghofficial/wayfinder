@@ -21,17 +21,14 @@
 	let lockSelectLocation = false;
 
 	async function fetchAutocompleteResults(query) {
-		const response = await fetch(
-			`/api/oba/google-place-autocomplete?query=${encodeURIComponent(query)}`
-		);
+		const response = await fetch(`/api/oba/place-suggestions?query=${encodeURIComponent(query)}`);
+
+		if (!response.ok) {
+			throw error('Error fetching location results', 500);
+		}
 		const data = await response.json();
 
-		return data.suggestions
-			? data.suggestions.map((suggestion) => ({
-					placeId: suggestion.placePrediction.placeId,
-					text: suggestion.placePrediction.text.text
-				}))
-			: [];
+		return data.suggestions;
 	}
 
 	const fetchLocationResults = debounce(async (query, isFrom) => {
@@ -52,7 +49,7 @@
 
 	async function geocodeLocation(locationName) {
 		const response = await fetch(
-			`/api/oba/google-geocode-location?query=${encodeURIComponent(locationName)}`
+			`/api/oba/geocode-location?query=${encodeURIComponent(locationName)}`
 		);
 
 		if (!response.ok) {
