@@ -58,7 +58,7 @@ export async function bingGeocode({ apiKey, query }) {
 			}
 		},
 		formatted_address: data.resourceSets[0].resources[0].address.formattedAddress,
-		name: data.resourceSets[0].resources[0].name ?? ""
+		name: data.resourceSets[0].resources[0].name ?? ''
 	};
 }
 
