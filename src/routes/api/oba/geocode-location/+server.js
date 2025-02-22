@@ -1,4 +1,4 @@
-import { googleGeocode } from '$lib/geocoder';
+import { bingGeocode, googleGeocode } from '$lib/geocoder';
 
 import { PRIVATE_OBA_GEOCODER_PROVIDER as geocoderProvider } from '$env/static/private';
 
@@ -10,7 +10,7 @@ async function locationSearch(query) {
 	if (geocoderProvider === 'google') {
 		return googleGeocode({ apiKey: geocoderApiKey, query });
 	} else {
-		return [];
+		return bingGeocode({ apiKey: geocoderApiKey, query });
 	}
 }
 

@@ -88,7 +88,7 @@
 					onclick={() => handleSelect(result)}
 				>
 					<FontAwesomeIcon icon={faMapMarkerAlt} class="mr-2 text-gray-400  " />
-					{result.text}
+					{result.displayText}
 				</button>
 			{/each}
 		</ul>

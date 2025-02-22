@@ -1,6 +1,6 @@
 import { OnebusawaySDK } from 'onebusaway-sdk';
 
-import { googleGeocode } from '$lib/geocoder';
+import { bingGeocode, googleGeocode } from '$lib/geocoder';
 
 import {
 	PUBLIC_OBA_SERVER_URL as baseUrl,
@@ -43,8 +43,8 @@ async function stopSearch(query) {
 async function locationSearch(query) {
 	if (geocoderProvider === 'google') {
 		return googleGeocode({ apiKey: geocoderApiKey, query });
-	} else {
-		return [];
+	} else if (geocoderProvider === 'bing') {
+		return bingGeocode({ apiKey: geocoderApiKey, query });
 	}
 }
 

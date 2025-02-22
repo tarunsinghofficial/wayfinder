@@ -141,7 +141,7 @@
 						on:click={() => handleLocationClick(location)}
 						title={location.formatted_address}
 						icon={faMapPin}
-						subtitle={location.types.join(', ')}
+						subtitle={location?.types?.join(', ') || location.name}
 					/>
 				{/if}
 

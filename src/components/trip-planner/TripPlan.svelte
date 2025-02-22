@@ -21,17 +21,14 @@
 	let lockSelectLocation = false;
 
 	async function fetchAutocompleteResults(query) {
-		const response = await fetch(
-			`/api/oba/google-place-autocomplete?query=${encodeURIComponent(query)}`
-		);
+		const response = await fetch(`/api/oba/place-suggestions?query=${encodeURIComponent(query)}`);
+
+		if (!response.ok) {
+			throw error('Error fetching location results', 500);
+		}
 		const data = await response.json();
 
-		return data.suggestions
-			? data.suggestions.map((suggestion) => ({
-					placeId: suggestion.placePrediction.placeId,
-					text: suggestion.placePrediction.text.text
-				}))
-			: [];
+		return data.suggestions;
 	}
 
 	const fetchLocationResults = debounce(async (query, isFrom) => {
@@ -52,7 +49,7 @@
 
 	async function geocodeLocation(locationName) {
 		const response = await fetch(
-			`/api/oba/google-geocode-location?query=${encodeURIComponent(locationName)}`
+			`/api/oba/geocode-location?query=${encodeURIComponent(locationName)}`
 		);
 
 		if (!response.ok) {
@@ -77,16 +74,16 @@
 		if (lockSelectLocation) return;
 		lockSelectLocation = true;
 		try {
-			const response = await geocodeLocation(suggestion.text);
+			const response = await geocodeLocation(suggestion.name);
 			if (isFrom) {
 				selectedFrom = response.location.geometry.location;
 				fromMarker = mapProvider.addPinMarker(selectedFrom, $t('trip-planner.from'));
-				fromPlace = suggestion.text;
+				fromPlace = suggestion.name;
 				fromResults = [];
 			} else {
 				selectedTo = response.location.geometry.location;
 				toMarker = mapProvider.addPinMarker(selectedTo, $t('trip-planner.to'));
-				toPlace = suggestion.text;
+				toPlace = suggestion.name;
 				toResults = [];
 			}
 		} catch (error) {
