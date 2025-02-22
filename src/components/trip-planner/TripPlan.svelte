@@ -74,16 +74,16 @@
 		if (lockSelectLocation) return;
 		lockSelectLocation = true;
 		try {
-			const response = await geocodeLocation(suggestion.text);
+			const response = await geocodeLocation(suggestion.name);
 			if (isFrom) {
 				selectedFrom = response.location.geometry.location;
 				fromMarker = mapProvider.addPinMarker(selectedFrom, $t('trip-planner.from'));
-				fromPlace = suggestion.text;
+				fromPlace = suggestion.name;
 				fromResults = [];
 			} else {
 				selectedTo = response.location.geometry.location;
 				toMarker = mapProvider.addPinMarker(selectedTo, $t('trip-planner.to'));
-				toPlace = suggestion.text;
+				toPlace = suggestion.name;
 				toResults = [];
 			}
 		} catch (error) {
