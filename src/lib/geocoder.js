@@ -145,7 +145,7 @@ export async function fetchAutocompleteResults(provider, query, apiKey) {
 		case 'bing':
 			return await bingAutoSuggestPlaces({ apiKey, query });
 		default:
-			throw error(500, 'Invalid geocoding provider');
+			throw new Error('Invalid geocoding provider');
 	}
 }
 
