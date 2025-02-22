@@ -11,7 +11,8 @@
 		faRulerCombined,
 		faClock,
 		faArrowRight,
-		faArrowAltCircleRight
+		faArrowAltCircleRight,
+		faTram
 	} from '@fortawesome/free-solid-svg-icons';
 	import { FontAwesomeIcon } from '@fortawesome/svelte-fontawesome';
 	import { t } from 'svelte-i18n';
@@ -46,6 +47,10 @@
 		case 'LIGHT_RAIL':
 			icon = faTrainSubway;
 			iconColor = 'text-red-600';
+			break;
+		case 'TRAM':
+			icon = faTram;
+			iconColor = 'text-orange-500';
 			break;
 		default:
 			icon = null;
