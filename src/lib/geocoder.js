@@ -1,5 +1,3 @@
-import { error } from '@sveltejs/kit';
-
 export async function googleGeocode({ apiKey, query }) {
 	const response = await fetch(
 		`https://maps.googleapis.com/maps/api/geocode/json?address=${encodeURIComponent(query)}&key=${apiKey}`
