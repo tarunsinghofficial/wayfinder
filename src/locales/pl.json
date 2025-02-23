@@ -100,5 +100,13 @@
 		"SW": "Południowy zachód",
 		"W": "Zachód",
 		"NW": "Północny zachód"
+	},
+	"service_alerts": {
+		"more_info": "Więcej informacji",
+		"close": "Zamknij",
+		"service_alerts": "Alerty serwisowe",
+		"page": "Strona",
+		"show": "Pokaż",
+		"hide": "Ukryj"
 	}
 }

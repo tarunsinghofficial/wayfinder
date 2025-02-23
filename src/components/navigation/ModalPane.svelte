@@ -3,7 +3,6 @@
 	import { FontAwesomeIcon } from '@fortawesome/svelte-fontawesome';
 	import { faX } from '@fortawesome/free-solid-svg-icons';
 	import { keybinding } from '$lib/keybinding';
-
 	/**
 	 * @typedef {Object} Props
 	 * @property {string} [title]

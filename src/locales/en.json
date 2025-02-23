@@ -100,5 +100,13 @@
 		"SW": "Southwest",
 		"W": "West",
 		"NW": "Northwest"
+	},
+	"service_alerts": {
+		"more_info": "More info",
+		"close": "Close",
+		"service_alerts": "Service Alerts",
+		"page": "Page",
+		"show": "Show",
+		"hide": "Hide"
 	}
 }

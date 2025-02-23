@@ -5,6 +5,7 @@
 	import Accordion from '$components/containers/SingleSelectAccordion.svelte';
 	import AccordionItem from '$components/containers/AccordionItem.svelte';
 	import SurveyModal from '$components/surveys/SurveyModal.svelte';
+	import ServiceAlerts from '$components/service-alerts/ServiceAlerts.svelte';
 	import { onDestroy } from 'svelte';
 	import '$lib/i18n.js';
 	import { isLoading, t } from 'svelte-i18n';
@@ -13,6 +14,7 @@
 	import { getUserId } from '$lib/utils/user';
 	import HeroQuestion from '$components/surveys/HeroQuestion.svelte';
 	import analytics from '$lib/Analytics/PlausibleAnalytics';
+	import { filterActiveAlerts } from '$components/service-alerts/serviceAlertsHelper';
 
 	/**
 	 * @typedef {Object} Props
@@ -31,6 +33,7 @@
 	let arrivalsAndDepartures = $state();
 	let loading = $state(false);
 	let error = $state();
+	let serviceAlerts = $state([]);
 
 	let interval = null;
 	let currentStopSurvey = $state(null);
@@ -42,6 +45,8 @@
 		if (response.ok) {
 			arrivalsAndDeparturesResponse = await response.json();
 			arrivalsAndDepartures = arrivalsAndDeparturesResponse.data.entry;
+			let situations = arrivalsAndDeparturesResponse.data.references.situations || [];
+			serviceAlerts = filterActiveAlerts(situations);
 		} else {
 			error = 'Unable to fetch arrival/departure data';
 		}
@@ -172,6 +177,11 @@
 						</div>
 					</div>
 				</div>
+
+				{#if serviceAlerts}
+					<ServiceAlerts bind:serviceAlerts />
+				{/if}
+
 				{#if showHeroQuestion && currentStopSurvey}
 					<HeroQuestion {currentStopSurvey} {handleSkip} {handleNext} {handleHeroQuestionChange} />
 				{/if}

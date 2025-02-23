@@ -101,5 +101,13 @@
 		"SW": "Suroeste",
 		"W": "Oeste",
 		"NW": "Noroeste"
+	},
+	"service_alerts": {
+		"more_info": "Más información",
+		"close": "Cerrar",
+		"service_alerts": "Alertas de servicio",
+		"page": "Página",
+		"show": "Mostrar",
+		"hide": "Ocultar"
 	}
 }

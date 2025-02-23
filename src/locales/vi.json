@@ -99,5 +99,13 @@
 		"SW": "Tây Nam",
 		"W": "Tây",
 		"NW": "Tây Bắc"
+	},
+	"service_alerts": {
+		"more_info": "Thêm thông tin",
+		"close": "Đóng",
+		"service_alerts": "Thông báo dịch vụ",
+		"page": "Trang",
+		"show": "Hiển thị",
+		"hide": "Ẩn"
 	}
 }
