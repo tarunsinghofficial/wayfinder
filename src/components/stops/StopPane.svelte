@@ -5,6 +5,7 @@
 	import Accordion from '$components/containers/SingleSelectAccordion.svelte';
 	import AccordionItem from '$components/containers/AccordionItem.svelte';
 	import SurveyModal from '$components/surveys/SurveyModal.svelte';
+	import ServiceAlerts from '$components/service-alerts/ServiceAlerts.svelte';
 	import { onDestroy } from 'svelte';
 	import '$lib/i18n.js';
 	import { isLoading, t } from 'svelte-i18n';
@@ -31,6 +32,7 @@
 	let arrivalsAndDepartures = $state();
 	let loading = $state(false);
 	let error = $state();
+	let serviceAlerts = $state([]);
 
 	let interval = null;
 	let currentStopSurvey = $state(null);
@@ -42,10 +44,23 @@
 		if (response.ok) {
 			arrivalsAndDeparturesResponse = await response.json();
 			arrivalsAndDepartures = arrivalsAndDeparturesResponse.data.entry;
+			let situations = arrivalsAndDeparturesResponse.data.references.situations || [];
+			serviceAlerts = filterActiveAlerts(situations);
 		} else {
 			error = 'Unable to fetch arrival/departure data';
 		}
 		loading = false;
+	}
+
+	function filterActiveAlerts(situations) {
+		const now = Date.now();
+		return situations.filter((situation) => {
+			return situation.activeWindows.some((window) => {
+				const from = window.from || 0;
+				const to = window.to || Infinity;
+				return now >= from && now <= to;
+			});
+		});
 	}
 
 	function resetDataFetchInterval(stopID) {
@@ -172,6 +187,9 @@
 						</div>
 					</div>
 				</div>
+
+				<ServiceAlerts bind:serviceAlerts />
+
 				{#if showHeroQuestion && currentStopSurvey}
 					<HeroQuestion {currentStopSurvey} {handleSkip} {handleNext} {handleHeroQuestionChange} />
 				{/if}

@@ -3,7 +3,8 @@
 	import { FontAwesomeIcon } from '@fortawesome/svelte-fontawesome';
 	import { faX } from '@fortawesome/free-solid-svg-icons';
 	import { keybinding } from '$lib/keybinding';
-
+	import { modalOpen } from '$src/stores/modalOpen';
+	import { onMount } from 'svelte';
 	/**
 	 * @typedef {Object} Props
 	 * @property {string} [title]
@@ -12,6 +13,12 @@
 
 	/** @type {Props} */
 	let { title = '', children, closePane } = $props();
+	let isModalOpen = $state(false);
+	onMount(() => {
+		modalOpen.subscribe((value) => {
+			isModalOpen = value;
+		});
+	});
 </script>
 
 <div
@@ -26,7 +33,7 @@
 				<button
 					type="button"
 					onclick={closePane}
-					use:keybinding={{ code: 'Escape' }}
+					use:keybinding={isModalOpen === false ? { code: 'Escape' } : null}
 					class="close-button"
 				>
 					<FontAwesomeIcon icon={faX} class="font-black text-black dark:text-white" />
