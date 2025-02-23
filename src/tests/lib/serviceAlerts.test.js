@@ -1,4 +1,7 @@
-import { filterActiveAlerts, normalizeTimestamp } from '$components/service-alerts/serviceAlertsHelper';
+import {
+	filterActiveAlerts,
+	normalizeTimestamp
+} from '$components/service-alerts/serviceAlertsHelper';
 import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest';
 
 describe('filterActiveAlerts', () => {
@@ -58,34 +61,33 @@ describe('filterActiveAlerts', () => {
 	});
 });
 
-
 describe('normalizeTimestamp', () => {
-  const fixedTime = new Date('2025-02-23T12:00:00Z').getTime();
+	const fixedTime = new Date('2025-02-23T12:00:00Z').getTime();
 
-  beforeEach(() => {
-    vi.useFakeTimers();
-    vi.setSystemTime(fixedTime);
-  });
+	beforeEach(() => {
+		vi.useFakeTimers();
+		vi.setSystemTime(fixedTime);
+	});
 
-  afterEach(() => {
-    vi.useRealTimers();
-  });
+	afterEach(() => {
+		vi.useRealTimers();
+	});
 
-  it('returns the original timestamp if the value is in milliseconds', () => {
-    const tsMilliseconds = fixedTime - 1000;
-    const normalized = normalizeTimestamp(tsMilliseconds);
-    expect(normalized).toBe(tsMilliseconds);
-  });
+	it('returns the original timestamp if the value is in milliseconds', () => {
+		const tsMilliseconds = fixedTime - 1000;
+		const normalized = normalizeTimestamp(tsMilliseconds);
+		expect(normalized).toBe(tsMilliseconds);
+	});
 
-  it('converts a timestamp in seconds to milliseconds', () => {
-    const tsSeconds = (fixedTime - 1000) / 1000;
-    const normalized = normalizeTimestamp(tsSeconds);
-    expect(normalized).toBeCloseTo(tsSeconds * 1000);
-  });
+	it('converts a timestamp in seconds to milliseconds', () => {
+		const tsSeconds = (fixedTime - 1000) / 1000;
+		const normalized = normalizeTimestamp(tsSeconds);
+		expect(normalized).toBeCloseTo(tsSeconds * 1000);
+	});
 
-  it('returns 0 when given an undefined or falsy value (:', () => {
-    expect(normalizeTimestamp(null)).toBe(0);
-    expect(normalizeTimestamp(undefined)).toBe(0);
-    expect(normalizeTimestamp(0)).toBe(0);
-  });
+	it('returns 0 when given an undefined or falsy value (:', () => {
+		expect(normalizeTimestamp(null)).toBe(0);
+		expect(normalizeTimestamp(undefined)).toBe(0);
+		expect(normalizeTimestamp(0)).toBe(0);
+	});
 });
