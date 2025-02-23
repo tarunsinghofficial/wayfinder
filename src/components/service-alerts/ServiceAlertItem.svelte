@@ -10,7 +10,7 @@
 	role="button"
 	tabindex="0"
 	onclick={() => openModal(alert)}
-	onkeydown={(e) => e.key === 'Enter' && openModal(alert)}
+	onkeydown={(e) => e.key === 'Enter'}
 >
 	<div class="mt-2 flex-shrink">
 		<FontAwesomeIcon
@@ -22,7 +22,7 @@
 	<div class="flex-1">
 		<h4 class="line-clamp-3 font-medium text-gray-900 dark:text-white">{alert.summary.value}</h4>
 		<p class="mt-1 line-clamp-3 text-sm text-gray-500 dark:text-gray-300">
-			{alert.description.value}
+			{alert?.description?.value}
 		</p>
 	</div>
 	<div class="ml-2 flex-shrink-0">

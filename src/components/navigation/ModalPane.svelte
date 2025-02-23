@@ -33,7 +33,7 @@
 				<button
 					type="button"
 					onclick={closePane}
-					use:keybinding={isModalOpen === false ? { code: 'Escape' } : null}
+					use:keybinding={{ code: 'Escape' }}
 					class="close-button"
 				>
 					<FontAwesomeIcon icon={faX} class="font-black text-black dark:text-white" />

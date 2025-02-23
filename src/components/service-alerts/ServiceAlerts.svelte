@@ -25,11 +25,12 @@
 	function openModal(alert) {
 		modalAlert = alert;
 		modalOpen.set(true);
+		console.debug('modal opened');
 	}
 
 	function closeModal() {
-		modalAlert = null;
-		modalOpen.update(() => false);
+		modalOpen.set(false);
+		console.debug('modal closed');
 	}
 
 	function toggleAlerts() {
@@ -47,13 +48,14 @@
 	}
 
 	function handleKeydown(event) {
-		if (event.key === 'Escape' && modalAlert) {
+		if (event.key === 'Escape') {
+			event.stopPropagation();
+        	event.preventDefault();
 			closeModal();
 		}
 	}
 </script>
 
-<svelte:window onkeydown={handleKeydown} />
 
 {#if serviceAlerts.length > 0}
 	<div class="relative flex flex-col gap-y-1 rounded-lg bg-white p-4 dark:bg-gray-800">
@@ -103,17 +105,19 @@
 {/if}
 
 {#if $modalOpen && modalAlert}
-	<div class="center">
-		<Modal
-			title={modalAlert.summary.value}
-			open={$modalOpen && modalAlert}
-			on:close={closeModal}
-			size="xl"
-			class="min-h-[400px] w-full max-w-3xl rounded-xl bg-white p-8 text-gray-900 shadow-2xl dark:bg-gray-800 dark:text-gray-100"
-		>
-			<p class="mt-6 text-base leading-relaxed text-gray-800 dark:text-gray-200">
-				{modalAlert.description.value}
-			</p>
-		</Modal>
-	</div>
+
+<div class="center" onkeydown={handleKeydown} role="button" tabindex="0">
+        <Modal
+            outsideclose={true}
+            title={modalAlert?.summary?.value}
+			bind:open={$modalOpen}
+            size="3xl"
+            class="relative w-full max-w-3xl rounded-xl bg-white p-8 text-gray-900 shadow-2xl dark:bg-gray-800 dark:text-gray-100"
+        >
+            <p class="mt-3 text-base leading-relaxed text-gray-800 dark:text-gray-200">
+                {modalAlert?.description?.value}
+            </p>
+        </Modal>
+    </div>
 {/if}
+
