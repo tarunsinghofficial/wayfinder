@@ -14,6 +14,7 @@
 	import { getUserId } from '$lib/utils/user';
 	import HeroQuestion from '$components/surveys/HeroQuestion.svelte';
 	import analytics from '$lib/Analytics/PlausibleAnalytics';
+	import { filterActiveAlerts } from '$components/service-alerts/serviceAlertsHelper';
 
 	/**
 	 * @typedef {Object} Props
@@ -50,17 +51,6 @@
 			error = 'Unable to fetch arrival/departure data';
 		}
 		loading = false;
-	}
-
-	function filterActiveAlerts(situations) {
-		const now = Date.now();
-		return situations.filter((situation) => {
-			return situation.activeWindows.some((window) => {
-				const from = window.from || 0;
-				const to = window.to || Infinity;
-				return now >= from && now <= to;
-			});
-		});
 	}
 
 	function resetDataFetchInterval(stopID) {
@@ -188,7 +178,9 @@
 					</div>
 				</div>
 
-				<ServiceAlerts bind:serviceAlerts />
+				{#if serviceAlerts}
+					<ServiceAlerts bind:serviceAlerts />
+				{/if}
 
 				{#if showHeroQuestion && currentStopSurvey}
 					<HeroQuestion {currentStopSurvey} {handleSkip} {handleNext} {handleHeroQuestionChange} />
