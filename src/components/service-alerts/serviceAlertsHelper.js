@@ -5,8 +5,6 @@ export function filterActiveAlerts(situations) {
 			const from = normalizeTimestamp(window.from) || 0;
 			// If no end date provided, default to Infinity.
 			const to = window.to ? normalizeTimestamp(window.to) : Infinity;
-
-			console.log(from, to);
 			return now >= from && now <= to;
 		})
 	);

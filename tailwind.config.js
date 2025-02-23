@@ -36,6 +36,6 @@ export default {
 		}
 	},
 
-	plugins: [require('@tailwindcss/forms'), require('@tailwindcss/line-clamp'), flowbitePlugin],
+	plugins: [require('@tailwindcss/forms'), flowbitePlugin],
 	darkMode: 'class'
 };

@@ -100,14 +100,16 @@
 	</div>
 {/if}
 
-{#if $modalOpen}
+{#if $modalOpen && modalAlert}
 	<div class="center">
 		<Modal
 			title={modalAlert.summary.value}
 			open={$modalOpen && modalAlert}
-			class="w-full max-w-3xl rounded-xl bg-white p-6 text-gray-900 shadow-2xl  dark:bg-gray-900 dark:text-gray-100"
+			on:close={closeModal}
+			size="xl"
+			class="min-h-[400px] w-full max-w-3xl rounded-xl bg-white p-8 text-gray-900 shadow-2xl dark:bg-gray-800 dark:text-gray-100"
 		>
-			<p class="mt-4 text-base leading-relaxed text-gray-800 dark:text-gray-200">
+			<p class="mt-6 text-base leading-relaxed text-gray-800 dark:text-gray-200">
 				{modalAlert.description.value}
 			</p>
 		</Modal>
