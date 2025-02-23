@@ -50,12 +50,11 @@
 	function handleKeydown(event) {
 		if (event.key === 'Escape') {
 			event.stopPropagation();
-        	event.preventDefault();
+			event.preventDefault();
 			closeModal();
 		}
 	}
 </script>
-
 
 {#if serviceAlerts.length > 0}
 	<div class="relative flex flex-col gap-y-1 rounded-lg bg-white p-4 dark:bg-gray-800">
@@ -105,19 +104,17 @@
 {/if}
 
 {#if $modalOpen && modalAlert}
-
-<div class="center" onkeydown={handleKeydown} role="button" tabindex="0">
-        <Modal
-            outsideclose={true}
-            title={modalAlert?.summary?.value}
+	<div class="center" onkeydown={handleKeydown} role="button" tabindex="0">
+		<Modal
+			outsideclose={true}
+			title={modalAlert?.summary?.value}
 			bind:open={$modalOpen}
-            size="3xl"
-            class="relative w-full max-w-3xl rounded-xl bg-white p-8 text-gray-900 shadow-2xl dark:bg-gray-800 dark:text-gray-100"
-        >
-            <p class="mt-3 text-base leading-relaxed text-gray-800 dark:text-gray-200">
-                {modalAlert?.description?.value}
-            </p>
-        </Modal>
-    </div>
+			size="3xl"
+			class="relative w-full max-w-3xl rounded-xl bg-white p-8 text-gray-900 shadow-2xl dark:bg-gray-800 dark:text-gray-100"
+		>
+			<p class="mt-3 text-base leading-relaxed text-gray-800 dark:text-gray-200">
+				{modalAlert?.description?.value}
+			</p>
+		</Modal>
+	</div>
 {/if}
-
