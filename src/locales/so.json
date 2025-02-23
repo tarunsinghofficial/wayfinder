@@ -100,5 +100,13 @@
 		"SW": "Koonfur Galbeed",
 		"W": "Galbeed",
 		"NW": "Waqooyi Galbeed"
+	},
+	"service_alerts": {
+		"more_info": "Macluumaad dheeri ah",
+		"close": "Xidho",
+		"service_alerts": "Ogeysiisyada adeegga",
+		"page": "Bogga",
+		"show": "Muujin",
+		"hide": "Qari"
 	}
 }

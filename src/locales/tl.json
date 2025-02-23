@@ -100,5 +100,13 @@
 		"SW": "Timog-kanluran",
 		"W": "Kanluran",
 		"NW": "Hilagang-kanluran"
+	},
+	"service_alerts": {
+		"more_info": "Karagdagang impormasyon",
+		"close": "Isara",
+		"service_alerts": "Mga abiso ng serbisyo",
+		"page": "Pahina",
+		"show": "Ipakita",
+		"hide": "Itago"
 	}
 }

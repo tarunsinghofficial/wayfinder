@@ -7,6 +7,7 @@
 	import { FontAwesomeIcon } from '@fortawesome/svelte-fontawesome';
 	import { Modal } from 'flowbite-svelte';
 	import ServiceAlertItem from './ServiceAlertItem.svelte';
+	import { t } from 'svelte-i18n';
 
 	let { serviceAlerts = $bindable([]) } = $props();
 
@@ -58,13 +59,13 @@
 	<div class="relative flex flex-col gap-y-1 rounded-lg bg-white p-4 dark:bg-gray-800">
 		<div class="mb-2 flex items-center justify-between">
 			<h3 class="font-medium text-gray-700 dark:text-white">
-				SERVICE ALERTS ({serviceAlerts.length})
+				{$t('service_alerts.service_alerts')} ({serviceAlerts.length})
 			</h3>
 			<button
 				class="text-sm font-medium text-green-600 hover:text-green-700 dark:text-green-400 dark:hover:text-green-500"
 				onclick={toggleAlerts}
 			>
-				{isAlertsHidden ? 'Show' : 'Hide'}
+				{isAlertsHidden ? $t('service_alerts.show') : $t('service_alerts.hide')}
 			</button>
 		</div>
 
@@ -85,7 +86,8 @@
 						<FontAwesomeIcon icon={faChevronLeft} class="h-4 w-4" />
 					</button>
 					<span class="text-sm text-gray-700 dark:text-gray-300">
-						Page {currentPage} of {totalPages}
+						{$t('service_alerts.page')}
+						{currentPage} of {totalPages}
 					</span>
 					<button
 						class="p-1 text-gray-500 hover:text-gray-700 disabled:opacity-50 dark:text-gray-400 dark:hover:text-gray-200"
