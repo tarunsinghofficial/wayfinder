@@ -10,9 +10,6 @@ export class PlausibleAdapter extends BaseAdapter {
 	}
 
 	buildRequest(envelope, requestContext) {
-		// `??` rather than a default parameter: the endpoint gets this from
-		// `await request.json()`, which returns null for a literal null body and
-		// never undefined, so a default parameter never fires on the reachable case.
 		const { name, url, referrer = '', props = {} } = envelope;
 
 		const headers = { 'Content-Type': 'application/json' };

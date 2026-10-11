@@ -2,6 +2,7 @@ import { afterEach, describe, expect, it, vi } from 'vitest';
 import { BaseAdapter } from '$lib/Insights/adapters/BaseAdapter.js';
 
 afterEach(() => {
+	vi.useRealTimers();
 	vi.unstubAllGlobals();
 });
 
@@ -73,7 +74,6 @@ describe('BaseAdapter', () => {
 
 		await rejection;
 		expect(signal.aborted).toBe(true);
-		vi.useRealTimers();
 	});
 
 	it('throws when buildRequest is not implemented', () => {
