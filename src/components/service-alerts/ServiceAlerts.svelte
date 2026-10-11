@@ -1,4 +1,5 @@
 <script>
+	// @ts-check
 	import { modalOpen } from '$src/stores/modalOpen';
 	import { ChevronLeft, ChevronRight } from '@lucide/svelte';
 	import Modal from 'flowbite-svelte/Modal.svelte';
@@ -16,7 +17,7 @@
 
 	/**
 	 * @typedef {Object} Props
-	 * @property {any[]} [serviceAlerts]
+	 * @property {import('$lib/types').ServiceAlert[]} [serviceAlerts]
 	 * @property {string | null} [stopId]
 	 * @property {string[]} [routeIds]
 	 */
@@ -24,7 +25,7 @@
 	/** @type {Props} */
 	let { serviceAlerts = $bindable([]), stopId = null, routeIds = [] } = $props();
 
-	let modalAlert = $state(null);
+	let modalAlert = $state(/** @type {import('$lib/types').ServiceAlert | null} */ (null));
 	let isAlertsHidden = $state(false);
 	let currentPage = $state(1);
 	const alertsPerPage = 3;
@@ -49,6 +50,7 @@
 		modalAlert ? formatEffectLabel(modalAlert?.consequences?.[0]?.condition, $t) : null
 	);
 
+	/** @param {import('$lib/types').ServiceAlert} alert */
 	function openModal(alert) {
 		modalAlert = alert;
 		modalOpen.set(true);
@@ -67,11 +69,13 @@
 		}
 	}
 
+	/** @param {number} page */
 	function goToPage(page) {
 		currentPage = Math.max(1, Math.min(page, totalPages));
 		isAlertsHidden = false;
 	}
 
+	/** @param {KeyboardEvent} event */
 	function handleKeydown(event) {
 		if (!$modalOpen) return;
 		if (event.key === 'Escape') {
@@ -152,10 +156,10 @@
 {#if $modalOpen && modalAlert}
 	<Modal
 		outsideclose={true}
+		classBackdrop="bg-gray-900/50 dark:bg-gray-900/80"
 		title={modalAlert?.summary?.value || $t('service_alerts.service_alert')}
 		bind:open={$modalOpen}
-		size="3xl"
-		classBackdrop="bg-gray-900/50 dark:bg-gray-900/80"
+		size="lg"
 		class="relative w-full max-w-3xl rounded-xl bg-white p-8 text-gray-900 shadow-2xl dark:bg-gray-800 dark:text-gray-100"
 	>
 		{#if modalSeverity}
