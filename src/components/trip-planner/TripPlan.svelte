@@ -482,7 +482,7 @@
 			<!-- From: mobile-only label -->
 			<label
 				for="from-location-input"
-				class="pt-2 text-xs font-medium text-gray-700 dark:text-white sm:hidden"
+				class="pt-2 text-xs font-medium text-gray-700 sm:hidden dark:text-white"
 			>
 				{$t('trip-planner.from')}:
 			</label>
@@ -490,7 +490,7 @@
 			<div>
 				<label
 					for="from-location-input"
-					class="hidden text-sm font-medium text-gray-700 dark:text-white sm:block"
+					class="hidden text-sm font-medium text-gray-700 sm:block dark:text-white"
 				>
 					{$t('trip-planner.from')}:
 				</label>
@@ -511,7 +511,7 @@
 			<!-- To: mobile-only label -->
 			<label
 				for="to-location-input"
-				class="pt-2 text-xs font-medium text-gray-700 dark:text-white sm:hidden"
+				class="pt-2 text-xs font-medium text-gray-700 sm:hidden dark:text-white"
 			>
 				{$t('trip-planner.to')}:
 			</label>
@@ -519,7 +519,7 @@
 			<div>
 				<label
 					for="to-location-input"
-					class="hidden text-sm font-medium text-gray-700 dark:text-white sm:block"
+					class="hidden text-sm font-medium text-gray-700 sm:block dark:text-white"
 				>
 					{$t('trip-planner.to')}:
 				</label>
@@ -577,7 +577,7 @@
 		<button
 			type="button"
 			onclick={() => showTripOptionsModal.set(true)}
-			class="inline-flex items-center justify-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 shadow-sm transition-colors hover:bg-gray-50 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-200 dark:hover:bg-gray-700"
+			class="inline-flex items-center justify-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 shadow-xs transition-colors hover:bg-gray-50 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-200 dark:hover:bg-gray-700"
 		>
 			{$t('trip-planner.options')}
 		</button>
@@ -587,7 +587,7 @@
 				onclick={() => (showRecentTrips = !showRecentTrips)}
 				aria-expanded={showRecentTrips}
 				aria-controls="trip-plan-recent-trips"
-				class="inline-flex items-center justify-center gap-1.5 rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 shadow-sm transition-colors hover:bg-gray-50 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-200 dark:hover:bg-gray-700"
+				class="inline-flex items-center justify-center gap-1.5 rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 shadow-xs transition-colors hover:bg-gray-50 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-200 dark:hover:bg-gray-700"
 				class:border-brand-accent={showRecentTrips}
 				class:text-brand-accent={showRecentTrips}
 				class:dark:border-brand={showRecentTrips}

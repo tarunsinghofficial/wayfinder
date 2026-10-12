@@ -85,12 +85,12 @@
 		aria-haspopup="dialog"
 		aria-label={toggleLabel}
 		title={toggleLabel}
-		class="relative flex h-11 w-11 items-center justify-center rounded-xl border border-gray-300 bg-white/95 text-black shadow-md backdrop-blur-sm hover:bg-gray-100 dark:border-gray-600 dark:bg-gray-800/95 dark:text-white dark:hover:bg-gray-700"
+		class="relative flex h-11 w-11 items-center justify-center rounded-xl border border-gray-300 bg-white/95 text-black shadow-md backdrop-blur-xs hover:bg-gray-100 dark:border-gray-600 dark:bg-gray-800/95 dark:text-white dark:hover:bg-gray-700"
 	>
 		<Star class="h-4 w-4" fill="currentColor" />
 		{#if count > 0}
 			<span
-				class="absolute -right-1.5 -top-1.5 flex h-5 min-w-5 items-center justify-center rounded-full bg-brand-accent px-1 text-[10px] font-bold text-white"
+				class="absolute -top-1.5 -right-1.5 flex h-5 min-w-5 items-center justify-center rounded-full bg-brand-accent px-1 text-[10px] font-bold text-white"
 			>
 				{count > 99 ? '99+' : count}
 			</span>
@@ -100,7 +100,7 @@
 	<Popover
 		aria-label={$t('favorites.title')}
 		arrow={false}
-		class="left-0 max-h-[min(24rem,70vh)] w-[min(20rem,calc(100vw-1.5rem))] overflow-y-auto rounded-xl border border-gray-300 bg-white/95 shadow-lg outline-none backdrop-blur-sm dark:border-gray-600 dark:bg-gray-800/95"
+		class="left-0 max-h-[min(24rem,70vh)] w-[min(20rem,calc(100vw-1.5rem))] overflow-y-auto rounded-xl border border-gray-300 bg-white/95 shadow-lg outline-hidden backdrop-blur-xs dark:border-gray-600 dark:bg-gray-800/95"
 		defaultClass="p-3"
 		id={panelId}
 		offset={6}
