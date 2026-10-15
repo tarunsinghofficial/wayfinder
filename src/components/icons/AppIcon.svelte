@@ -11,6 +11,7 @@
 <script>
 	import { FontAwesomeIcon } from '@fortawesome/svelte-fontawesome';
 
+	// eslint-disable-next-line svelte/valid-compile
 	let { icon, class: className = '', ...rest } = $props();
 
 	const isFontAwesome = $derived(typeof icon === 'object' && icon !== null && 'iconName' in icon);
