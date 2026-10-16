@@ -1,4 +1,5 @@
 <script>
+	// eslint-disable-next-line svelte/valid-compile
 	let { class: className = '', size = 24, ...rest } = $props();
 </script>
 
