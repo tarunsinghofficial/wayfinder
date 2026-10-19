@@ -215,7 +215,7 @@
 >
 	<div class="logo-container flex items-center gap-2 px-1 py-1 md:gap-4 md:px-2 md:py-2">
 		<div class="flex items-center justify-center gap-x-2">
-			<!-- FIXME: navigation path not built with resolve() -->
+			<!-- external URL -->
 			<!-- eslint-disable-next-line svelte/no-navigation-without-resolve -->
 			<a href="/" class="block">
 				<img
@@ -227,7 +227,7 @@
 				/>
 			</a>
 			{#if showRegionName}
-				<!-- FIXME: navigation path not built with resolve() -->
+				<!-- external URL -->
 				<!-- eslint-disable-next-line svelte/no-navigation-without-resolve -->
 				<a href="/" class="region-name block text-xl font-extrabold text-brand-foreground">
 					{PUBLIC_OBA_REGION_NAME}
@@ -246,7 +246,7 @@
 		<!-- eslint-disable-next-line svelte/require-each-key -->
 		{#each visibleLinks as { key, value }}
 			<div class="flex-shrink-0 rounded-md border bg-surface/80 dark:bg-surface-dark">
-				<!-- FIXME: navigation path not built with resolve() -->
+				<!-- external URL -->
 				<!-- eslint-disable svelte/no-navigation-without-resolve -->
 				<a
 					href={value}

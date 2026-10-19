@@ -48,7 +48,7 @@
 	<!-- FIXME: each block has no key -->
 	<!-- eslint-disable-next-line svelte/require-each-key -->
 	{#each links as { key, value }}
-		<!-- FIXME: navigation path not built with resolve() -->
+		<!-- external URL -->
 		<!-- eslint-disable svelte/no-navigation-without-resolve -->
 		<a
 			class="block px-4 py-2 text-sm font-semibold text-surface-foreground hover:bg-gray-100 dark:text-surface-foreground-dark dark:hover:bg-gray-700"

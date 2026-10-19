@@ -287,7 +287,7 @@
 		try {
 			const url = new URL($page.url);
 			applyTripParams(url, { selectedFrom, selectedTo, fromPlace, toPlace });
-			// FIXME: navigation path not built with resolve()
+			// using `resolve` would drop trip params
 			// eslint-disable-next-line svelte/no-navigation-without-resolve
 			replaceState(url, {});
 		} catch (e) {
@@ -300,7 +300,7 @@
 		try {
 			const url = new URL($page.url);
 			removeTripParams(url);
-			// FIXME: navigation path not built with resolve()
+			// using `resolve` would drop trip params
 			// eslint-disable-next-line svelte/no-navigation-without-resolve
 			replaceState(url, {});
 		} catch (e) {
