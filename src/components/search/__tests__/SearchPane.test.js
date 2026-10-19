@@ -516,7 +516,7 @@ describe('SearchPane', () => {
 			return registration[1];
 		}
 
-		test('waits for the mobile plan sheet to mount before setting the location', async () => {
+		test('opens the Plan tab and hands it the clicked location', async () => {
 			render(SearchPane, { props: mockProps });
 			const handler = getContextMenuTripPlanHandler();
 			const detail = { type: 'from', lat: 47.6, lng: -122.3 };
