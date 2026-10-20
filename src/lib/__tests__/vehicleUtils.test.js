@@ -177,6 +177,24 @@ describe('buildVehiclePopupData', () => {
 			expect(fromRoute.routeShortName).toBe('Link Light Rail');
 		});
 
+		it('falls back to referenced stops when stopsMap lacks the next stop', async () => {
+			const data = tripsResponse('route-1', [{ tripId: 'trip-1', vehicleId: 'v-1' }]);
+			data.data.references.stops = [{ id: 'stop-9', name: 'Beacon Hill' }];
+			vi.stubGlobal('fetch', vi.fn().mockResolvedValue({ ok: true, json: async () => data }));
+			const poll = await fetchAndUpdateVehiclesForRoutes([{ id: 'route-1' }], provider);
+			clearInterval(poll.intervalId);
+
+			const fromRefs = buildVehiclePopupData({ nextStop: 'stop-9' }, undefined, new Map());
+			const fromMap = buildVehiclePopupData(
+				{ nextStop: 'stop-9' },
+				undefined,
+				new Map([['stop-9', { name: 'Beacon Hill Station' }]])
+			);
+
+			expect(fromRefs.nextStopName).toBe('Beacon Hill');
+			expect(fromMap.nextStopName).toBe('Beacon Hill Station');
+		});
+
 		it('forgets cached routes after clearVehicleMarkersMap', async () => {
 			await pollWithRoutes([{ id: 'route-1', shortName: '1 Line' }]);
 			clearVehicleMarkersMap();
