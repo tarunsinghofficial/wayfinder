@@ -183,10 +183,7 @@
 		"min_compact": "{n}m"
 	},
 	"vehicle": {
-		"number": "Vehicle #",
-		"data_updated": "Data updated",
 		"no_real_time_data": "We don't have real-time data for this vehicle now.",
-		"next_stop": "Next stop:",
 		"next_stop_label": "Next stop",
 		"towards": "Towards",
 		"live": "Live",
