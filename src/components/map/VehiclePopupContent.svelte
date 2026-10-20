@@ -1,6 +1,6 @@
 <script>
 	import { FontAwesomeIcon } from '@fortawesome/svelte-fontawesome';
-	import { CalendarClock, MapPin } from '@lucide/svelte';
+	import { CalendarClock, Clock, MapPin } from '@lucide/svelte';
 	import { prioritizedRouteTypeForDisplay } from '$config/routeConfig';
 	import { contrastRatio } from '$lib/colorUtils';
 	import { formatLastUpdated } from '$lib/dateTimeFormat';
@@ -17,8 +17,11 @@
 		routeColor,
 		routeTextColor,
 		routeType,
+		scheduleDeviation,
 		nextStopTimeOffset
 	} = $props();
+
+	const STALE_AFTER_MS = 2 * 60 * 1000;
 
 	const lastUpdatedText = $derived(
 		formatLastUpdated(lastUpdateTime, {
@@ -41,8 +44,21 @@
 
 	const displayVehicleId = $derived(vehicleId ? String(vehicleId).replace(/^[^_]+_/, '') : null);
 
+	const isStale = $derived(
+		predicted && Number.isFinite(lastUpdateTime) && Date.now() - lastUpdateTime > STALE_AFTER_MS
+	);
+
+	const deviation = $derived.by(() => {
+		if (isStale || !Number.isFinite(scheduleDeviation)) return null;
+		const minutes = Math.round(scheduleDeviation / 60);
+		if (minutes === 0) return { text: $t('vehicle.on_time'), late: false };
+		if (minutes > 0)
+			return { text: $t('vehicle.min_late', { values: { n: minutes } }), late: true };
+		return { text: $t('vehicle.min_early', { values: { n: -minutes } }), late: false };
+	});
+
 	const etaText = $derived.by(() => {
-		if (!Number.isFinite(nextStopTimeOffset)) return null;
+		if (isStale || !Number.isFinite(nextStopTimeOffset)) return null;
 		if (nextStopTimeOffset <= 30) return $t('vehicle.arriving');
 		return `${Math.round(nextStopTimeOffset / 60)} ${$t('time.min')}`;
 	});
@@ -62,7 +78,14 @@
 					{routeShortName}
 				</span>
 			{/if}
-			{#if predicted}
+			{#if isStale}
+				<span
+					class="inline-flex items-center gap-1 rounded-full bg-amber-100 px-2 py-0.5 text-xs font-semibold text-amber-800 dark:bg-amber-500/15 dark:text-amber-300"
+				>
+					<Clock class="h-3 w-3" aria-hidden="true" />
+					{$t('vehicle.last_seen', { values: { time: lastUpdatedText } })}
+				</span>
+			{:else if predicted}
 				<span
 					class="inline-flex items-center gap-1.5 text-xs font-semibold text-green-700 dark:text-green-400"
 				>
@@ -110,8 +133,21 @@
 					</div>
 					<div class="truncate font-semibold">{nextStopName || $t('NA')}</div>
 				</div>
-				{#if etaText}
-					<div class="text-end font-bold tabular-nums">{etaText}</div>
+				{#if etaText || deviation}
+					<div class="text-end">
+						{#if etaText}
+							<div class="font-bold tabular-nums">{etaText}</div>
+						{/if}
+						{#if deviation}
+							<div
+								class="text-[11px] font-medium {deviation.late
+									? 'text-amber-700 dark:text-amber-300'
+									: 'text-green-700 dark:text-green-400'}"
+							>
+								{deviation.text}
+							</div>
+						{/if}
+					</div>
 				{/if}
 			</div>
 		{:else}
