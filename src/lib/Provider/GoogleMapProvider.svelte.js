@@ -1,4 +1,5 @@
 import { loadGoogleMapsLibrary, createMap, nightModeStyles } from '$lib/googleMaps';
+import './../../assets/styles/google-map.css';
 import StopMarker from '$components/map/StopMarker.svelte';
 import { faBus } from '@fortawesome/free-solid-svg-icons';
 import {
