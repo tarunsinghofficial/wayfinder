@@ -79,6 +79,23 @@ describe('VehiclePopupContent', () => {
 		expect(screen.getByText('Beacon Hill')).toBeInTheDocument();
 	});
 
+	test('switches to last seen while open when no new data arrives', async () => {
+		renderPopup();
+		expect(screen.getByText(/vehicle\.live/)).toBeInTheDocument();
+
+		await vi.advanceTimersByTimeAsync(3 * 60_000);
+
+		expect(screen.getByText('vehicle.last_seen')).toBeInTheDocument();
+		expect(screen.queryByText(/vehicle\.live/)).not.toBeInTheDocument();
+		expect(screen.queryByText('vehicle.on_time')).not.toBeInTheDocument();
+	});
+
+	test('stops the clock when unmounted', () => {
+		const { unmount } = renderPopup();
+		unmount();
+		expect(vi.getTimerCount()).toBe(0);
+	});
+
 	test('shows the scheduled state without the next stop row', () => {
 		renderPopup({ predicted: false });
 		expect(screen.getByText('vehicle.scheduled')).toBeInTheDocument();

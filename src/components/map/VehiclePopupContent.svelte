@@ -22,16 +22,28 @@
 	} = $props();
 
 	const STALE_AFTER_MS = 2 * 60 * 1000;
+	const CLOCK_TICK_MS = 10000;
 
-	const lastUpdatedText = $derived(
-		formatLastUpdated(lastUpdateTime, {
+	let currentTime = $state(Date.now());
+
+	$effect(() => {
+		const interval = setInterval(() => {
+			currentTime = Date.now();
+		}, CLOCK_TICK_MS);
+
+		return () => clearInterval(interval);
+	});
+
+	const lastUpdatedText = $derived.by(() => {
+		void currentTime;
+		return formatLastUpdated(lastUpdateTime, {
 			min: $t('time.min'),
 			mins: $t('time.mins'),
 			sec: $t('time.sec'),
 			secs: $t('time.secs'),
 			ago: $t('time.ago')
-		})
-	);
+		});
+	});
 
 	const badgeBackground = $derived(routeColor ? `#${routeColor}` : '#374151');
 	const badgeForeground = $derived.by(() => {
@@ -45,7 +57,7 @@
 	const displayVehicleId = $derived(vehicleId ? String(vehicleId).replace(/^[^_]+_/, '') : null);
 
 	const isStale = $derived(
-		predicted && Number.isFinite(lastUpdateTime) && Date.now() - lastUpdateTime > STALE_AFTER_MS
+		predicted && Number.isFinite(lastUpdateTime) && currentTime - lastUpdateTime > STALE_AFTER_MS
 	);
 
 	const deviation = $derived.by(() => {
