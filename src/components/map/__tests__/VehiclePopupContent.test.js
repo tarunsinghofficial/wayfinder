@@ -53,13 +53,18 @@ describe('VehiclePopupContent', () => {
 		expect(screen.getByText(/vehicle\.live/)).toBeInTheDocument();
 		expect(screen.getByText('Lynnwood City Center')).toBeInTheDocument();
 		expect(screen.getByText('Beacon Hill')).toBeInTheDocument();
-		expect(screen.getByText('2 time.min')).toBeInTheDocument();
+		expect(screen.getByText('2 time.mins')).toBeInTheDocument();
 		expect(screen.getByText('vehicle.on_time')).toBeInTheDocument();
 	});
 
 	test('shows arriving when the vehicle is about to reach the next stop', () => {
 		renderPopup({ nextStopTimeOffset: 20 });
 		expect(screen.getByText('vehicle.arriving')).toBeInTheDocument();
+	});
+
+	test('uses the singular minute label for a one minute ETA', () => {
+		renderPopup({ nextStopTimeOffset: 60 });
+		expect(screen.getByText('1 time.min')).toBeInTheDocument();
 	});
 
 	test.each([
@@ -74,7 +79,7 @@ describe('VehiclePopupContent', () => {
 		renderPopup({ lastUpdateTime: NOW - 4 * 60_000 });
 		expect(screen.getByText('vehicle.last_seen')).toBeInTheDocument();
 		expect(screen.queryByText(/vehicle\.live/)).not.toBeInTheDocument();
-		expect(screen.queryByText('2 time.min')).not.toBeInTheDocument();
+		expect(screen.queryByText('2 time.mins')).not.toBeInTheDocument();
 		expect(screen.queryByText('vehicle.on_time')).not.toBeInTheDocument();
 		expect(screen.getByText('Beacon Hill')).toBeInTheDocument();
 	});

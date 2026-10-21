@@ -72,7 +72,8 @@
 	const etaText = $derived.by(() => {
 		if (isStale || !Number.isFinite(nextStopTimeOffset)) return null;
 		if (nextStopTimeOffset <= 30) return $t('vehicle.arriving');
-		return `${Math.round(nextStopTimeOffset / 60)} ${$t('time.min')}`;
+		const minutes = Math.round(nextStopTimeOffset / 60);
+		return `${minutes} ${minutes === 1 ? $t('time.min') : $t('time.mins')}`;
 	});
 </script>
 
