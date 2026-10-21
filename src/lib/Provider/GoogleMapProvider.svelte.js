@@ -453,21 +453,38 @@ export default class GoogleMapProvider {
 
 		marker.vehicleData = vehicleData;
 
+		marker.popupComponent = null;
+		marker.infoWindow = new google.maps.InfoWindow();
+
+		// Mount on open and unmount on close, as the Leaflet provider does. The
+		// popup runs a timer while mounted, so an instance per marker would keep
+		// ticking for every vehicle ever drawn.
+		marker.addListener('click', () => this._openVehiclePopup(marker));
+		for (const event of ['closeclick', 'close']) {
+			marker.infoWindow.addListener?.(event, () => this._unmountVehiclePopup(marker));
+		}
+
+		return marker;
+	}
+
+	_openVehiclePopup(marker) {
+		this._unmountVehiclePopup(marker);
+
 		const popupContainer = document.createElement('div');
 		marker.popupComponent = mount(VehiclePopupContent, {
 			target: popupContainer,
 			props: marker.vehicleData
 		});
 
-		marker.infoWindow = new google.maps.InfoWindow({
-			content: popupContainer
-		});
+		marker.infoWindow.setContent(popupContainer);
+		marker.infoWindow.open(this.map, marker);
+	}
 
-		marker.addListener('click', () => {
-			marker.infoWindow.open(this.map, marker);
-		});
+	_unmountVehiclePopup(marker) {
+		if (!marker) return;
 
-		return marker;
+		if (marker.popupComponent) unmount(marker.popupComponent);
+		marker.popupComponent = null;
 	}
 
 	updateVehicleMarker(
@@ -537,6 +554,8 @@ export default class GoogleMapProvider {
 		if (!marker) return;
 
 		cancelMarkerAnimation(marker);
+		marker.infoWindow?.close();
+		this._unmountVehiclePopup(marker);
 		marker.setMap(null);
 
 		const index = this.vehicleMarkers.indexOf(marker);
@@ -550,6 +569,8 @@ export default class GoogleMapProvider {
 
 		for (const marker of this.vehicleMarkers) {
 			cancelMarkerAnimation(marker);
+			marker.infoWindow?.close();
+			this._unmountVehiclePopup(marker);
 			marker.setMap(null);
 		}
 		this.vehicleMarkers = [];
